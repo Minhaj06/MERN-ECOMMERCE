@@ -1,4 +1,5 @@
 const Product = require("../models/product.js");
+const { validProduct } = require("../helpers/product.js");
 const Order = require("../models/order.js");
 const fs = require("fs");
 const slugify = require("slugify");
@@ -6,7 +7,7 @@ const branitree = require("braintree");
 require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
 
-sgMail.setApiKey(process.env.SENDGRID_KEY);
+// sgMail.setApiKey(process.env.SENDGRID_KEY);
 
 // const gateway = new braintree.BraintreeGateway({
 //   environment: braintree.Environment.Sandbox,
@@ -17,18 +18,19 @@ sgMail.setApiKey(process.env.SENDGRID_KEY);
 
 exports.create = async (req, res) => {
   try {
-    console.log(req.fields);
-    console.log(req.files);
+    // console.log(req.fields);
+    // console.log(req.files);
 
     const { name, description, price, category, quantity, shipping } = req.fields;
 
     const { photo } = req.files;
-    console.log("PHOTO========>", photo);
+    // console.log("PHOTO========>", photo);
+
+    // Unique Product Validation
+    await validProduct(name, res);
 
     // Validation
     switch (true) {
-      case !name.trim():
-        return res.json({ error: "Name is required" });
       case !description.trim():
         return res.json({ error: "Description is required" });
       case !price.trim():
