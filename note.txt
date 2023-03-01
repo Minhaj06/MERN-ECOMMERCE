@@ -1,0 +1,10 @@
+in controllers/category.js
+
+const Category = require("../models/category.js");
+const Product = require("../models/product.js");
+const validCategory = require("../helpers/category.js");
+
+const slugify = require("slugify");
+
+
+in helpers/category.js
