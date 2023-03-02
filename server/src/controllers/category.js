@@ -1,23 +1,19 @@
 const Category = require("../models/category.js");
 const Product = require("../models/product.js");
-const { validCategory } = require("../helpers/category.js");
 
 const slugify = require("slugify");
 
 exports.create = async (req, res) => {
   try {
     const { name } = req.body;
-    // if (!name.trim()) {
-    //   return res.json({ error: "Name is required" });
-    // }
+    if (!name.trim()) {
+      return res.json({ error: "Name is required" });
+    }
 
-    // const existingCategory = await Category.findOne({ name });
-    // if (existingCategory) {
-    //   return res.json({ error: "Already exists" });
-    // }
-
-    // Category Validation
-    await validCategory(name, res);
+    const existingCategory = await Category.findOne({ name });
+    if (existingCategory) {
+      return res.json({ error: `${name} already existis` });
+    }
 
     const category = await new Category({ name, slug: slugify(name) }).save();
     res.status(201).json(category);
@@ -31,11 +27,6 @@ exports.update = async (req, res) => {
   try {
     const { name } = req.body;
     const { categoryId } = req.params;
-
-    // Category validation
-    await validCategory(name, res);
-
-    // const exist
 
     const category = await Category.findByIdAndUpdate(
       categoryId,

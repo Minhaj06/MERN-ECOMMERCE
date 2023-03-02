@@ -1,5 +1,4 @@
 const Product = require("../models/product.js");
-const { validProduct } = require("../helpers/product.js");
 const Order = require("../models/order.js");
 const fs = require("fs");
 const slugify = require("slugify");
@@ -22,12 +21,10 @@ exports.create = async (req, res) => {
     // console.log(req.files);
 
     const { name, description, price, category, quantity, shipping } = req.fields;
+    console.log(name);
 
     const { photo } = req.files;
     // console.log("PHOTO========>", photo);
-
-    // Unique Product Validation
-    await validProduct(name, res);
 
     // Validation
     switch (true) {
@@ -43,6 +40,12 @@ exports.create = async (req, res) => {
         return res.json({ error: "Shipping is required" });
       case photo && photo.size > 1000000:
         return res.json({ error: "Image should be less than 1mb in size" });
+    }
+
+    // Existiong Product
+    const existingProduct = await Product.findOne({ name });
+    if (existingProduct) {
+      return res.json({ error: "Product already exists" });
     }
 
     // Create Product
@@ -72,6 +75,7 @@ exports.list = async (req, res) => {
     res.json(products);
   } catch (err) {
     console.log(err);
+    return res.status(400).json(err.message);
   }
 };
 
@@ -84,6 +88,7 @@ exports.read = async (req, res) => {
     res.json(product);
   } catch (err) {
     console.log(err);
+    return res.status(400).json(err.message);
   }
 };
 
@@ -97,6 +102,7 @@ exports.photo = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+    return res.status(400).json(err.message);
   }
 };
 
@@ -106,39 +112,40 @@ exports.remove = async (req, res) => {
     res.json(product);
   } catch (err) {
     console.log(err);
+    return res.status(400).json(err.message);
   }
 };
 
 exports.update = async (req, res) => {
   try {
-    console.log(req.fields);
-    console.log(req.files);
+    // console.log(req.fields);
+    // console.log(req.files);
 
     const { name, description, price, category, quantity, shipping } = req.fields;
 
     const { photo } = req.files;
-    console.log("PHOTO========>", photo);
+    // console.log("PHOTO========>", photo);
 
     // Validation
     switch (true) {
-      case !name.trim():
+      case !name?.trim():
         return res.json({ error: "Name is required" });
-      case !description.trim():
+      case !description?.trim():
         return res.json({ error: "Description is required" });
-      case !price.trim():
+      case !price?.trim():
         return res.json({ error: "Price is required" });
-      case !category.trim():
+      case !category?.trim():
         return res.json({ error: "Category is required" });
-      case !quantity.trim():
+      case !quantity?.trim():
         return res.json({ error: "Quantity is required" });
-      case !shipping.trim():
+      case !shipping?.trim():
         return res.json({ error: "Shipping is required" });
       case photo && photo.size > 1000000:
         return res.json({ error: "Image should be less than 1mb in size" });
     }
 
     // Update Product
-    const product = new Product.findByIdAndUpdate(
+    const product = await Product.findByIdAndUpdate(
       req.params.productId,
       {
         ...req.fields,
@@ -172,8 +179,10 @@ exports.filteredProducts = async (req, res) => {
     const products = await Product.find(args);
     console.log("Filtered products query ==> ", products.length);
     res.json(products);
+    return;
   } catch (err) {
     console.log(err);
+    res.status(400).json(err.message);
   }
 };
 
@@ -183,6 +192,7 @@ exports.productCount = async (req, res) => {
     res.json(total);
   } catch (err) {
     console.log(err);
+    return res.status(400).json(err.message);
   }
 };
 
@@ -200,6 +210,7 @@ exports.listProducts = async (req, res) => {
     res.json(products);
   } catch (err) {
     console.log(err);
+    return res.status(400).json(err.message);
   }
 };
 
@@ -208,14 +219,15 @@ exports.productSearch = async (req, res) => {
     const { keyword } = req.params;
     const results = await Product.find({
       $or: [
-        { name: { $regax: keyword, $options: "i" } },
-        { description: { $regax: keyword, $options: "i" } },
+        { name: { $regex: keyword, $options: "i" } },
+        { description: { $regex: keyword, $options: "i" } },
       ],
     }).select("-photo");
 
     res.json(results);
   } catch (err) {
     console.log(err);
+    return res.status(400).json(err.message);
   }
 };
 
@@ -233,6 +245,7 @@ exports.relatedProducts = async (req, res) => {
     res.json(related);
   } catch (err) {
     console.log(err);
+    return res.status(400).json(err.message);
   }
 };
 
