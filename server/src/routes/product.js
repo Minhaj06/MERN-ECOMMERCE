@@ -18,6 +18,9 @@ const {
   listProducts,
   productSearch,
   relatedProducts,
+  getToken,
+  processPayment,
+  orderStatus,
 } = require("../controllers/product.js");
 
 router.post("/product", requireSignin, isAdmin, formidable(), create);
@@ -31,5 +34,9 @@ router.get("/products-count", productCount);
 router.get("/list-products/:page", listProducts);
 router.get("/products/search/:keyword", productSearch);
 router.get("/related-products/:productId/:categoryId", relatedProducts);
+
+router.get("/braintree/token", getToken);
+router.post("/braintree/payment", requireSignin, processPayment);
+router.put("/order-status/:orderId", requireSignin, isAdmin, orderStatus);
 
 module.exports = router;
