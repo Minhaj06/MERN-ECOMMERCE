@@ -1,0 +1,52 @@
+.megaMenu {
+  position: absolute;
+  padding: 4rem 0;
+  width: 100%;
+  left: 0;
+  top: 110%;
+  background-color: var(--lightColor2);
+  border-top: 1px solid var(--light-color);
+  border-bottom: 1px solid var(--light-color);
+  max-height: 60rem;
+  overflow: auto;
+  -ms-scroll-chaining: none;
+  overscroll-behavior: contain;
+  text-align: left;
+  transition: all 0.3s ease-in-out;
+  z-index: 1020;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.megaMenu ul li a {
+  transition: 0.2s;
+}
+.megaMenu ul li a:hover {
+  color: var(--themeColor);
+}
+.navbar-nav li:hover .megaMenu {
+  opacity: 1;
+  visibility: visible;
+}
+
+.navbar-nav .nav-item .nav-link {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.megaMenuImg {
+  max-height: 35rem;
+  transition: 0.3s;
+  object-fit: cover;
+  object-position: top;
+}
+.megaMenuImg:hover {
+  transform: scale(1.1);
+}
+/* .megaMenu ul li {
+  font-size: 1.6rem;
+}
+
+.megaMenu ul li:hover a {
+  color: var(--text-color-2);
+} */ ;

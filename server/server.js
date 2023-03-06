@@ -21,8 +21,9 @@ readdirSync("./src/routes").map((r) => app.use("/api/v1", require(`./src/routes/
 const port = process.env.PORT || 8000;
 
 // Connect to DB and start server
+const OPTION = { user: process.env.DB_USER, pass: process.env.DB_PASS, autoIndex: true };
 mongoose
-  .connect(process.env.DATABASE)
+  .connect(process.env.DATABASE, OPTION)
   .then(() => {
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
