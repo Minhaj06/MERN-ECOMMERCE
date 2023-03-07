@@ -1,0 +1,12 @@
+.btnPrimary {
+  background-color: var(--themeColor);
+  color: var(--whiteColor);
+  font-size: 1.6rem;
+  border-radius: 0.4rem;
+  transition: all 0.3s ease 0s;
+}
+
+.btnPrimary:hover {
+  color: var(--whiteColor);
+  background-color: var(--themeColorSecondary);
+}

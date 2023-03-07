@@ -1,30 +1,23 @@
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import "./megaMenu.css";
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
-import { BsArrowRightShort } from "react-icons/bs";
 import { FiChevronDown } from "react-icons/fi";
-
-import megaMenuWomen from "../../assets/images/megaMenuWomen.jpg";
-
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../context/auth";
-import { useNavigate } from "react-router-dom";
+import MegaMenuWomen from "../megaMenu/MegaMuenuWomen";
+// import { useAuth } from "../../context/auth";
+// import { useNavigate } from "react-router-dom";
 
 const Menu = () => {
   // hooks
-  const [auth, setAuth] = useAuth();
-  const navigate = useNavigate();
+  // const [auth, setAuth] = useAuth();
+  // const navigate = useNavigate();
 
-  const logout = () => {
-    setAuth({ ...auth, user: null, token: "" });
-    localStorage.removeItem("auth");
-    navigate("/login");
-  };
+  // const logout = () => {
+  //   setAuth({ ...auth, user: null, token: "" });
+  //   localStorage.removeItem("auth");
+  //   navigate("/login");
+  // };
 
   return (
     <Navbar className="mb-4 bg-transparent" bg="light" expand="lg">
@@ -57,167 +50,7 @@ const Menu = () => {
                 <FiChevronDown size={20} />
               </NavLink>
               {/* mega menu */}
-              <div className="megaMenu">
-                <div className="container">
-                  <div className="row g-5">
-                    <div className="col-lg-9">
-                      <div className="row">
-                        <div className="col-lg-3">
-                          <div className="">
-                            <h5 className="text-uppercase fw-semibold text-color-2 mb-4">
-                              Women clothing
-                            </h5>
-
-                            <ul className="text-capitalize">
-                              <li className="mb-4">
-                                <NavLink to="">Dresses</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Coats & Jackets</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Tops & Tess</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Dresses</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Coats & Jackets</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Tops & Tess</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Dresses</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Tops & Tess</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Dresses</NavLink>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-
-                        <div className="col-lg-3">
-                          <div className="">
-                            <h5 className="text-uppercase fw-semibold text-color-2 mb-4">
-                              Jwelery
-                            </h5>
-
-                            <ul className="text-capitalize">
-                              <li className="mb-4">
-                                <NavLink to="">Accessories</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Bags & purses</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Rings</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Earrings</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Accessories</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Bags & purses</NavLink>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-
-                        <div className="col-lg-3">
-                          <div className="">
-                            <h5 className="text-uppercase fw-semibold text-color-2 mb-4">
-                              Beauty
-                            </h5>
-
-                            <ul className="text-capitalize">
-                              <li className="mb-4">
-                                <NavLink to="">Bath accessories</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Makeup & cosmetics</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Skin care</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Hair care</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Essential oils</NavLink>
-                              </li>
-                              <li className="mb-4">
-                                <NavLink to="">Facemask & coverrings</NavLink>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-
-                        <div className="col-lg-3">
-                          <div className="">
-                            <h5 className="text-uppercase fw-semibold text-color-2 mb-4">
-                              Top brands
-                            </h5>
-
-                            <ul className="text-capitalize">
-                              <li className="float-start w-50 mb-4">
-                                <NavLink to="">Nike</NavLink>
-                              </li>
-                              <li className="float-start w-50 mb-4">
-                                <NavLink to="">Louis vuitton</NavLink>
-                              </li>
-                              <li className="float-start w-50 mb-4">
-                                <NavLink to="">Hermes</NavLink>
-                              </li>
-                              <li className="float-start w-50 mb-4">
-                                <NavLink to="">Gucci</NavLink>
-                              </li>
-                              <li className="float-start w-50 mb-4">
-                                <NavLink to="">Zalando</NavLink>
-                              </li>
-                              <li className="float-start w-50 mb-4">
-                                <NavLink to="">Tiffany & Co.</NavLink>
-                              </li>
-                              <li className="float-start w-50 mb-4">
-                                <NavLink to="">Nike</NavLink>
-                              </li>
-                              <li className="float-start w-50 mb-4">
-                                <NavLink to="">Louis vuitton</NavLink>
-                              </li>
-                              <li className="float-start w-50 mb-4">
-                                <NavLink to="">Hermes</NavLink>
-                              </li>
-                              <li className="float-start w-50 mb-4">
-                                <NavLink to="">Gucci</NavLink>
-                              </li>
-                            </ul>
-                            <NavLink
-                              className="d-inline-block fw-semibold py-2 hoverable"
-                              to="/brands"
-                            >
-                              <span className="me-3">View all brands</span>
-                              <BsArrowRightShort size={22} />
-                            </NavLink>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-lg-3">
-                      <div className="overflow-hidden">
-                        <a href="#" className="d-block">
-                          <img className="w-100 megaMenuImg mb-4" src={megaMenuWomen} alt="" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <MegaMenuWomen />
             </li>
 
             <li className="nav-item">
