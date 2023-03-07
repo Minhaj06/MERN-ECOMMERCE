@@ -39,7 +39,7 @@ const Menu = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto gap-4 fs-15">
+          <Nav className="me-auto gap-4">
             <li className="nav-item">
               <NavLink className="nav-link" to="/" aria-current="page">
                 Home
@@ -237,7 +237,7 @@ const Menu = () => {
             <div className="topbar-icon-group me-20">
               <NavLink className="text-color-dark" to="/wishlist">
                 <div className="floating-text-icon d-inline-block position-relative">
-                  <AiOutlineHeart className="fs-3" />
+                  <AiOutlineHeart size={22} />
                   <span className="floating-num">0</span>
                 </div>
               </NavLink>
@@ -245,14 +245,14 @@ const Menu = () => {
             <div className="topbar-icon-group me-20">
               <NavLink className="text-color-dark" to="/cart">
                 <div className="floating-text-icon d-inline-block position-relative">
-                  <AiOutlineShoppingCart className="fs-3" />
+                  <AiOutlineShoppingCart size={22} />
                   <span className="floating-num">0</span>
                 </div>
               </NavLink>
             </div>
             <div className="totalAmount">
               <small className="fs-12 lightColor">Total</small>
-              <h5>$0.00</h5>
+              <h5 className="fs-14">$0.00</h5>
             </div>
           </div>
         </Navbar.Collapse>

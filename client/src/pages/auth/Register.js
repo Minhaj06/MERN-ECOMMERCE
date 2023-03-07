@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 function Register() {
   // state
-  const [name, setName] = useState("Minhaj Kobir");
-  const [email, setEmail] = useState("minhaj@gmail.com");
-  const [password, setPassword] = useState("Minhaj736#");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // hooks
   const [auth, setAuth] = useAuth();
@@ -19,7 +20,8 @@ function Register() {
     e.preventDefault();
     try {
       const { data } = await axios.post(`/register`, {
-        name,
+        firstName,
+        lastName,
         email,
         password,
       });
@@ -49,16 +51,25 @@ function Register() {
               <input
                 type="text"
                 className="form-control mb-4"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter first name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                autoFocus
+              />
+
+              <input
+                type="text"
+                className="form-control mb-4"
+                placeholder="Enter last name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 autoFocus
               />
 
               <input
                 type="email"
                 className="form-control mb-4"
-                placeholder="Email"
+                placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -66,7 +77,7 @@ function Register() {
               <input
                 type="password"
                 className="form-control mb-4"
-                placeholder="Password"
+                placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

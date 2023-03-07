@@ -87,13 +87,14 @@ button,
 .form-select {
   border: none;
   box-shadow: none;
+  font-size: 1.6rem;
 }
-button:focus,
+/* button:focus,
 .btn:focus,
 .form-control:focus {
   border: none;
   box-shadow: none;
-}
+} */
 
 a {
   text-decoration: none;
@@ -134,4 +135,8 @@ select {
 
 .navbar .nav-link {
   font-weight: 500;
+}
+
+.form-control {
+  font-size: 1.6rem;
 }

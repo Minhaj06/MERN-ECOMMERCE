@@ -48,9 +48,7 @@ const TopNav = () => {
                   aria-label="Default select example"
                   className="fs-14 themeColorSecondaryDark"
                 >
-                  <option value="bdt" selected>
-                    BDT
-                  </option>
+                  <option value="bdt">BDT</option>
                   <option value="usd">USD</option>
                   <option value="sa">SA</option>
                 </Form.Select>
@@ -60,9 +58,7 @@ const TopNav = () => {
                   aria-label="Default select example"
                   className="fs-14 themeColorSecondaryDark"
                 >
-                  <option value="english" selected>
-                    English
-                  </option>
+                  <option value="english">English</option>
                   <option value="japanese">Japanese</option>
                   <option value="arabic">Arabic</option>
                 </Form.Select>

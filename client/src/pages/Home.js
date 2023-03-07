@@ -2,7 +2,7 @@ import React from "react";
 import Jumbotron from "../components/cards/Jumbotron";
 import { useAuth } from "../context/auth";
 
-function Home() {
+const Home = () => {
   const [auth, setAuth] = useAuth();
 
   return (
@@ -13,6 +13,6 @@ function Home() {
       </div>
     </div>
   );
-}
+};
 
 export default Home;

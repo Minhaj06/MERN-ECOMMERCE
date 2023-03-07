@@ -57,7 +57,11 @@ exports.register = async (req, res) => {
       token,
     });
   } catch (err) {
+    console.log("===================================>>>>>>>>>>>>>>>>");
+    console.log("===================================>>>>>>>>>>>>>>>>");
     console.log(err);
+    console.log("======================================>>>>>>>>>");
+    console.log("======================================>>>>>>>>>");
     return res.status(400).json(err.message);
   }
 };
