@@ -20,7 +20,8 @@ exports.create = async (req, res) => {
     // console.log(req.fields);
     // console.log(req.files);
 
-    const { name, description, price, category, quantity, shipping } = req.fields;
+    const { name, description, price, category, subcategory, quantity, isFeatured, shipping } =
+      req.fields;
     console.log(name);
 
     const { photo } = req.files;
@@ -121,7 +122,8 @@ exports.update = async (req, res) => {
     // console.log(req.fields);
     // console.log(req.files);
 
-    const { name, description, price, category, quantity, shipping } = req.fields;
+    const { name, description, price, category, subcategory, quantity, isFeatured, shipping } =
+      req.fields;
 
     const { photo } = req.files;
     // console.log("PHOTO========>", photo);
@@ -243,6 +245,36 @@ exports.relatedProducts = async (req, res) => {
       .limit(3);
 
     res.json(related);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err.message);
+  }
+};
+
+exports.trendingProducts = async (req, res) => {
+  try {
+    const trendingProducts = await Product.find({})
+      .populate("category")
+      .select("-photo")
+      .limit(8)
+      .sort({ sold: -1 });
+
+    res.json(trendingProducts);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err.message);
+  }
+};
+
+exports.featuredProducts = async (req, res) => {
+  try {
+    const featuredProducts = await Product.find({ isFeatured: true })
+      .populate("category")
+      .select("-photo")
+      .limit(8)
+      .sort({ createdAt: -1 });
+
+    res.json(featuredProducts);
   } catch (err) {
     console.log(err);
     return res.status(400).json(err.message);

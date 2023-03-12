@@ -18,6 +18,8 @@ const {
   listProducts,
   productSearch,
   relatedProducts,
+  trendingProducts,
+  featuredProducts,
   getToken,
   processPayment,
   orderStatus,
@@ -34,6 +36,8 @@ router.get("/products-count", productCount);
 router.get("/list-products/:page", listProducts);
 router.get("/products/search/:keyword", productSearch);
 router.get("/related-products/:productId/:categoryId", relatedProducts);
+router.get("/trending-products", trendingProducts);
+router.get("/featured-products", featuredProducts);
 
 router.get("/braintree/token", getToken);
 router.post("/braintree/payment", requireSignin, processPayment);

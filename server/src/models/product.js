@@ -30,8 +30,18 @@ const productSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
+    subcategory: {
+      type: ObjectId,
+      ref: "Subcategory",
+    },
     quantity: {
       type: Number,
+    },
+    rating: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 5,
     },
     sold: {
       type: Number,
@@ -40,6 +50,10 @@ const productSchema = new mongoose.Schema(
     photo: {
       data: Buffer,
       contentType: String,
+    },
+    isFeatured: {
+      type: Boolean,
+      default: false,
     },
     shipping: {
       required: false,

@@ -61,7 +61,7 @@ const CategoryMenu = () => {
       </div>
 
       <div className="catMenuBody">
-        <ul class="list-group catMenuList rounded-0">
+        <ul class="list-group catMenuList rounded-0 text-capitalize">
           {categories.map((category) => (
             <li class="list-group-item px-4 py-12" key={category?._id}>
               {filteredSubcategories(category?._id).length > 0 ? (
@@ -98,7 +98,10 @@ const CategoryMenu = () => {
                       <ul className="pt-2 ps-20">
                         {filteredSubcategories(category?._id).map((subcategory) => (
                           <li key={subcategory?._id}>
-                            <NavLink className="d-block px-4 py-2" to="/category">
+                            <NavLink
+                              className="d-block hoverableOp px-4 py-2"
+                              to={`/category/subcategory/${subcategory?.slug}`}
+                            >
                               {subcategory.name}
                             </NavLink>
                           </li>
