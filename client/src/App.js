@@ -5,7 +5,7 @@ import TopNav from "./components/nav/TopNav";
 import Menu from "./components/nav/Menu";
 import TestMenu from "./components/nav/TestMenu";
 
-import { SearchNav } from "./components/nav/SearchNav";
+import SearchNav from "./components/nav/SearchNav";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";

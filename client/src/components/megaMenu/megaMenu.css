@@ -24,7 +24,7 @@
 .megaMenu ul li a:hover {
   color: var(--themeColor);
 }
-.navbar-nav li:hover .megaMenu {
+.megaMenuLink:hover .megaMenu {
   opacity: 1;
   visibility: visible;
 }

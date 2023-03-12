@@ -1,11 +1,12 @@
 const Category = require("../models/category.js");
+const Subcategory = require("../models/subcategory");
 const Product = require("../models/product.js");
 
 const slugify = require("slugify");
 
 exports.create = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, icon } = req.body;
     if (!name.trim()) {
       return res.json({ error: "Name is required" });
     }
@@ -15,7 +16,7 @@ exports.create = async (req, res) => {
       return res.json({ error: `${name} already existis` });
     }
 
-    const category = await new Category({ name, slug: slugify(name) }).save();
+    const category = await new Category({ name, slug: slugify(name), icon }).save();
     res.status(201).json(category);
   } catch (err) {
     console.log(err);
@@ -45,7 +46,11 @@ exports.update = async (req, res) => {
 
 exports.remove = async (req, res) => {
   try {
-    const removed = await Category.findByIdAndDelete(req.params.categoryId);
+    const { categoryId } = req.params;
+    const removed = await Category.findByIdAndDelete(categoryId);
+    // Remove subcategory
+    await Subcategory.deleteMany({ category: categoryId });
+
     res.json(removed);
   } catch (err) {
     console.log(err);

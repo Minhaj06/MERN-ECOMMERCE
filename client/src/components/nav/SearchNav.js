@@ -1,16 +1,17 @@
 import React from "react";
 import { BsSearch } from "react-icons/bs";
+import CategoryMenu from "../CategoryMenu";
 
-export const SearchNav = () => {
+const SearchNav = () => {
   return (
-    <div className="bgThemeSecondaryDark py-4 text-white">
+    <div className="bgThemeSecondaryDark pt-20 text-white">
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <div className="d-flex justify-content-between">
-              <div className="categoryMenu"></div>
+            <div className="d-flex justify-content-end align-items-end position-relative">
+              <CategoryMenu />
 
-              <div className="searchBox">
+              <div className="searchBox mb-20">
                 <div className="input-group">
                   <span className="input-group-text bg-white border-0 px-4">
                     <BsSearch size={15} />
@@ -33,3 +34,5 @@ export const SearchNav = () => {
     </div>
   );
 };
+
+export default SearchNav;

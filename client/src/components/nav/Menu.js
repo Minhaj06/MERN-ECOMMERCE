@@ -44,7 +44,7 @@ const Menu = () => {
               </NavLink>
             </li>
 
-            <li className="nav-item ms-0">
+            <li className="nav-item ms-0 megaMenuLink">
               <NavLink className="nav-link" to="category/women">
                 Women
                 <FiChevronDown size={20} />

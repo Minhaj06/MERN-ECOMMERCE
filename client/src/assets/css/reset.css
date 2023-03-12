@@ -113,6 +113,14 @@ a:hover {
   color: var(--themeColor) !important;
 }
 
+.hoverableOp {
+  transition: 0.2s;
+}
+
+.hoverableOp:hover {
+  opacity: 0.75;
+}
+
 img {
   max-width: 100%;
   height: auto;
