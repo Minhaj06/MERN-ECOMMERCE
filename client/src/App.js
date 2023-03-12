@@ -3,7 +3,7 @@ import { Toaster } from "react-hot-toast";
 
 import TopNav from "./components/nav/TopNav";
 import Menu from "./components/nav/Menu";
-import TestMenu from "./components/nav/TestMenu";
+// import TestMenu from "./components/nav/TestMenu";
 
 import SearchNav from "./components/nav/SearchNav";
 import Home from "./pages/Home";
@@ -23,7 +23,7 @@ function App() {
       <TopNav />
       <Menu />
       <SearchNav />
-      <TestMenu />
+      {/* <TestMenu /> */}
       <Toaster />
       <Routes>
         <Route path="/" element={<Home />}></Route>

@@ -48,7 +48,7 @@ const CategoryMenu = () => {
   return (
     <div
       className="categoryMenu allDepartments position-absolute top-0 start-0"
-      style={{ width: "30rem" }}
+      style={{ width: "30rem", zIndex: 1000 }}
     >
       <div className="catMenuHeader bgTheme px-4 py-3 rounded-top-3 d-flex justify-content-between align-items-center">
         <div>
