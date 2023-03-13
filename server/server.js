@@ -4,9 +4,10 @@ const express = require("express");
 const app = express();
 const helmet = require("helmet");
 const mongoose = require("mongoose");
-require("dotenv").config();
 const morgan = require("morgan");
 const cors = require("cors");
+
+require("dotenv").config();
 
 // Middlewares
 app.use(cors());
