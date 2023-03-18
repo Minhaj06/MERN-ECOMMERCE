@@ -21,9 +21,9 @@ function App() {
   return (
     <BrowserRouter>
       <TopNav />
+      {/* <TestMenu /> */}
       <Menu />
       <SearchNav />
-      {/* <TestMenu /> */}
       <Toaster />
       <Routes>
         <Route path="/" element={<Home />}></Route>
@@ -33,6 +33,9 @@ function App() {
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<UserDashboard />} />
           <Route path="secret" element={<Secret />} />
+          <Route path="profile" element={""} />
+          <Route path="orders" element={""} />
+          <Route path="transactions" element={""} />
         </Route>
 
         <Route path="/dashboard" element={<AdminRoute />}>

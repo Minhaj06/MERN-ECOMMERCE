@@ -101,6 +101,8 @@ exports.photo = async (req, res) => {
       res.set("Content-Type", product.photo.contentType);
       res.set("Cross-Origin-Resource-Policy", "cross-origin"); // add this line
       return res.send(product.photo.data);
+    } else {
+      return res.status(404).json("Photo not found");
     }
   } catch (err) {
     console.log(err);

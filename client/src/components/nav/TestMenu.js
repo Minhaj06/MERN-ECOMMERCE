@@ -15,10 +15,10 @@ function TestMenu() {
   };
 
   return (
-    <div className="container mt-5 bg-dark">
+    <div className="container mt-5 bg-dark text-white">
       <ul className="nav d-flex justify-content-between shadow mb-4">
         <li className="nav-item ">
-          <NavLink className="nav-link" to="/" aria-current="page">
+          <NavLink className="nav-link text-white" to="/" aria-current="page">
             Home
           </NavLink>
         </li>
@@ -26,17 +26,17 @@ function TestMenu() {
         {!auth?.user ? (
           <>
             <li className="nav-item ">
-              <NavLink className="nav-link" to="dashboard/secret">
+              <NavLink className="nav-link text-white" to="dashboard/secret">
                 Secret
               </NavLink>
             </li>
             <li className="nav-item ">
-              <NavLink className="nav-link" to="/login">
+              <NavLink className="nav-link text-white" to="/login">
                 Login
               </NavLink>
             </li>
             <li className="nav-item ">
-              <NavLink className="nav-link" to="/register">
+              <NavLink className="nav-link text-white" to="/register">
                 Register
               </NavLink>
             </li>
@@ -45,7 +45,7 @@ function TestMenu() {
           <div className="dropdown">
             <li className="nav-item ">
               <NavLink
-                className="nav-link dropdown-toggle"
+                className="nav-link text-white dropdown-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
               >
@@ -55,14 +55,14 @@ function TestMenu() {
               <ul className="dropdown-menu">
                 <li className="nav-item ">
                   <NavLink
-                    className="nav-link"
+                    className="nav-link text-white"
                     to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}
                   >
                     Dashboard
                   </NavLink>
                 </li>
                 <li className="nav-item ">
-                  <NavLink onClick={logout} className="nav-link" type="button">
+                  <NavLink onClick={logout} className="nav-link text-white" type="button">
                     Logout
                   </NavLink>
                 </li>

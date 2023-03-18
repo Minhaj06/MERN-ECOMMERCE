@@ -132,3 +132,14 @@ select {
 .form-control {
   font-size: 1.6rem;
 }
+/* .dropdown-item:hover {
+  color: var(--li)
+} */
+.dropdown-item.active,
+.dropdown-item:active {
+  color: var(--whiteColor);
+  background-color: var(--themeColorSecondaryDark);
+}
+.removeToggleIcon::after {
+  display: none !important;
+}

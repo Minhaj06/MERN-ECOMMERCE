@@ -12,6 +12,7 @@ const CategoryMenu = () => {
   const [subcategories, setSubcategories] = useState([]);
 
   const [activeCollapse, setActiveCollapse] = useState(null);
+  const [openCatMenu, setOpenCatMenu] = useState(true);
 
   const handleCollapse = (categoryId) => {
     setActiveCollapse(activeCollapse === categoryId ? null : categoryId);
@@ -47,30 +48,82 @@ const CategoryMenu = () => {
 
   return (
     <div
-      className="categoryMenu allDepartments position-absolute top-0 start-0"
+      className="categoryMenu allDepartments position-absolute top-0 start-0 d-none d-lg-block"
       style={{ width: "30rem", zIndex: 1000 }}
     >
-      <div className="catMenuHeader bgTheme px-4 py-3 rounded-top-3 d-flex justify-content-between align-items-center">
+      <div
+        className="catMenuHeader bgTheme px-4 py-3 rounded-top-3 d-flex justify-content-between align-items-center"
+        style={{ borderBottom: "1px solid var(--themeColor)" }}
+      >
         <div>
           <h4 className="fs-16 fw-medium">All Departments</h4>
           <p className="fs-13 mb-0">Total 1022 Products</p>
         </div>
         <div>
-          <HiOutlineBars3BottomRight size={28} type="button" />
+          <HiOutlineBars3BottomRight
+            size={28}
+            type="button"
+            onClick={() => setOpenCatMenu(!openCatMenu)}
+            aria-expanded={openCatMenu}
+          />
         </div>
       </div>
 
-      <div className="catMenuBody">
-        <ul class="list-group catMenuList rounded-0 text-capitalize">
-          {categories.map((category) => (
-            <li class="list-group-item px-4 py-12" key={category?._id}>
-              {filteredSubcategories(category?._id).length > 0 ? (
-                <>
+      <Collapse in={openCatMenu}>
+        <div className="catMenuBody">
+          <ul class="list-group catMenuList rounded-0 text-capitalize">
+            {categories.map((category) => (
+              <li class="list-group-item px-4 py-12" key={category?._id}>
+                {filteredSubcategories(category?._id).length > 0 ? (
+                  <>
+                    <NavLink
+                      className="d-block hoverableOp d-flex justify-content-between align-items-center blackColor"
+                      to="#"
+                      onClick={() => handleCollapse(category?._id)}
+                      aria-expanded={activeCollapse === category?._id}
+                    >
+                      <span className="d-flex align-items-center">
+                        {category?.icon ? (
+                          <img
+                            className="me-3"
+                            style={{ width: "1.6rem" }}
+                            src={category.icon}
+                            alt=""
+                          />
+                        ) : (
+                          <CategoryIcon style={{ width: "2.1rem" }} className="me-2" />
+                        )}
+
+                        {category?.name}
+                      </span>
+                      {activeCollapse === category?._id ? (
+                        <BiChevronDown size={22} />
+                      ) : (
+                        <BiChevronRight size={22} />
+                      )}
+                    </NavLink>
+
+                    <Collapse in={activeCollapse === category?._id}>
+                      <div>
+                        <ul className="pt-2 ps-20">
+                          {filteredSubcategories(category?._id).map((subcategory) => (
+                            <li key={subcategory?._id}>
+                              <NavLink
+                                className="d-block hoverableOp px-4 py-2"
+                                to={`/category/subcategory/${subcategory?.slug}`}
+                              >
+                                {subcategory.name}
+                              </NavLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </Collapse>
+                  </>
+                ) : (
                   <NavLink
                     className="d-block hoverableOp d-flex justify-content-between align-items-center blackColor"
-                    to="#"
-                    onClick={() => handleCollapse(category?._id)}
-                    aria-expanded={activeCollapse === category?._id}
+                    to={`/category/${category?.slug}`}
                   >
                     <span className="d-flex align-items-center">
                       {category?.icon ? (
@@ -86,55 +139,13 @@ const CategoryMenu = () => {
 
                       {category?.name}
                     </span>
-                    {activeCollapse === category?._id ? (
-                      <BiChevronDown size={22} />
-                    ) : (
-                      <BiChevronRight size={22} />
-                    )}
                   </NavLink>
-
-                  <Collapse in={activeCollapse === category?._id}>
-                    <div>
-                      <ul className="pt-2 ps-20">
-                        {filteredSubcategories(category?._id).map((subcategory) => (
-                          <li key={subcategory?._id}>
-                            <NavLink
-                              className="d-block hoverableOp px-4 py-2"
-                              to={`/category/subcategory/${subcategory?.slug}`}
-                            >
-                              {subcategory.name}
-                            </NavLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </Collapse>
-                </>
-              ) : (
-                <NavLink
-                  className="d-block hoverableOp d-flex justify-content-between align-items-center blackColor"
-                  to={`/category/${category?.slug}`}
-                >
-                  <span className="d-flex align-items-center">
-                    {category?.icon ? (
-                      <img
-                        className="me-3"
-                        style={{ width: "1.6rem" }}
-                        src={category.icon}
-                        alt=""
-                      />
-                    ) : (
-                      <CategoryIcon style={{ width: "2.1rem" }} className="me-2" />
-                    )}
-
-                    {category?.name}
-                  </span>
-                </NavLink>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Collapse>
     </div>
   );
 };
