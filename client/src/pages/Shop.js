@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "../components/cards/productCard/ProductCard";
 import { RiLayoutGridFill } from "react-icons/ri";
-import { FaList } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
+import Form from "react-bootstrap/Form";
+
 const Shop = () => {
   const [products, setProducts] = useState([]);
 
@@ -34,11 +36,42 @@ const Shop = () => {
             <h2 className="themeColor">Filter Area</h2>
           </div>
           <div className="col-lg-9">
-            <div className="row g-4 g-xl-5">
-              <div className="col-12">
-                <span type="button" onClick={() => toggleView()}>
-                  {isGridView ? <FaList size={28} /> : <RiLayoutGridFill size={28} />}
-                </span>
+            <div className="row g-4">
+              <div className="col-12 mb-4">
+                <div className="bgThemeSecondaryDark text-white p-4 rounded shadow">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <button
+                        className="fs-3 fw-light bg-transparent whiteColor shadow-none border-0 hoverableOp"
+                        onClick={() => toggleView()}
+                      >
+                        {isGridView ? (
+                          <>
+                            <FaBars size={20} /> List View
+                          </>
+                        ) : (
+                          <>
+                            <RiLayoutGridFill size={20} /> Grid View
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    <div className="d-flex align-items-center gap-3">
+                      <span className="text-nowrap fw-light">Sort by</span>
+                      <Form.Select className="fs-4">
+                        <option value="">Date, new to old</option>
+                        <option value="">Date, old to new</option>
+                        <option value="">Featured</option>
+                        <option value="">Best selling</option>
+                        <option value="">Price, low to hight</option>
+                        <option value="">Price, hight to low</option>
+                        <option value="">Alphabetically, A-Z</option>
+                        <option value="">Alphabetically, Z-A</option>
+                      </Form.Select>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {isGridView

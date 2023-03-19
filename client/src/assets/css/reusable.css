@@ -578,7 +578,7 @@
   transition: 0.2s;
 }
 .hoverSecondary:hover {
-  color: var(--themeColorSecondary);
+  color: var(--themeColorSecondary) !important;
 }
 
 .hoverLine {
