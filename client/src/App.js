@@ -9,6 +9,7 @@ import SearchNav from "./components/nav/SearchNav";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import Shop from "./pages/Shop";
 import PrivateRoute from "./components/routes/PrivateRoute";
 import UserDashboard from "./pages/user/Dashboard";
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -29,6 +30,7 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
+        <Route path="/shop" element={<Shop />}></Route>
 
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<UserDashboard />} />

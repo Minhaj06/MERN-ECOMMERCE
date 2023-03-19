@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { HiOutlineBars3BottomRight } from "react-icons/hi2";
 import { BiChevronRight, BiChevronDown } from "react-icons/bi";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Collapse from "react-bootstrap/Collapse";
 import axios from "axios";
 
@@ -12,11 +12,19 @@ const CategoryMenu = () => {
   const [subcategories, setSubcategories] = useState([]);
 
   const [activeCollapse, setActiveCollapse] = useState(null);
-  const [openCatMenu, setOpenCatMenu] = useState(true);
-
   const handleCollapse = (categoryId) => {
     setActiveCollapse(activeCollapse === categoryId ? null : categoryId);
   };
+
+  const [openCatMenu, setOpenCatMenu] = useState(false);
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setOpenCatMenu(true);
+    } else {
+      setOpenCatMenu(false);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     loadCategories();

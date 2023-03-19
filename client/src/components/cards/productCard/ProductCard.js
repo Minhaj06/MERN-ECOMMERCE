@@ -9,7 +9,7 @@ import productPlaceholderImg from "../../../assets/images/productPlaceholder.png
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-const ProductCard = ({ product, isTrending }) => {
+const ProductCard = ({ product, isTrending, listView }) => {
   const handleBeforeLoadImg = () => {
     return productPlaceholderImg;
   };
@@ -27,38 +27,34 @@ const ProductCard = ({ product, isTrending }) => {
   return (
     <div className={`${isTrending ? "trendingProductCard" : ""} productCard h-100`}>
       <div className={`${isTrending ? "row h-100" : ""}`}>
-        <div className={`${isTrending ? "col-4" : "mb-20"} productImg overflow-hidden`}>
+        <div
+          className={`${isTrending ? "col-4" : "mb-20"} ${
+            listView ? "pe-sm-4" : ""
+          } productImg overflow-hidden`}
+        >
           <div className="overflow-hidden">
             <Link to={`/product/${product?.slug}`}>
               <LazyLoadImage
                 src={`${process.env.REACT_APP_API}/product/photo/${product?._id}`}
-                // src={img == "Photo not found" ? productPlaceholderImg : img}
-                // onerror={`this.onerror=null; this.src=${prod}`}
                 onError={handleImgError}
                 alt={product?.name}
                 effect="blur"
-                // placeholderSrc={productPlaceholderImg}
                 beforeLoad={handleBeforeLoadImg}
               />
             </Link>
           </div>
         </div>
-        <div className={`${isTrending ? "col-8" : ""} productDetails`}>
+        <div
+          className={`${isTrending ? "col-8" : ""} ${
+            listView ? "ps-sm-5" : ""
+          } productDetails`}
+        >
           <h4 className="fs-16 fw-normal text-capitalize themeColorDark mb-3">
             <Link className="hoverLine hoverSecondary" to={`/product/${445}`}>
               {product?.name}
             </Link>
           </h4>
           <div className="mb-4">
-            {/* {(() => {
-                                const startRating = [];
-                                for (let i = 0; i < product?.rating; i++) {
-                                  startRating.push(
-                                    <AiFillStar key={i} style={{ color: "#FF9529" }} />
-                                  );
-                                }
-                                return startRating;
-                              })()} */}
             <AiFillStar style={{ color: "#FDCC0D" }} />
             <AiFillStar style={{ color: "#FDCC0D" }} />
             <AiFillStar style={{ color: "#FDCC0D" }} />
@@ -94,8 +90,16 @@ const ProductCard = ({ product, isTrending }) => {
                   : "Out of stock"
                 : ""
             }`}
-            {/* Stock: 14 left */}
           </p>
+          {listView ? (
+            <p className="mt-4">
+              {product?.description.length > 200
+                ? product?.description.substring(0, 200) + "..."
+                : product?.description}
+            </p>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
