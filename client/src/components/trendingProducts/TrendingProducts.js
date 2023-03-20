@@ -36,7 +36,7 @@ const TrendingProducts = () => {
                 <div className="row g-5">
                   {trendingProducts?.map((product) => (
                     <div className="col-sm-6" key={product?._id}>
-                      <ProductCard product={product} isTrending={true} listView={true} />
+                      <ProductCard product={product} isTrending={true} />
                     </div>
                   ))}
                 </div>
