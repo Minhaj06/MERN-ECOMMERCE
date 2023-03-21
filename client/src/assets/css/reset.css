@@ -114,6 +114,7 @@ select {
   box-shadow: none !important;
 }
 
+/* Bootstrap overriding */
 .nav-link {
   transition: 0.2s;
   color: var(--themeColorSecondaryDark);
@@ -135,11 +136,15 @@ select {
 /* .dropdown-item:hover {
   color: var(--li)
 } */
-.dropdown-item.active,
-.dropdown-item:active {
-  color: var(--whiteColor);
-  background-color: var(--themeColorSecondaryDark);
-}
+
 .removeToggleIcon::after {
   display: none !important;
+}
+.form-check-input:checked {
+  background-color: var(--themeColor);
+  border-color: var(--themeColor);
+}
+.form-check-input:focus {
+  border-color: var(--themeColor);
+  box-shadow: 0 0 0 0.25rem #ff6b6b75;
 }

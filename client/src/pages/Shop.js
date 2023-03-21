@@ -69,6 +69,49 @@ const Shop = () => {
     }
   };
 
+  // Products sort
+  // Sort by date
+  //   const sortByDateOldToNew = () => {
+  //     const sortedProducts = [...products].sort(
+  //       (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+  //     );
+  //     console.log(products);
+  //     console.log([...products]);
+  //     setProducts(sortedProducts);
+  //   };
+  const sortByAlphabatically = () => {
+    const sortedProducts = products.sort((a, b) => a.name.localeCompare(b.name));
+    console.log(sortedProducts);
+  };
+
+  const sortProducts = (event) => {
+    const value = event.target.value;
+    if (value === "dateNewToOld") {
+      const sortedProducts = [...products].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setProducts(sortedProducts);
+    } else if (value === "dateOldToNew") {
+      const sortedProducts = [...products].sort(
+        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+      );
+      setProducts(sortedProducts);
+    } else if (value === "featured") {
+    } else if (value === "bestSelling") {
+    } else if (value === "priceLowToHight") {
+      const sortedProducts = [...products].sort((a, b) => a.price - b.price);
+      setProducts(sortedProducts);
+    } else if (value === "priceHighToLow") {
+      const sortedProducts = [...products].sort((a, b) => b.price - a.price);
+      setProducts(sortedProducts);
+    } else if (value === "alphabetically_A_Z") {
+      const sortedProducts = [...products].sort((a, b) => a.name.localeCompare(b.name));
+      setProducts(sortedProducts);
+    } else if (value === "alphabetically_Z_A") {
+      const sortedProducts = [...products].sort((a, b) => b.name.localeCompare(a.name));
+      setProducts(sortedProducts);
+    }
+  };
   return (
     <div className="my-50">
       <div className="container">
@@ -189,15 +232,15 @@ const Shop = () => {
 
                     <div className="d-flex align-items-center gap-3">
                       <span className="text-nowrap">Sort by</span>
-                      <Form.Select className="fs-4">
-                        <option value="">Date, new to old</option>
-                        <option value="">Date, old to new</option>
-                        <option value="">Featured</option>
-                        <option value="">Best selling</option>
-                        <option value="">Price, low to hight</option>
-                        <option value="">Price, hight to low</option>
-                        <option value="">Alphabetically, A-Z</option>
-                        <option value="">Alphabetically, Z-A</option>
+                      <Form.Select className="fs-4" onChange={sortProducts}>
+                        <option value="dateNewToOld">Date, new to old</option>
+                        <option value="dateOldToNew">Date, old to new</option>
+                        <option value="featured">Featured</option>
+                        <option value="bestSelling">Best selling</option>
+                        <option value="priceLowToHight">Price, low to hight</option>
+                        <option value="priceHighToLow">Price, hight to low</option>
+                        <option value="alphabetically_A_Z">Alphabetically, A-Z</option>
+                        <option value="alphabetically_Z_A">Alphabetically, Z-A</option>
                       </Form.Select>
                     </div>
                   </div>
