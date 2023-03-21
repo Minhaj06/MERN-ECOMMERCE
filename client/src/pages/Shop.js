@@ -97,7 +97,12 @@ const Shop = () => {
       );
       setProducts(sortedProducts);
     } else if (value === "featured") {
+      const sortedProducts = [...products].sort((a, b) => b.isFeatured - a.isFeatured);
+      setProducts(sortedProducts);
+      console.log(sortedProducts.map((item) => item.isFeatured));
     } else if (value === "bestSelling") {
+      const sortedProducts = [...products].sort((a, b) => b.sold - a.sold);
+      setProducts(sortedProducts);
     } else if (value === "priceLowToHight") {
       const sortedProducts = [...products].sort((a, b) => a.price - b.price);
       setProducts(sortedProducts);
