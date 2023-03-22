@@ -93,8 +93,8 @@ const ProductCard = ({ product, isTrending, listView }) => {
           </p>
           {listView ? (
             <p className="mt-4">
-              {product?.description.length > 200
-                ? product?.description.substring(0, 200) + "..."
+              {product?.description.length > 250
+                ? product?.description.substring(0, 250) + "..."
                 : product?.description}
             </p>
           ) : (

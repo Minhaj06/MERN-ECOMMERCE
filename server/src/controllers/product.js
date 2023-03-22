@@ -174,11 +174,11 @@ exports.update = async (req, res) => {
 
 exports.filteredProducts = async (req, res) => {
   try {
-    const { checked, radio } = req.body;
+    const { checked } = req.body;
 
     let args = {};
     if (checked.length > 0) args.category = checked;
-    if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
+    // if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
     console.log("args ==> ", args);
 
     const products = await Product.find(args);
