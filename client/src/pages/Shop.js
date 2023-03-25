@@ -8,10 +8,15 @@ import { HiOutlineChevronRight, HiOutlineChevronDown } from "react-icons/hi";
 import Form from "react-bootstrap/Form";
 import NoProductImg from "../assets/images/noData.png";
 import { ReactComponent as CategoryIcon } from "../assets/icons/categoryIcon.svg";
-
 import { Collapse } from "react-bootstrap";
-import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
-import RangeSlider from "react-bootstrap-range-slider";
+
+import { Slider } from "antd";
+const onChange = (value) => {
+  console.log("onChange: ", value);
+};
+const onAfterChange = (value) => {
+  console.log("onAfterChange: ", value);
+};
 
 const Shop = () => {
   const [categories, setCategories] = useState([]);
@@ -21,6 +26,7 @@ const Shop = () => {
   // Filtered Products
   const [categoryChecked, setCategoryChecked] = useState([]);
   const [subcategoryChecked, setSubcategoryChecked] = useState([]);
+  const [priceRange, setPriceRange] = useState(0);
 
   // Collapse Expand
   const [isGridView, setIsGridView] = useState(true);
@@ -289,6 +295,15 @@ const Shop = () => {
                     ))}
                   </ul>
                 </Collapse>
+              </div>
+              <div className="priceFilterArea">
+                <Slider
+                  range
+                  step={10}
+                  defaultValue={[20, 50]}
+                  onChange={onChange}
+                  onAfterChange={onAfterChange}
+                />
               </div>
             </div>
           </div>
