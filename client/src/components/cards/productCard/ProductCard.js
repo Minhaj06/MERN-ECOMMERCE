@@ -49,7 +49,11 @@ const ProductCard = ({ product, isTrending, listView }) => {
             listView ? "ps-sm-5" : ""
           } productDetails`}
         >
-          <h4 className="fs-16 fw-normal text-capitalize themeColorDark mb-3">
+          <h4
+            className={`${isTrending ? "fs-16" : "fs-18"} ${
+              listView ? "fs-18" : ""
+            } fw-normal text-capitalize themeColorDark mb-3`}
+          >
             <Link className="hoverLine hoverSecondary" to={`/product/${product?.slug}`}>
               {product?.name}
             </Link>

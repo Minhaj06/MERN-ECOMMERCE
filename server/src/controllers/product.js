@@ -174,16 +174,16 @@ exports.update = async (req, res) => {
 
 exports.filteredProducts = async (req, res) => {
   try {
-    const { categoryChecked, subcategoryChecked } = req.body;
+    const { categoryChecked, subcategoryChecked, priceRange } = req.body;
 
     let args = {};
     if (categoryChecked.length > 0) args.category = categoryChecked;
     if (subcategoryChecked.length > 0) args.subcategory = subcategoryChecked;
-    // if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
-    console.log("args ==> ", args);
+    if (priceRange.length) args.price = { $gte: priceRange[0], $lte: priceRange[1] };
+    // console.log("args ==> ", args);
 
     const products = await Product.find(args);
-    console.log("Filtered products query ==> ", products.length);
+    // console.log("Filtered products query ==> ", products.length);
     res.json(products);
     return;
   } catch (err) {

@@ -11,12 +11,9 @@ import { ReactComponent as CategoryIcon } from "../assets/icons/categoryIcon.svg
 import { Collapse } from "react-bootstrap";
 
 import { Slider } from "antd";
-const onChange = (value) => {
-  console.log("onChange: ", value);
-};
-const onAfterChange = (value) => {
-  console.log("onAfterChange: ", value);
-};
+// const onChange = (value) => {
+//   console.log("onChange: ", value);
+// };
 
 const Shop = () => {
   const [categories, setCategories] = useState([]);
@@ -34,7 +31,7 @@ const Shop = () => {
   const [toggleFilterMenu, setToggleFilterMenu] = useState(["categoryFilter"]);
 
   useEffect(() => {
-    if (!categoryChecked.length) loadProducts();
+    if (!categoryChecked.length || !priceRange.length) loadProducts();
   }, []);
 
   useEffect(() => {
@@ -43,6 +40,9 @@ const Shop = () => {
   useEffect(() => {
     if (subcategoryChecked.length) loadFilteredProducts();
   }, [subcategoryChecked]);
+  useEffect(() => {
+    if (priceRange.length) loadFilteredProducts();
+  }, [priceRange]);
 
   const loadProducts = async () => {
     try {
@@ -58,9 +58,9 @@ const Shop = () => {
       const { data } = await axios.post("/filtered-products", {
         categoryChecked,
         subcategoryChecked,
+        priceRange,
       });
       setProducts(data);
-      console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -298,11 +298,11 @@ const Shop = () => {
               </div>
               <div className="priceFilterArea">
                 <Slider
-                  range
-                  step={10}
-                  defaultValue={[20, 50]}
-                  onChange={onChange}
-                  onAfterChange={onAfterChange}
+                  range={{ draggableTrack: true }}
+                  defaultValue={[100, 40000]}
+                  min={100}
+                  max={150000}
+                  onChange={(newPriceRange) => setPriceRange(newPriceRange)}
                 />
               </div>
             </div>
