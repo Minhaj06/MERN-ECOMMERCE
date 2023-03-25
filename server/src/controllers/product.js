@@ -174,10 +174,11 @@ exports.update = async (req, res) => {
 
 exports.filteredProducts = async (req, res) => {
   try {
-    const { checked } = req.body;
+    const { categoryChecked, subcategoryChecked } = req.body;
 
     let args = {};
-    if (checked.length > 0) args.category = checked;
+    if (categoryChecked.length > 0) args.category = categoryChecked;
+    if (subcategoryChecked.length > 0) args.subcategory = subcategoryChecked;
     // if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
     console.log("args ==> ", args);
 
