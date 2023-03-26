@@ -182,7 +182,7 @@ exports.filteredProducts = async (req, res) => {
     if (priceRange.length) args.price = { $gte: priceRange[0], $lte: priceRange[1] };
     // console.log("args ==> ", args);
 
-    const products = await Product.find(args);
+    const products = await Product.find(args).select("-photo");
     // console.log("Filtered products query ==> ", products.length);
     res.json(products);
     return;
@@ -204,7 +204,7 @@ exports.productCount = async (req, res) => {
 
 exports.listProducts = async (req, res) => {
   try {
-    const perPage = 6;
+    const perPage = 8;
     const page = req.params.page ? req.params.page : 1;
 
     const products = await Product.find({})

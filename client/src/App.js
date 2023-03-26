@@ -18,7 +18,6 @@ import PageNotFouond from "./pages/PageNotFouond";
 import Secret from "./pages/Secret";
 import AdminRoute from "./components/routes/AdminRoute";
 import AdminCategory from "./pages/admin/Category";
-import FullScreenLoader from "./components/FullScreenLoader";
 
 function App() {
   return (

@@ -1,4 +1,4 @@
-.custom-slider .ant-slider {
+/* .custom-slider .ant-slider {
   height: 40px;
 }
 
@@ -15,6 +15,10 @@
   height: 24px;
   width: 8px;
   margin-top: 2px !important;
+} */
+
+.custom-slider .ant-slider-track {
+  background-color: var(--themeColor) !important;
 }
 .custom-slider .ant-slider-handle::after {
   box-shadow: 0 0 0 3px #ff6b6b80 !important;

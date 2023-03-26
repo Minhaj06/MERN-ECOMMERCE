@@ -19,3 +19,33 @@
 .productCard:hover img {
   transform: scale(1.1);
 }
+
+.productCard .productIcon {
+  width: 2.4rem;
+  height: 2.4rem;
+  background-color: #0000004a;
+  color: var(--whiteColor);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.productCard:hover .productIcon {
+  background-color: var(--themeColorSecondaryDark);
+}
+
+.productCard .productIcon:hover {
+  background-color: var(--themeColor);
+}
+
+.productCard .productIcon:last-child {
+  position: absolute;
+  right: -5rem;
+}
+
+.productCard:hover .productIcon:last-child {
+  right: 0;
+}

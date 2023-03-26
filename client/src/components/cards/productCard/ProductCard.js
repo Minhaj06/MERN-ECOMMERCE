@@ -1,15 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AiFillStar } from "react-icons/ai";
+import toast from "react-hot-toast";
+import { AiFillStar, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import "./productCard.css";
-// import productPlaceholderImg from "../../../assets/images/productPlaceholder.avif";
-// import { ReactComponent as CategoryIcon } from "../../../assets/images/productPlaceholder.svg";
+
 import productPlaceholderImg from "../../../assets/images/productPlaceholder.png";
 
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useCart } from "../../../context/cart";
 
 const ProductCard = ({ product, isTrending, listView }) => {
+  const [cart, setCart] = useCart();
+
   const handleBeforeLoadImg = () => {
     return productPlaceholderImg;
   };
@@ -32,7 +35,7 @@ const ProductCard = ({ product, isTrending, listView }) => {
             listView ? "pe-sm-4" : ""
           } productImg overflow-hidden`}
         >
-          <div className="overflow-hidden">
+          <div className="overflow-hidden position-relative">
             <Link to={`/product/${product?.slug}`}>
               <LazyLoadImage
                 src={`${process.env.REACT_APP_API}/product/photo/${product?._id}`}
@@ -42,6 +45,22 @@ const ProductCard = ({ product, isTrending, listView }) => {
                 beforeLoad={handleBeforeLoadImg}
               />
             </Link>
+            <div className="position-absolute top-0 end-0 mt-3 me-3">
+              <span className="productIcon mb-2" title="Add to wishlist">
+                <AiOutlineHeart size={17} />
+              </span>
+              <span
+                className="productIcon"
+                title="Add to cart"
+                onClick={() => {
+                  setCart([...cart, product]);
+                  localStorage.setItem("cart", JSON.stringify([...cart, product]));
+                  toast.success("Added to cart");
+                }}
+              >
+                <AiOutlineShoppingCart size={16} />
+              </span>
+            </div>
           </div>
         </div>
         <div
@@ -96,7 +115,7 @@ const ProductCard = ({ product, isTrending, listView }) => {
             }`}
           </p>
           {listView ? (
-            <p className="mt-4">
+            <p className="mt-4 lh-base">
               {product?.description.length > 250
                 ? product?.description.substring(0, 250) + "..."
                 : product?.description}

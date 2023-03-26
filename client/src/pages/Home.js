@@ -4,6 +4,7 @@ import HomeCarousel from "../components/homeCarousel/HomeCarousel";
 import { useAuth } from "../context/auth";
 import TrendingProducts from "../components/trendingProducts/TrendingProducts";
 import FeaturedProducts from "../components/featuredProducts/FeaturedProducts";
+import AllProducts from "../components/allProducts/AllProducts";
 
 const Home = () => {
   const [auth, setAuth] = useAuth();
@@ -13,6 +14,7 @@ const Home = () => {
       <HomeCarousel />
       <TrendingProducts />
       <FeaturedProducts />
+      <AllProducts />
       {/* <Jumbotron title="Home" subtitle="Welcome to my first react ecommerce" />
       <div className="container-fluid">
         <pre className="mt-4">{JSON.stringify(auth, null, 4)}</pre>
