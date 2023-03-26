@@ -1,3 +1,4 @@
+import React, { Fragment, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
@@ -17,38 +18,41 @@ import PageNotFouond from "./pages/PageNotFouond";
 import Secret from "./pages/Secret";
 import AdminRoute from "./components/routes/AdminRoute";
 import AdminCategory from "./pages/admin/Category";
+import FullScreenLoader from "./components/FullScreenLoader";
 
 function App() {
   return (
-    <BrowserRouter>
-      <TopNav />
-      {/* <TestMenu /> */}
-      <Menu />
-      <SearchNav />
-      <Toaster />
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/shop" element={<Shop />}></Route>
+    <Fragment>
+      <BrowserRouter>
+        <TopNav />
+        {/* <TestMenu /> */}
+        <Menu />
+        <SearchNav />
+        <Toaster />
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/shop" element={<Shop />}></Route>
 
-        <Route path="/dashboard" element={<PrivateRoute />}>
-          <Route path="user" element={<UserDashboard />} />
-          <Route path="secret" element={<Secret />} />
-          <Route path="profile" element={""} />
-          <Route path="orders" element={""} />
-          <Route path="transactions" element={""} />
-        </Route>
+          <Route path="/dashboard" element={<PrivateRoute />}>
+            <Route path="user" element={<UserDashboard />} />
+            <Route path="secret" element={<Secret />} />
+            <Route path="profile" element={""} />
+            <Route path="orders" element={""} />
+            <Route path="transactions" element={""} />
+          </Route>
 
-        <Route path="/dashboard" element={<AdminRoute />}>
-          <Route path="admin" element={<AdminDashboard />} />
-          <Route path="admin/category" element={<AdminCategory />} />
-          {/* <Route path="admin/product" element={<AdminProduct />} /> */}
-        </Route>
+          <Route path="/dashboard" element={<AdminRoute />}>
+            <Route path="admin" element={<AdminDashboard />} />
+            <Route path="admin/category" element={<AdminCategory />} />
+            {/* <Route path="admin/product" element={<AdminProduct />} /> */}
+          </Route>
 
-        <Route path="*" element={<PageNotFouond />} replace />
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<PageNotFouond />} replace />
+        </Routes>
+      </BrowserRouter>
+    </Fragment>
   );
 }
 

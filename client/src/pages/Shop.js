@@ -11,11 +11,11 @@ import { ReactComponent as CategoryIcon } from "../assets/icons/categoryIcon.svg
 import { Collapse } from "react-bootstrap";
 
 import { Slider } from "antd";
-// const onChange = (value) => {
-//   console.log("onChange: ", value);
-// };
+import FullScreenLoader from "../components/FullScreenLoader";
 
 const Shop = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -45,15 +45,18 @@ const Shop = () => {
   }, [priceRange]);
 
   const loadProducts = async () => {
+    setIsLoading(true);
     try {
       const { data } = await axios.get(`products`);
       setProducts(data);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
 
   const loadFilteredProducts = async () => {
+    setIsLoading(true);
     try {
       const { data } = await axios.post("/filtered-products", {
         categoryChecked,
@@ -61,6 +64,7 @@ const Shop = () => {
         priceRange,
       });
       setProducts(data);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -169,8 +173,11 @@ const Shop = () => {
 
   return (
     <div className="my-50">
-      <div className="container">
-        <pre>{JSON.stringify({ categoryChecked, subcategoryChecked }, null, 4)}</pre>
+      <div className="container position-relative">
+        {isLoading && <FullScreenLoader />}
+        <pre>
+          {JSON.stringify({ categoryChecked, subcategoryChecked, priceRange }, null, 4)}
+        </pre>
         <div className="row g-5">
           <div className="col-lg-3">
             <div className="bgLight2 rounded py-4 border">
@@ -296,13 +303,14 @@ const Shop = () => {
                   </ul>
                 </Collapse>
               </div>
-              <div className="priceFilterArea">
+              <div className="priceFilterArea p-4">
                 <Slider
+                  className="custom-slider"
                   range={{ draggableTrack: true }}
                   defaultValue={[100, 40000]}
                   min={100}
                   max={150000}
-                  onChange={(newPriceRange) => setPriceRange(newPriceRange)}
+                  onAfterChange={(newPriceRange) => setPriceRange(newPriceRange)}
                 />
               </div>
             </div>

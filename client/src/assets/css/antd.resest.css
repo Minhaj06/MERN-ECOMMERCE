@@ -1,0 +1,24 @@
+.custom-slider .ant-slider {
+  height: 40px;
+}
+
+.custom-slider .ant-slider-rail {
+  height: 8px;
+}
+
+.custom-slider .ant-slider-track {
+  height: 8px;
+  background-color: var(--themeColor) !important;
+}
+
+.custom-slider .ant-slider-handle {
+  height: 24px;
+  width: 8px;
+  margin-top: 2px !important;
+}
+.custom-slider .ant-slider-handle::after {
+  box-shadow: 0 0 0 3px #ff6b6b80 !important;
+}
+.custom-slider .ant-slider-handle:hover::after {
+  box-shadow: 0 0 0 4px var(--themeColor) !important;
+}
