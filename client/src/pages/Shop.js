@@ -5,6 +5,7 @@ import { RiLayoutGridFill } from "react-icons/ri";
 import { FaBars } from "react-icons/fa";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { HiOutlineChevronRight, HiOutlineChevronDown } from "react-icons/hi";
+import { FaFilter } from "react-icons/fa";
 import Form from "react-bootstrap/Form";
 import NoProductImg from "../assets/images/noData.png";
 import { ReactComponent as CategoryIcon } from "../assets/icons/categoryIcon.svg";
@@ -28,7 +29,7 @@ const Shop = () => {
   // Collapse Expand
   const [isGridView, setIsGridView] = useState(true);
   const [open, setOpen] = useState([]);
-  const [toggleFilterMenu, setToggleFilterMenu] = useState(["categoryFilter"]);
+  const [toggleFilterMenu, setToggleFilterMenu] = useState(["categoryFilter", "priceFilter"]);
 
   useEffect(() => {
     if (!categoryChecked.length || !priceRange.length) loadProducts();
@@ -181,9 +182,13 @@ const Shop = () => {
         <div className="row g-5">
           <div className="col-lg-3">
             <div className="bgLight2 rounded py-4 border">
-              <div className="categoryFilterArea">
-                <h3
-                  className="themeColorSecondaryDark d-flex justify-content-between align-items-center px-4 mb-0"
+              <h2 className="d-flex justify-content-between align-items-center px-4 mb-20">
+                <span>Filter</span>
+                <FaFilter size={15} />
+              </h2>
+              <div className="categoryFilterArea mb-5">
+                <h4
+                  className="themeColorSecondaryDark fs-16 d-flex justify-content-between align-items-center px-4 mb-0"
                   role="button"
                   onClick={() => handleFilterMenu(`categoryFilter`)}
                   aria-expanded={toggleFilterMenu.includes(`categoryFilter`)}
@@ -194,7 +199,7 @@ const Shop = () => {
                   ) : (
                     <HiOutlineChevronRight size={20} />
                   )}
-                </h3>
+                </h4>
                 <Collapse in={toggleFilterMenu.includes(`categoryFilter`)}>
                   <ul class="list-group bg-transparent catMenuList rounded-0 text-capitalize">
                     {categories.map((category) => (
@@ -303,15 +308,32 @@ const Shop = () => {
                   </ul>
                 </Collapse>
               </div>
-              <div className="priceFilterArea p-4">
-                <Slider
-                  className="custom-slider"
-                  range={{ draggableTrack: true }}
-                  defaultValue={[100, 40000]}
-                  min={100}
-                  max={150000}
-                  onAfterChange={(newPriceRange) => setPriceRange(newPriceRange)}
-                />
+              <div className="priceFilterArea">
+                <h4
+                  className="themeColorSecondaryDark fs-16 d-flex justify-content-between align-items-center px-4 mb-0"
+                  role="button"
+                  onClick={() => handleFilterMenu(`priceFilter`)}
+                  aria-expanded={toggleFilterMenu.includes(`priceFilter`)}
+                >
+                  Filter By Price
+                  {toggleFilterMenu.includes(`priceFilter`) ? (
+                    <HiOutlineChevronDown size={20} />
+                  ) : (
+                    <HiOutlineChevronRight size={20} />
+                  )}
+                </h4>
+                <Collapse in={toggleFilterMenu.includes(`priceFilter`)}>
+                  <div className="px-4">
+                    <Slider
+                      className="custom-slider"
+                      range={{ draggableTrack: true }}
+                      defaultValue={[100, 60000]}
+                      min={100}
+                      max={150000}
+                      onAfterChange={(newPriceRange) => setPriceRange(newPriceRange)}
+                    />
+                  </div>
+                </Collapse>
               </div>
             </div>
           </div>
