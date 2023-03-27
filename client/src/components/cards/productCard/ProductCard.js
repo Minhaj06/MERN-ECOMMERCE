@@ -48,7 +48,11 @@ const ProductCard = ({ product, isTrending, listView }) => {
                 <AiOutlineHeart size={17} />
               </span>
               <span
-                className="productIcon"
+                className={`productIcon ${
+                  JSON.parse(localStorage.getItem("cart")).filter(
+                    (item) => item._id === product?._id
+                  ).length > 0 && "bgTheme end-0"
+                }`}
                 title="Add to cart"
                 onClick={() => {
                   setCart([...cart, product]);
