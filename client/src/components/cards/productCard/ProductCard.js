@@ -11,6 +11,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useCart } from "../../../context/cart";
 
 const ProductCard = ({ product, isTrending, listView }) => {
+  // Context
   const [cart, setCart] = useCart();
 
   const handleBeforeLoadImg = () => {
@@ -23,9 +24,6 @@ const ProductCard = ({ product, isTrending, listView }) => {
     target.src = productPlaceholderImg; // set the default image URL if the product image fails to load
     return;
   }
-
-  // const img = `${process.env.REACT_APP_API}/product/photo/${product?._id}`;
-  // console.log(img);
 
   return (
     <div className={`${isTrending ? "trendingProductCard" : ""} productCard h-100`}>
