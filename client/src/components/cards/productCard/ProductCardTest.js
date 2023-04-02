@@ -91,29 +91,9 @@ const ProductCard = ({ product, isTrending }) => {
 
 export default ProductCard;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                      <ProductCard product={product} isTrending={true} />
-                      {/* <div className="trendingProductCard productCard h-100">
+<ProductCard product={product} isTrending={true} />;
+{
+  /* <div className="trendingProductCard productCard h-100">
                         <div className="row h-100">
                           <div className="col-4 trendingProductImg productImg">
                             <Link to={`/product/${product?.slug}`}>
@@ -174,4 +154,8 @@ export default ProductCard;
                             </p>
                           </div>
                         </div>
-                      </div> */}
+                      </div> */
+}
+
+JSON.parse(localStorage.getItem("cart")).filter((item) => item._id === product?._id).length >
+  0 && "bgTheme end-0";

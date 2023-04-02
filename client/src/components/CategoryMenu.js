@@ -79,9 +79,9 @@ const CategoryMenu = () => {
 
       <Collapse in={openCatMenu}>
         <div className="catMenuBody">
-          <ul class="list-group catMenuList rounded-0 text-capitalize">
+          <ul className="list-group catMenuList rounded-0 text-capitalize">
             {categories.map((category) => (
-              <li class="list-group-item px-4 py-12" key={category?._id}>
+              <li className="list-group-item px-4 py-12" key={category?._id}>
                 {filteredSubcategories(category?._id).length > 0 ? (
                   <>
                     <NavLink

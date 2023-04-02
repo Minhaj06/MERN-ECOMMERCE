@@ -229,10 +229,10 @@ const Shop = () => {
                     )}
                   </h4>
                   <Collapse in={toggleFilterMenu.includes(`categoryFilter`)}>
-                    <ul class="list-group bg-transparent catMenuList rounded-0 text-capitalize">
+                    <ul className="list-group bg-transparent catMenuList rounded-0 text-capitalize">
                       {categories.map((category) => (
                         <li
-                          class="list-group-item bg-transparent px-4 py-12 border-start-0 border-end-0"
+                          className="list-group-item bg-transparent px-4 py-12 border-start-0 border-end-0"
                           key={category?._id}
                         >
                           {filteredSubcategories(category?._id).length > 0 ? (

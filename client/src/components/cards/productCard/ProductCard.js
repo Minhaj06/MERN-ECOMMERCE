@@ -48,16 +48,23 @@ const ProductCard = ({ product, isTrending, listView }) => {
                 <AiOutlineHeart size={17} />
               </span>
               <span
-                className={`productIcon ${
-                  JSON.parse(localStorage.getItem("cart")).filter(
-                    (item) => item._id === product?._id
-                  ).length > 0 && "bgTheme end-0"
+                className={`productIcon disabled ${
+                  cart.filter((item) => item._id === product?._id).length > 0 &&
+                  "bgTheme end-0"
                 }`}
                 title="Add to cart"
                 onClick={() => {
-                  setCart([...cart, product]);
-                  localStorage.setItem("cart", JSON.stringify([...cart, product]));
-                  toast.success("Added to cart");
+                  const exists = cart.find((item) => item._id === product?._id);
+                  if (!exists) {
+                    setCart([...cart, product]);
+                    localStorage.setItem("cart", JSON.stringify([...cart, product]));
+                    toast.success("Added to cart");
+                  } else {
+                    const updatedCart = cart.filter((item) => item?._id !== product?._id);
+                    setCart(updatedCart);
+                    localStorage.setItem("cart", JSON.stringify(updatedCart));
+                    toast.error("Removed from cart.");
+                  }
                 }}
               >
                 <AiOutlineShoppingCart size={16} />

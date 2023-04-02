@@ -22,7 +22,7 @@ const SearchNav = () => {
                     className="form-control border-0 shadow-none"
                     placeholder="Search for products"
                   />
-                  <button class="btn btnPrimary input-group-text fs-14 px-4 py-3">
+                  <button className="btn btnPrimary input-group-text fs-14 px-4 py-3">
                     Search
                   </button>
                 </div>
