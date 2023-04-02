@@ -52,8 +52,12 @@ const ProductCard = ({ product, isTrending, listView }) => {
                   cart.filter((item) => item._id === product?._id).length > 0 &&
                   "bgTheme end-0"
                 }`}
-                title="Add to cart"
-                onClick={() => {
+                title={`${
+                  cart.find((item) => item._id === product?._id)
+                    ? "Remove from cart"
+                    : "Add to cart"
+                }`}
+                onClick={(e) => {
                   const exists = cart.find((item) => item._id === product?._id);
                   if (!exists) {
                     setCart([...cart, product]);
