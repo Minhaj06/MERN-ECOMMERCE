@@ -20,6 +20,9 @@ const Shop = () => {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(6);
+  const [total, setTotal] = useState([]);
 
   // Filtered Products
   const [categoryChecked, setCategoryChecked] = useState([]);
@@ -32,7 +35,10 @@ const Shop = () => {
   const [toggleFilterMenu, setToggleFilterMenu] = useState(["categoryFilter", "priceFilter"]);
 
   useEffect(() => {
-    if (!categoryChecked.length || !priceRange.length) loadProducts();
+    if (!categoryChecked.length || !priceRange.length) {
+      loadProducts();
+      getTotal();
+    }
   }, []);
 
   useEffect(() => {
@@ -45,14 +51,40 @@ const Shop = () => {
     if (priceRange.length) loadFilteredProducts();
   }, [priceRange]);
 
+  const getTotal = async () => {
+    try {
+      const { data } = await axios.get("/products-count");
+      setTotal(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const loadProducts = async () => {
     setIsLoading(true);
     try {
-      const { data } = await axios.get(`products`);
+      const { data } = await axios.get(`/list-products/${page}/${perPage}`);
       setProducts(data);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (page === 1) return;
+    loadMore();
+  }, [page]);
+
+  const loadMore = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await axios.get(`/list-products/${page}/${perPage}`);
+      setProducts([...products, ...data]);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -408,11 +440,24 @@ const Shop = () => {
                     />
                   </div>
                 )}
-                {/* {products?.map((product) => (
-                <div className="col-sm-6 col-md-4" key={product?._id}>
-                  <ProductCard product={product} />
+                <div className="col-12 text-center mt-40">
+                  <button
+                    className="btn btnPrimary fs-3 px-50 py-3"
+                    disabled={
+                      isLoading ? isLoading : products.length === total ? true : isLoading
+                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPage(page + 1);
+                    }}
+                  >
+                    {isLoading
+                      ? "Loading..."
+                      : products.length === total
+                      ? "No More Products"
+                      : "Load More"}
+                  </button>
                 </div>
-              ))} */}
               </div>
             </div>
           </div>

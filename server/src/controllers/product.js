@@ -204,7 +204,7 @@ exports.productCount = async (req, res) => {
 
 exports.listProducts = async (req, res) => {
   try {
-    const perPage = 8;
+    const perPage = req.params?.perPage || 8;
     const page = req.params.page ? req.params.page : 1;
 
     const products = await Product.find({})

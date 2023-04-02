@@ -80,7 +80,7 @@ const Menu = () => {
                 <div className="floating-text-icon d-inline-block position-relative">
                   <AiOutlineShoppingCart size={22} />
                   <span className="floating-num">
-                    {/* {JSON.parse(localStorage.getItem("cart")).length} */}
+                    {JSON.parse(localStorage.getItem("cart")).length}
                   </span>
                 </div>
               </NavLink>

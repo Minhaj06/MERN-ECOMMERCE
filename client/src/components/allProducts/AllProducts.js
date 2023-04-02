@@ -7,6 +7,7 @@ const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState([]);
   const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(8);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const AllProducts = () => {
   const loadProducts = async () => {
     setIsLoading(true);
     try {
-      const { data } = await axios.get(`list-products/${page}`);
+      const { data } = await axios.get(`list-products/${page}/${perPage}`);
       setProducts(data);
       setIsLoading(false);
     } catch (err) {
@@ -43,7 +44,7 @@ const AllProducts = () => {
   const loadMore = async () => {
     setIsLoading(true);
     try {
-      const { data } = await axios.get(`/list-products/${page}`);
+      const { data } = await axios.get(`/list-products/${page}/${perPage}`);
       setProducts([...products, ...data]);
       setIsLoading(false);
     } catch (err) {

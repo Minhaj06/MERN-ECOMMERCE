@@ -33,7 +33,7 @@ const ProductCard = ({ product, isTrending, listView }) => {
             listView ? "pe-sm-4" : ""
           } productImg overflow-hidden`}
         >
-          <div className="overflow-hidden position-relative">
+          <div className="overflow-hidden position-relative h-100">
             <Link to={`/product/${product?.slug}`}>
               <LazyLoadImage
                 src={`${process.env.REACT_APP_API}/product/photo/${product?._id}`}
@@ -57,7 +57,7 @@ const ProductCard = ({ product, isTrending, listView }) => {
                     ? "Remove from cart"
                     : "Add to cart"
                 }`}
-                onClick={(e) => {
+                onClick={() => {
                   const exists = cart.find((item) => item._id === product?._id);
                   if (!exists) {
                     setCart([...cart, product]);
