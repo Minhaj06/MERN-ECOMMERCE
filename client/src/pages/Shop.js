@@ -248,7 +248,7 @@ const Shop = () => {
                 </div>
                 <div className="categoryFilterArea">
                   <h4
-                    className="themeColorSecondaryDark fs-16 d-flex justify-content-between align-items-center px-4 mb-0"
+                    className="themeColorSecondaryDark fs-16 d-flex justify-content-between align-items-center px-4 mb-4"
                     role="button"
                     onClick={() => handleFilterMenu(`categoryFilter`)}
                     aria-expanded={toggleFilterMenu.includes(`categoryFilter`)}

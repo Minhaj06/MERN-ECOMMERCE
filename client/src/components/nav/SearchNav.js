@@ -19,7 +19,7 @@ const SearchNav = () => {
                   <input
                     style={{ width: "35rem", maxWidth: "35rem" }}
                     type="search"
-                    className="form-control border-0 shadow-none"
+                    className="form-control border-0 shadow-none ps-0"
                     placeholder="Search for products"
                   />
                   <button className="btn btnPrimary input-group-text fs-14 px-4 py-3">

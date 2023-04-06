@@ -5,19 +5,11 @@ import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { FiChevronDown } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 import MegaMenuWomen from "../megaMenu/MegaMuenuWomen";
-// import { useAuth } from "../../context/auth";
-// import { useNavigate } from "react-router-dom";
+import { useCart } from "../../context/cart";
 
 const Menu = () => {
-  // hooks
-  // const [auth, setAuth] = useAuth();
-  // const navigate = useNavigate();
-
-  // const logout = () => {
-  //   setAuth({ ...auth, user: null, token: "" });
-  //   localStorage.removeItem("auth");
-  //   navigate("/login");
-  // };
+  // Context
+  const [cart, setCart] = useCart();
 
   return (
     <Navbar className="mb-4 bg-transparent" bg="light" expand="lg">
@@ -79,9 +71,7 @@ const Menu = () => {
               <NavLink className="text-color-dark" to="/cart">
                 <div className="floating-text-icon d-inline-block position-relative">
                   <AiOutlineShoppingCart size={22} />
-                  <span className="floating-num">
-                    {JSON.parse(localStorage.getItem("cart")).length}
-                  </span>
+                  <span className="floating-num">{cart.length}</span>
                 </div>
               </NavLink>
             </div>
