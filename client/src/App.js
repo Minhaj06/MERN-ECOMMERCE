@@ -18,6 +18,7 @@ import PageNotFouond from "./pages/PageNotFouond";
 import Secret from "./pages/Secret";
 import AdminRoute from "./components/routes/AdminRoute";
 import AdminCategory from "./pages/admin/Category";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/shop" element={<Shop />}></Route>
+          <Route path="/search" element={<Search />}></Route>
 
           <Route path="/dashboard" element={<PrivateRoute />}>
             <Route path="user" element={<UserDashboard />} />

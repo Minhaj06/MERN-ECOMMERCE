@@ -149,8 +149,12 @@ const Shop = () => {
   const filteredSubcategories = (categoryId) =>
     subcategories.filter((subcategory) => subcategory?.category?._id === categoryId);
 
+  const handleInStock = (e) => {
+    console.log(e.target.checked);
+  };
+
   const handleCategoryCheck = (value, id) => {
-    console.log(value, id);
+    // console.log(value, id);
     let all = [...categoryChecked];
     if (value) {
       all.push(id);
@@ -160,7 +164,7 @@ const Shop = () => {
     setCategoryChecked(all);
   };
   const handleSubcategoryCheck = (value, id) => {
-    console.log(value, id);
+    // console.log(value, id);
     let all = [...subcategoryChecked];
     if (value) {
       all.push(id);
@@ -214,12 +218,27 @@ const Shop = () => {
           </pre>
           <div className="row g-5">
             <div className="col-lg-3">
-              <div className="bgLight2 rounded py-4 border">
-                <h2 className="d-flex justify-content-between align-items-center px-4 mb-5">
+              <div className="bgLight2 rounded py-4 border mb-5">
+                <h2 className="d-flex justify-content-between align-items-center px-4">
                   <span>Filter</span>
                   <FaFilter size={15} />
                 </h2>
-                <div className="priceFilterArea mb-5">
+              </div>
+
+              <div className="bgLight2 rounded p-4 border mb-5">
+                <div className="stockFilterArea">
+                  <Form.Check
+                    onChange={handleInStock}
+                    type="checkbox"
+                    label="In Stock"
+                    id="stockFilterCheck"
+                    htmlFor="stockFilterCheck"
+                  />
+                </div>
+              </div>
+
+              <div className="bgLight2 rounded py-4 border mb-5">
+                <div className="priceFilterArea">
                   <h4
                     className="themeColorSecondaryDark fs-16 d-flex justify-content-between align-items-center px-4 mb-0"
                     role="button"
@@ -235,20 +254,26 @@ const Shop = () => {
                   </h4>
                   <Collapse in={toggleFilterMenu.includes(`priceFilter`)}>
                     <div className="px-4">
-                      <Slider
-                        className="custom-slider"
-                        range={{ draggableTrack: true }}
-                        defaultValue={[100, 60000]}
-                        min={100}
-                        max={150000}
-                        onAfterChange={(newPriceRange) => setPriceRange(newPriceRange)}
-                      />
+                      <div className="pt-4">
+                        <Slider
+                          className="custom-slider"
+                          range={{ draggableTrack: true }}
+                          defaultValue={[100, 60000]}
+                          min={100}
+                          max={150000}
+                          onAfterChange={(newPriceRange) => setPriceRange(newPriceRange)}
+                        />
+                        <h4 className="themeColor mt-4">৳100 - ৳150,000</h4>
+                      </div>
                     </div>
                   </Collapse>
                 </div>
+              </div>
+
+              <div className="bgLight2 rounded py-4 border mb-5">
                 <div className="categoryFilterArea">
                   <h4
-                    className="themeColorSecondaryDark fs-16 d-flex justify-content-between align-items-center px-4 mb-4"
+                    className="themeColorSecondaryDark fs-16 d-flex justify-content-between align-items-center px-4 mb-0"
                     role="button"
                     onClick={() => handleFilterMenu(`categoryFilter`)}
                     aria-expanded={toggleFilterMenu.includes(`categoryFilter`)}
@@ -261,12 +286,9 @@ const Shop = () => {
                     )}
                   </h4>
                   <Collapse in={toggleFilterMenu.includes(`categoryFilter`)}>
-                    <ul className="list-group bg-transparent catMenuList rounded-0 text-capitalize">
+                    <ul className="catMenuList rounded-0 text-capitalize pt-4">
                       {categories.map((category) => (
-                        <li
-                          className="list-group-item bg-transparent px-4 py-12 border-start-0 border-end-0"
-                          key={category?._id}
-                        >
+                        <li className="px-4 py-12" key={category?._id}>
                           {filteredSubcategories(category?._id).length > 0 ? (
                             <>
                               <div className="d-flex align-items-center gap-3">

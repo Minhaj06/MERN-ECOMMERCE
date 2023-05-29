@@ -3,17 +3,24 @@
   overflow: hidden;
 }
 
+.productCard .lazy-load-image-loaded {
+  width: 100%;
+}
+
 .productCard img {
   width: 100%;
+  max-height: 30rem;
+  object-fit: cover;
   transition: all 0.3s ease-in-out !important;
 }
 .productCard:not(.trendingProductCard) img {
-  height: 35rem;
+  height: 30rem;
+  max-height: 30rem;
 }
 
 .trendingProductCard img {
   height: 100%;
-  min-height: 12rem;
+  min-height: 14rem;
 }
 
 .productCard:hover img {

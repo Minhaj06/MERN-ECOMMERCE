@@ -222,14 +222,18 @@ exports.listProducts = async (req, res) => {
 
 exports.productSearch = async (req, res) => {
   try {
-    const { keyword } = req.params;
-    const results = await Product.find({
+    const { keyword, category } = req.query;
+    console.log(category);
+    let query = {
       $or: [
         { name: { $regex: keyword, $options: "i" } },
         { description: { $regex: keyword, $options: "i" } },
       ],
-    }).select("-photo");
-
+    };
+    if (category !== undefined) {
+      query.category = category;
+    }
+    const results = await Product.find(query).select("-photo");
     res.json(results);
   } catch (err) {
     console.log(err);
