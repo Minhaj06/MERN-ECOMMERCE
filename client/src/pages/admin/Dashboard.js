@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import Jumbotron from "../../components/cards/Jumbotron";
 import AdminMenu from "../../components/nav/AdminMenu";
 import { useAuth } from "../../context/auth";
@@ -8,7 +9,11 @@ function UserDashboard() {
 
   return (
     <>
-      <Jumbotron title={`Hello ${auth?.user?.name}`} subtitle="Admin Dashboard" />
+      <Jumbotron title={`Hello, ${auth?.user?.firstName}`} subtitle="Admin Dashboard" />
+
+      <div className="my-5">
+        <Button type="primary">Ant Button</Button>
+      </div>
 
       <div className="container-fluid">
         <div className="row">

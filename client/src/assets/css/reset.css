@@ -25,15 +25,6 @@ body {
   overflow-x: hidden;
 }
 
-section {
-  margin-bottom: 10rem;
-}
-
-section.bgLight4 {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
-
 .container,
 .container-fluid,
 .container-lg,
@@ -147,4 +138,8 @@ select {
 .form-check-input:focus {
   border-color: var(--themeColor);
   box-shadow: 0 0 0 0.25rem #ff6b6b75;
+}
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: var(--themeColor);
 }

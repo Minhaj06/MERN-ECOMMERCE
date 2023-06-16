@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 import MegaMenuWomen from "../megaMenu/MegaMuenuWomen";
 import { useCart } from "../../context/cart";
 
-const Menu = () => {
+const MainMenu = () => {
   // Context
   const [cart, setCart] = useCart();
 
@@ -86,4 +86,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default MainMenu;

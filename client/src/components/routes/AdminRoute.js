@@ -4,7 +4,7 @@ import { useAuth } from "../../context/auth";
 import axios from "axios";
 import Loading from "./Loading";
 
-function AdminRoute() {
+const AdminRoute = () => {
   // context
   const [auth, setAuth] = useAuth();
 
@@ -26,6 +26,6 @@ function AdminRoute() {
   }, [auth?.token]);
 
   return ok ? <Outlet /> : <Loading path="" />;
-}
+};
 
 export default AdminRoute;
