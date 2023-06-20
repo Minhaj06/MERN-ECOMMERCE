@@ -1,21 +1,17 @@
 import Jumbotron from "../../components/cards/Jumbotron";
-import AdminMenu from "../../components/nav/AdminMenu";
 import { useAuth } from "../../context/auth";
 
-function AdminCategory() {
+function Category() {
   // context
   const [auth, setAuth] = useAuth();
 
   return (
     <>
-      <Jumbotron title={`Hello ${auth?.user?.name}`} subtitle="Admin Dashboard" />
+      <Jumbotron title={`Hello ${auth?.user?.firstName}`} subtitle="Admin Dashboard" />
 
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-3">
-            <AdminMenu />
-          </div>
-          <div className="col-md-9">
+          <div className="col-md-12">
             <div className="p-3 mt-2 mb-2 h4 bg-light">Admin Information</div>
 
             <ul className="list-group">
@@ -30,4 +26,4 @@ function AdminCategory() {
   );
 }
 
-export default AdminCategory;
+export default Category;

@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { FiChevronDown } from "react-icons/fi";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import MegaMenuWomen from "../megaMenu/MegaMuenuWomen";
 import { useCart } from "../../context/cart";
 
@@ -15,12 +15,12 @@ const MainMenu = () => {
     <Navbar className="mb-4 bg-transparent" bg="light" expand="lg">
       <Container>
         <Navbar.Brand className="me-5">
-          <NavLink to="/">
+          <Link to="/">
             <img
               src="https://minhaj06.github.io/AlifaOnline-OkkhoTech/images/logo.svg"
               alt="Logo"
             />
-          </NavLink>
+          </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

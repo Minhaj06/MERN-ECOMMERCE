@@ -5,18 +5,24 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  LaptopOutlined,
+  NotificationOutlined,
 } from "@ant-design/icons";
 import { Breadcrumb, Button, Layout, Menu, theme } from "antd";
 
-import { Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 import Loading from "../../components/routes/Loading";
 import { Footer } from "antd/es/layout/layout";
+import BreadcrumbComponent from "../../components/breadcrumb/BreadcrumbComponent";
+import AdminMenu from "../../components/nav/AdminMenu";
 
 const { Header, Sider, Content } = Layout;
 
 const AdminLayout = () => {
+  const admin = "/dashboard/admin";
+
   // context
   const [auth, setAuth] = useAuth();
 
@@ -39,8 +45,48 @@ const AdminLayout = () => {
   }, [auth?.token]);
 
   const {
-    token: { colorBgContainer },
+    token: { colorBgContainer, colorPrimary, colorSecondary, colorSecondaryDark },
   } = theme.useToken();
+
+  const handleWindowResize = () => {
+    if (window.innerWidth < 576) {
+      setSiderWidth("100%");
+    } else if (window.innerWidth > 1399) {
+      setSiderWidth("280px");
+    } else if (window.innerWidth > 991) {
+      setSiderWidth("250px");
+    } else {
+      setSiderWidth("200px");
+    }
+  };
+
+  useEffect(() => {
+    handleWindowResize();
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
+  }, []);
+
+  const [siderWidth, setSiderWidth] = useState("250px");
+
+  const items1 = ["1", "2", "3"].map((key) => ({
+    key,
+    label: `nav ${key}`,
+  }));
+  const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
+    const key = String(index + 1);
+    return {
+      key: `sub${key}`,
+      icon: React.createElement(icon),
+      label: `subnav ${key}`,
+      children: new Array(4).fill(null).map((_, j) => {
+        const subKey = index * 4 + j + 1;
+        return {
+          key: subKey,
+          label: `option${subKey}`,
+        };
+      }),
+    };
+  });
 
   return ok ? (
     <Layout style={{ minHeight: "100vh" }}>
@@ -56,9 +102,52 @@ const AdminLayout = () => {
         onCollapse={(collapsed, type) => {
           console.log(collapsed, type);
         }}
+        width={siderWidth}
+        style={{ maxWidth: "100%" }}
       >
-        <div className="demo-logo-vertical" />
-        <Menu
+        <div className="d-flex flex-column">
+          <div
+            className="demo-logo-vertical d-flex justify-content-between align-items-center py-4 mb-3"
+            style={{ marginInline: "4px" }}
+          >
+            <Link className="d-block" to={"./"}>
+              <img
+                className="w-100"
+                src="https://minhaj06.github.io/AlifaOnline-OkkhoTech/images/logo.svg"
+                alt="Logo"
+              />
+            </Link>
+
+            <Button
+              className="bgTheme p-0 d-flex justify-content-center align-items-center d-sm-none"
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+              style={{
+                fontSize: "16px",
+                width: 30,
+                height: 30,
+              }}
+            />
+          </div>
+
+          {/*  */}
+          {/*  */}
+          {/*  */}
+
+          {/* <Menu
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          defaultOpenKeys={["sub1"]}
+          style={{
+            height: "100%",
+          }}
+          items={items2}
+        /> */}
+
+          <AdminMenu />
+
+          {/* <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
@@ -66,20 +155,23 @@ const AdminLayout = () => {
             {
               key: "1",
               icon: <UserOutlined />,
-              label: "nav 1",
+              label: "Nav 1",
+              link: "/nav1",
             },
             {
               key: "2",
               icon: <VideoCameraOutlined />,
-              label: "nav 2",
+              label: <NavLink to={`${admin}/category`}>Category</NavLink>,
             },
             {
               key: "3",
               icon: <UploadOutlined />,
-              label: "nav 3",
+              label: "Nav 3",
+              link: "/nav3",
             },
           ]}
-        />
+        /> */}
+        </div>
       </Sider>
       <Layout>
         <Header
@@ -105,14 +197,7 @@ const AdminLayout = () => {
             margin: "0 16px",
           }}
         >
-          <Breadcrumb
-            style={{
-              margin: "16px 0",
-            }}
-          >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
+          <BreadcrumbComponent />
           <div
             style={{
               padding: 24,

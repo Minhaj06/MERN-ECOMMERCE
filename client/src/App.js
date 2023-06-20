@@ -9,6 +9,8 @@ const App = () => {
       theme={{
         token: {
           colorPrimary: "#ff6b6b",
+          colorSecondary: "#794afa",
+          colorSecondaryDark: "#453c5c",
         },
       }}
     >

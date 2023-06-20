@@ -10,12 +10,15 @@ import UserDashboard from "./pages/user/Dashboard";
 import AdminDashboard from "./pages/admin/Dashboard";
 import PageNotFound from "./pages/PageNotFound";
 import Secret from "./pages/Secret";
-import AdminCategory from "./pages/admin/Category";
 import Search from "./pages/Search";
 import AdminLayout from "./layout/adminLayout/AdminLayout";
 import PublicLayout from "./layout/publicLayout/PublicLayout";
+import Category from "./pages/admin/Category";
+import ProductDetails from "./pages/productDetails/ProductDetails";
 
 const AllRoutes = () => {
+  const admin = "/dashboard/admin";
+
   return (
     <Fragment>
       <BrowserRouter>
@@ -27,6 +30,7 @@ const AllRoutes = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/product/:slug" element={<ProductDetails />} />
             <Route path="/dashboard" element={<PrivateRoute />}>
               <Route path="user" element={<UserDashboard />} />
               <Route path="secret" element={<Secret />} />
@@ -36,8 +40,8 @@ const AllRoutes = () => {
 
           {/* Admin Layout */}
           <Route element={<AdminLayout />}>
-            <Route path="/dashboard/admin" element={<AdminDashboard />} />
-            <Route path="/dashboard/admin/category" element={<AdminCategory />} />
+            <Route path={`${admin}`} element={<AdminDashboard />} />
+            <Route path={`${admin}/category`} element={<Category />} />
             {/* Add more routes for the admin dashboard */}
           </Route>
           <Route path="*" element={<PageNotFound />} />
