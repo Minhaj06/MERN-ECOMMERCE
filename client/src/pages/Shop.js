@@ -211,11 +211,11 @@ const Shop = () => {
   return (
     <>
       {isLoading && <FullScreenLoader />}
-      <div className="my-50">
+      <section className="my-50">
         <div className="container position-relative">
-          <pre>
+          {/* <pre>
             {JSON.stringify({ categoryChecked, subcategoryChecked, priceRange }, null, 4)}
-          </pre>
+          </pre> */}
           <div className="row g-5">
             <div className="col-lg-3">
               <div className="bgLight2 rounded py-4 border mb-5">
@@ -484,7 +484,7 @@ const Shop = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };
