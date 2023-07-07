@@ -47,10 +47,16 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    photo: {
-      data: Buffer,
-      contentType: String,
-    },
+    // photo: {
+    //   data: Buffer,
+    //   contentType: String,
+    // },
+    photos: [
+      {
+        data: Buffer,
+        contentType: String,
+      },
+    ],
     isFeatured: {
       type: Boolean,
       default: false,

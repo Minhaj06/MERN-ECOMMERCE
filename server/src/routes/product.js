@@ -25,7 +25,19 @@ const {
   orderStatus,
 } = require("../controllers/product.js");
 
-router.post("/product", requireSignin, isAdmin, formidable(), create);
+// Single Image
+// router.post("/product", requireSignin, isAdmin, formidable(), create);
+
+// Multiple Images
+router.post(
+  "/product",
+  requireSignin,
+  isAdmin,
+  formidable({
+    multiples: true,
+  }),
+  create
+);
 router.get("/products", list);
 router.get("/product/:slug", read);
 router.get("/product/photo/:productId", photo);

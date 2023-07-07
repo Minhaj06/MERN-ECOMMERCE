@@ -15,17 +15,70 @@ const sgMail = require("@sendgrid/mail");
 //   privateKey: process.env.BRAINTREE_PRIVATE_KEY,
 // });
 
+// Single Image
+// exports.create = async (req, res) => {
+//   try {
+//     // console.log(req.fields);
+//     // console.log(req.files);
+
+//     const { name, description, price, category, subcategory, quantity, isFeatured, shipping } =
+//       req.fields;
+//     console.log(name);
+
+//     const { photo } = req.files;
+//     // console.log("PHOTO========>", photo);
+
+//     // Validation
+//     switch (true) {
+//       case !description.trim():
+//         return res.json({ error: "Description is required" });
+//       case !price.trim():
+//         return res.json({ error: "Price is required" });
+//       case !category.trim():
+//         return res.json({ error: "Category is required" });
+//       case !quantity.trim():
+//         return res.json({ error: "Quantity is required" });
+//       case !shipping.trim():
+//         return res.json({ error: "Shipping is required" });
+//       case photo && photo.size > 1000000:
+//         return res.json({ error: "Image should be less than 1mb in size" });
+//     }
+
+//     // Existiong Product
+//     const existingProduct = await Product.findOne({ name });
+//     if (existingProduct) {
+//       return res.json({ error: "Product already exists" });
+//     }
+
+//     // Create Product
+//     const product = new Product({ ...req.fields, slug: slugify(name) });
+
+//     if (photo) {
+//       product.photo.data = fs.readFileSync(photo.path);
+//       product.photo.contentType = photo.type;
+//     }
+
+//     await product.save();
+//     res.json(product);
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(400).json(err.message);
+//   }
+// };
+
+// Multiple Image
 exports.create = async (req, res) => {
   try {
-    // console.log(req.fields);
-    // console.log(req.files);
-
     const { name, description, price, category, subcategory, quantity, isFeatured, shipping } =
       req.fields;
-    console.log(name);
 
-    const { photo } = req.files;
-    // console.log("PHOTO========>", photo);
+    const { photos } = req.files;
+
+    // Handle multiple files
+    const receivedPhotos = Array.isArray(photos) ? photos : [photos];
+    if (receivedPhotos.length > 6) {
+      return res.json({ error: "Exceeded the maximum number of images allowed (6)." });
+    }
 
     // Validation
     switch (true) {
@@ -39,11 +92,9 @@ exports.create = async (req, res) => {
         return res.json({ error: "Quantity is required" });
       case !shipping.trim():
         return res.json({ error: "Shipping is required" });
-      case photo && photo.size > 1000000:
-        return res.json({ error: "Image should be less than 1mb in size" });
     }
 
-    // Existiong Product
+    // Existing Product
     const existingProduct = await Product.findOne({ name });
     if (existingProduct) {
       return res.json({ error: "Product already exists" });
@@ -52,9 +103,19 @@ exports.create = async (req, res) => {
     // Create Product
     const product = new Product({ ...req.fields, slug: slugify(name) });
 
-    if (photo) {
-      product.photo.data = fs.readFileSync(photo.path);
-      product.photo.contentType = photo.type;
+    if (receivedPhotos) {
+      product.photos = []; // Create an empty array to store photo data
+      for (let i = 0; i < receivedPhotos.length; i++) {
+        const photo = receivedPhotos[i];
+        if (photo.size > 1000000) {
+          return res.json({ error: "Each image should be less than 1mb in size" });
+        }
+        const photoData = {
+          data: fs.readFileSync(photo.path),
+          contentType: photo.type,
+        };
+        product.photos.push(photoData); // Add each photo data to the array
+      }
     }
 
     await product.save();
@@ -93,14 +154,33 @@ exports.read = async (req, res) => {
   }
 };
 
+// Previous======================>
+// exports.photo = async (req, res) => {
+//   try {
+//     const product = await Product.findById(req.params.productId).select("photo");
+
+//     if (product.photo.data) {
+//       res.set("Content-Type", product.photo.contentType);
+//       res.set("Cross-Origin-Resource-Policy", "cross-origin"); // add this line
+//       return res.send(product.photo.data);
+//     } else {
+//       return res.status(404).json("Photo not found");
+//     }
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(400).json(err.message);
+//   }
+// };
+
+// Send Single Photo
 exports.photo = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.productId).select("photo");
+    const product = await Product.findById(req.params.productId).select("photos");
 
-    if (product.photo.data) {
-      res.set("Content-Type", product.photo.contentType);
+    if (product.photos[0].data) {
+      res.set("Content-Type", product.photos[0].contentType);
       res.set("Cross-Origin-Resource-Policy", "cross-origin"); // add this line
-      return res.send(product.photo.data);
+      return res.send(product.photos[0].data);
     } else {
       return res.status(404).json("Photo not found");
     }

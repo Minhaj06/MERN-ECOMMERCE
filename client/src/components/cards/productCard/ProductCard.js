@@ -17,13 +17,13 @@ const ProductCard = ({ product, isTrending, listView }) => {
   const handleBeforeLoadImg = () => {
     return productPlaceholderImg;
   };
-  function handleImgError(event) {
+  const handleImgError = (event) => {
     // code to handle image load errors
     const { target } = event;
     target.onerror = null;
     target.src = productPlaceholderImg; // set the default image URL if the product image fails to load
     return;
-  }
+  };
 
   return (
     <div className={`${isTrending ? "trendingProductCard" : ""} productCard h-100`}>

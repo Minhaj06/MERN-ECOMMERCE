@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "react-image-gallery/styles/css/image-gallery.css";
 import ReactImageGallery from "react-image-gallery";
 import "./productDetails.css";
+
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const ProductDetails = () => {
   const images = [
@@ -43,10 +46,24 @@ const ProductDetails = () => {
     },
   ];
 
-  const thumbnailStyle = {
-    objectFit: "cover",
-    width: "100px", // Adjust the width as per your requirement
-    height: "30px", // Adjust the height as per your requirement
+  // state
+  const [product, setProduct] = useState();
+
+  // hooks
+  const { slug } = useParams();
+
+  useEffect(() => {
+    if (slug) loadProduct();
+  }, [slug]);
+
+  const loadProduct = async (req, res) => {
+    try {
+      // const { data } = await axios.get(`/product/${slug}`);
+      const { data } = await axios.get(`/product/photo/6415324268595c201cee6fe9`);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
