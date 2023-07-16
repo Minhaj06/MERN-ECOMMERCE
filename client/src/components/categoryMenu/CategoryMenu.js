@@ -5,7 +5,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import Collapse from "react-bootstrap/Collapse";
 import axios from "axios";
 
-import { ReactComponent as CategoryIcon } from "../assets/icons/categoryIcon.svg";
+import { ReactComponent as CategoryIcon } from "../../assets/icons/categoryIcon.svg";
 
 const CategoryMenu = () => {
   const [categories, setCategories] = useState([]);
@@ -57,7 +57,7 @@ const CategoryMenu = () => {
   return (
     <div
       className="categoryMenu allDepartments position-absolute top-0 start-0 d-none d-lg-block"
-      style={{ width: "30rem", zIndex: 1000 }}
+      style={{ width: "30rem", zIndex: 1022 }}
     >
       <div
         className="catMenuHeader bgTheme px-4 py-3 rounded-top-3 d-flex justify-content-between align-items-center"

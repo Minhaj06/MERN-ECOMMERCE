@@ -79,49 +79,50 @@ const Search = () => {
 
   return (
     <>
+      {isLoading && <FullScreenLoader />}
       <section className="my-50">
-        <div className="container">
-          <div className="row gx-4 gx-xxl-5 gy-5">
-            <div className="col-12">
-              <div className="bgLight2 p-4 rounded border">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <span
-                      type="button"
-                      className="fs-3 hoverableOp d-flex align-items-center gap-3"
-                      onClick={() => toggleView()}
-                    >
-                      {isGridView ? (
-                        <>
-                          <FaBars size={20} /> List View
-                        </>
-                      ) : (
-                        <>
-                          <RiLayoutGridFill size={20} /> Grid View
-                        </>
-                      )}
-                    </span>
-                  </div>
+        <div className="container position-relative">
+          <div className="row g-5">
+            <div className="col-lg-12">
+              <div className="row gx-4 gx-xxl-5 gy-5">
+                <div className="col-12">
+                  <div className="bgLight2 p-4 rounded border">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <span
+                          type="button"
+                          className="fs-3 hoverableOp d-flex align-items-center gap-3"
+                          onClick={() => toggleView()}
+                        >
+                          {isGridView ? (
+                            <>
+                              <FaBars size={20} /> List View
+                            </>
+                          ) : (
+                            <>
+                              <RiLayoutGridFill size={20} /> Grid View
+                            </>
+                          )}
+                        </span>
+                      </div>
 
-                  <div className="d-flex align-items-center gap-3">
-                    <span className="text-nowrap">Sort by</span>
-                    <Form.Select className="fs-4" onChange={sortProducts}>
-                      <option value="dateNewToOld">Date, new to old</option>
-                      <option value="dateOldToNew">Date, old to new</option>
-                      <option value="featured">Featured</option>
-                      <option value="bestSelling">Best selling</option>
-                      <option value="priceLowToHight">Price, low to hight</option>
-                      <option value="priceHighToLow">Price, hight to low</option>
-                      <option value="alphabetically_A_Z">Alphabetically, A-Z</option>
-                      <option value="alphabetically_Z_A">Alphabetically, Z-A</option>
-                    </Form.Select>
+                      <div className="d-flex align-items-center gap-3">
+                        <span className="text-nowrap">Sort by</span>
+                        <Form.Select className="fs-4" onChange={sortProducts}>
+                          <option value="dateNewToOld">Date, new to old</option>
+                          <option value="dateOldToNew">Date, old to new</option>
+                          <option value="featured">Featured</option>
+                          <option value="bestSelling">Best selling</option>
+                          <option value="priceLowToHight">Price, low to hight</option>
+                          <option value="priceHighToLow">Price, hight to low</option>
+                          <option value="alphabetically_A_Z">Alphabetically, A-Z</option>
+                          <option value="alphabetically_Z_A">Alphabetically, Z-A</option>
+                        </Form.Select>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            <div className="col-12">
-              <div className="row gx-4 gx-xxl-5 gy-5">
                 {products.length > 0 ? (
                   isGridView ? (
                     products?.map((product) => (
@@ -132,7 +133,12 @@ const Search = () => {
                   ) : (
                     products?.map((product) => (
                       <div className="col-12" key={product?._id}>
-                        <ProductCard product={product} isTrending={true} listView={true} />
+                        <ProductCard
+                          product={product}
+                          isTrending={true}
+                          listView={true}
+                          fullWidth={true}
+                        />
                       </div>
                     ))
                   )
@@ -148,22 +154,10 @@ const Search = () => {
                 )}
               </div>
             </div>
-            {/* <div className="col-12 text-center mt-40">
-          <button
-            className="btn btnPrimary fs-3 px-50 py-3"
-            disabled={isLoading ? isLoading : products.length === total ? true : isLoading}
-            onClick={(e) => {
-              e.preventDefault();
-              setPage(page + 1);
-            }}
-          >
-            {isLoading
-              ? "Loading..."
-              : products.length === total
-              ? "No More Products"
-              : "Load More"}
-          </button>
-        </div> */}
+
+            <div className="col-lg-3">
+              <div className="bgLight2 h-100"></div>
+            </div>
           </div>
         </div>
       </section>

@@ -11,6 +11,7 @@ const {
   list,
   read,
   photo,
+  photos,
   remove,
   update,
   filteredProducts,
@@ -41,6 +42,7 @@ router.post(
 router.get("/products", list);
 router.get("/product/:slug", read);
 router.get("/product/photo/:productId", photo);
+router.get("/product/photos/:productId", photos);
 router.delete("/product/:productId", requireSignin, isAdmin, remove);
 router.put("/product/:productId", requireSignin, isAdmin, formidable(), update);
 router.post("/filtered-products", filteredProducts);

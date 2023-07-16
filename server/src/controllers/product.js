@@ -190,6 +190,32 @@ exports.photo = async (req, res) => {
   }
 };
 
+// Send Multiple Photos
+exports.photos = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.productId).select("photos");
+
+    if (product.photos.length > 0) {
+      const photoResponses = [];
+
+      for (const photo of product.photos) {
+        const photoResponse = {
+          contentType: photo.contentType,
+          data: photo.data,
+        };
+        photoResponses.push(photoResponse);
+      }
+
+      return res.json({ photos: photoResponses });
+    } else {
+      return res.status(404).json("Photos not found");
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err.message);
+  }
+};
+
 exports.remove = async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.productId).select("-photo");

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import CategoryMenu from "../CategoryMenu";
 import axios from "axios";
 import { useSearch } from "../../context/search";
 import { useNavigate } from "react-router-dom";
+import CategoryMenu from "../categoryMenu/CategoryMenu";
 
 const SearchNav = () => {
   // hooks

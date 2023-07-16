@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { AiFillStar, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
-import { IoBagCheckOutline } from "react-icons/io5";
 import "./productCard.css";
 
 import productPlaceholderImg from "../../../assets/images/productPlaceholder.png";
@@ -11,7 +10,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useCart } from "../../../context/cart";
 
-const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
+const ProductCard = ({ product, isTrending, listView }) => {
   // Context
   const [cart, setCart] = useCart();
 
@@ -27,13 +26,10 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
   };
 
   return (
-    <div
-      className={`${isTrending && "trendingProductCard"} 
-      ${fullWidth && "fullWidthWrapper"} productCard h-100`}
-    >
+    <div className={`${isTrending ? "trendingProductCard" : ""} productCard h-100`}>
       <div className={`${isTrending ? "row h-100" : ""}`}>
         <div
-          className={`${isTrending ? "col-4" : "mb-20"} ${fullWidth && "fullWidthImg"} ${
+          className={`${isTrending ? "col-4" : "mb-20"} ${
             listView ? "pe-sm-4" : ""
           } productImg overflow-hidden`}
         >
@@ -82,8 +78,8 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
         </div>
         <div
           className={`${isTrending ? "col-8" : ""} ${
-            fullWidth && "fullWidthDesc flex-grow-1"
-          } ${listView ? "ps-sm-5" : ""} productDetails`}
+            listView ? "ps-sm-5" : ""
+          } productDetails`}
         >
           <h4
             className={`${isTrending ? "fs-16" : "fs-18"} ${
@@ -94,7 +90,7 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
               {product?.name}
             </Link>
           </h4>
-          <div className="mb-2">
+          <div className="mb-4">
             <AiFillStar style={{ color: "#FDCC0D" }} />
             <AiFillStar style={{ color: "#FDCC0D" }} />
             <AiFillStar style={{ color: "#FDCC0D" }} />
@@ -104,7 +100,7 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
               ({String(product?.rating).padStart(2, "0")})
             </small>
           </div>
-          <h4 className="fs-18 fw-normal mb-2">
+          <h4 className="fs-18 fw-normal mb-3">
             <span className="themeColor me-3">
               {product?.price?.toLocaleString("en-US", {
                 style: "currency",
@@ -132,21 +128,13 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
             }`}
           </p>
           {listView ? (
-            <>
-              <p className="mt-2 lh-base">
-                {product?.description.length > 250
-                  ? product?.description.substring(0, 250) + "..."
-                  : product?.description}
-              </p>
-              <div className="btn-group">
-                <button className="btn btnDark fs-4 d-flex align-items-start gap-2 py-2">
-                  <IoBagCheckOutline size={22} />
-                  <span>Checkout</span>
-                </button>
-              </div>
-            </>
+            <p className="mt-4 lh-base">
+              {product?.description.length > 250
+                ? product?.description.substring(0, 250) + "..."
+                : product?.description}
+            </p>
           ) : (
-            <></>
+            ""
           )}
         </div>
       </div>

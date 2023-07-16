@@ -10,3 +10,29 @@
   color: var(--whiteColor) !important;
   background-color: var(--themeColorSecondary) !important;
 }
+
+.btnSecondary {
+  background-color: var(--themeColorSecondary) !important;
+  color: var(--whiteColor) !important;
+  font-size: 1.6rem;
+  border-radius: 0.4rem;
+  transition: all 0.3s ease 0s;
+}
+
+.btnSecondary:hover {
+  color: var(--whiteColor) !important;
+  background-color: var(--themeColorSecondaryDark) !important;
+}
+
+.btnDark {
+  background-color: var(--themeColorSecondaryDark) !important;
+  color: var(--whiteColor) !important;
+  font-size: 1.6rem;
+  border-radius: 0.4rem;
+  transition: all 0.3s ease 0s;
+}
+
+.btnDark:hover {
+  color: var(--whiteColor) !important;
+  background-color: var(--themeColorSecondary) !important;
+}

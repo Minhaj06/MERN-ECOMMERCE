@@ -56,3 +56,7 @@
 .productCard:hover .productIcon:last-child {
   right: 0;
 }
+
+.fullWidthImg {
+  max-width: 33rem !important;
+}
