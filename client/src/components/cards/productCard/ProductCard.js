@@ -10,6 +10,7 @@ import productPlaceholderImg from "../../../assets/images/productPlaceholder.png
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useCart } from "../../../context/cart";
+import Stars from "../../stars/Stars";
 
 const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
   // Context
@@ -95,11 +96,7 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
             </Link>
           </h4>
           <div className="mb-2">
-            <AiFillStar style={{ color: "#FDCC0D" }} />
-            <AiFillStar style={{ color: "#FDCC0D" }} />
-            <AiFillStar style={{ color: "#FDCC0D" }} />
-            <AiFillStar style={{ color: "#FDCC0D" }} />
-            <AiFillStar style={{ color: "#FDCC0D" }} />
+            <Stars />
             <small className="ms-3 lightColor">
               ({String(product?.rating).padStart(2, "0")})
             </small>

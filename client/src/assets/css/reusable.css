@@ -590,3 +590,8 @@
 .hoverLine:hover {
   text-decoration: underline;
 }
+
+/* Cursor */
+.cursor-pointer {
+  cursor: pointer;
+}

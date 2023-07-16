@@ -144,7 +144,7 @@ exports.list = async (req, res) => {
 exports.read = async (req, res) => {
   try {
     const product = await Product.findOne({ slug: req.params.slug })
-      .select("-photo")
+      .select("-photos")
       .populate("category");
 
     res.json(product);

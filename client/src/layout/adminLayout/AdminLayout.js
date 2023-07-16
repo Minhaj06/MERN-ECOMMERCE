@@ -217,7 +217,7 @@ const AdminLayout = () => {
       </Layout>
     </Layout>
   ) : (
-    <Loading path="" />
+    <Loading path="login" />
   );
 };
 
