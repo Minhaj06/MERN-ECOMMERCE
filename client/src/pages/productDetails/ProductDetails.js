@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "react-image-gallery/styles/css/image-gallery.css";
 import ReactImageGallery from "react-image-gallery";
 import "./productDetails.css";
@@ -14,6 +14,33 @@ import Collapse from "react-bootstrap/esm/Collapse";
 import FullScreenLoader from "../../components/FullScreenLoader";
 import { useCart } from "../../context/cart";
 import { toast } from "react-hot-toast";
+
+const dummySliderImages = [
+  {
+    original: productPlaceholderImg,
+    thumbnail: productPlaceholderImg,
+  },
+  {
+    original: productPlaceholderImg,
+    thumbnail: productPlaceholderImg,
+  },
+  {
+    original: productPlaceholderImg,
+    thumbnail: productPlaceholderImg,
+  },
+  {
+    original: productPlaceholderImg,
+    thumbnail: productPlaceholderImg,
+  },
+  {
+    original: productPlaceholderImg,
+    thumbnail: productPlaceholderImg,
+  },
+  {
+    original: productPlaceholderImg,
+    thumbnail: productPlaceholderImg,
+  },
+];
 
 const ProductDetails = () => {
   // state
@@ -63,43 +90,19 @@ const ProductDetails = () => {
     }
   };
 
-  const dummySliderImages = [
-    {
-      original: productPlaceholderImg,
-      thumbnail: productPlaceholderImg,
-    },
-    {
-      original: productPlaceholderImg,
-      thumbnail: productPlaceholderImg,
-    },
-    {
-      original: productPlaceholderImg,
-      thumbnail: productPlaceholderImg,
-    },
-    {
-      original: productPlaceholderImg,
-      thumbnail: productPlaceholderImg,
-    },
-    {
-      original: productPlaceholderImg,
-      thumbnail: productPlaceholderImg,
-    },
-    {
-      original: productPlaceholderImg,
-      thumbnail: productPlaceholderImg,
-    },
-  ];
-
-  const sliderImages = [];
-  if (photos.length > 0) {
-    photos.map((photo) => {
-      const imageObj = {
-        original: arrayBufferToBase64(photo.data.data),
-        thumbnail: arrayBufferToBase64(photo.data.data),
-      };
-      sliderImages.push(imageObj);
-    });
-  }
+  const sliderImages = useMemo(() => {
+    const images = [];
+    if (photos.length > 0) {
+      photos.forEach((photo) => {
+        const imageObj = {
+          original: arrayBufferToBase64(photo.data.data),
+          thumbnail: arrayBufferToBase64(photo.data.data),
+        };
+        images.push(imageObj);
+      });
+    }
+    return images.length > 0 ? images : dummySliderImages;
+  }, [photos]);
 
   return (
     <>
