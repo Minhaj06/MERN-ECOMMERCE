@@ -11,13 +11,20 @@ import Stars from "../../components/stars/Stars";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
 import Collapse from "react-bootstrap/esm/Collapse";
+import FullScreenLoader from "../../components/FullScreenLoader";
+import { useCart } from "../../context/cart";
+import { toast } from "react-hot-toast";
 
 const ProductDetails = () => {
   // state
+  const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState();
   const [photos, setPhotos] = useState([]);
   const [cartQuantity, setCartQuantity] = useState(1);
   const [activeCollapse, setActiveCollapse] = useState(null);
+
+  // Context
+  const [cart, setCart] = useCart();
 
   const handleCollapse = (id) => {
     setActiveCollapse(activeCollapse === id ? null : id);
@@ -35,11 +42,14 @@ const ProductDetails = () => {
   }, [product?._id]);
 
   const loadProduct = async (req, res) => {
+    setIsLoading(true);
     try {
       const { data } = await axios.get(`/product/${slug}`);
       setProduct(data);
       console.log(data);
+      setIsLoading(false);
     } catch (err) {
+      setIsLoading(false);
       console.log(err);
     }
   };
@@ -93,6 +103,7 @@ const ProductDetails = () => {
 
   return (
     <>
+      {isLoading && <FullScreenLoader />}
       <section className="my-50">
         <div className="container">
           <div className="row g-5 position-relative mb-4">
@@ -166,7 +177,14 @@ const ProductDetails = () => {
                     </div>
                   </div>
                   <div className="col-7">
-                    <button className="btn btnPrimary py-12 rounded-pill w-100">
+                    <button
+                      className="btn btnPrimary py-12 rounded-pill w-100"
+                      onClick={() => {
+                        setCart([...cart, product]);
+                        localStorage.setItem("cart", JSON.stringify([...cart, product]));
+                        toast.success("Added to cart");
+                      }}
+                    >
                       Add To Cart
                     </button>
                   </div>
@@ -185,6 +203,7 @@ const ProductDetails = () => {
 
                 <div>
                   <button
+                    className="btn btnPrimary"
                     onClick={() => handleCollapse(1)}
                     aria-expanded={activeCollapse === 1}
                   >
@@ -192,9 +211,16 @@ const ProductDetails = () => {
                   </button>
 
                   <Collapse in={activeCollapse === 1}>
-                    <p>
+                    <p className="border border-danger">
                       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis,
                       ratione!
+                      <br />
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis,
+                      ratione!
+                      <br />
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis,
+                      ratione!
+                      <br />
                     </p>
                   </Collapse>
                 </div>

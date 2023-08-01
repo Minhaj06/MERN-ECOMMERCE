@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { AiFillStar, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { IoBagCheckOutline } from "react-icons/io5";
 import "./productCard.css";
 
