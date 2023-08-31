@@ -1,88 +1,99 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import React, { useState } from "react";
+
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { FiChevronDown } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
-import MegaMenuWomen from "../megaMenu/MegaMuenuWomen";
+import MegaMenu from "../megaMenu/MegaMunu";
 import { useCart } from "../../context/cart";
+import { Button, Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
+
+// Define the main menu items as an array of objects
+const mainMenuItems = [
+  { label: "Home", to: "/" },
+  { label: "Shop", to: "/shop" },
+  { label: "Women", to: "category/women", megaMenu: true },
+  { label: "Men", to: "category/men" },
+  { label: "Sports", to: "category/sports" },
+];
 
 const MainMenu = () => {
   // Context
   const [cart, setCart] = useCart();
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
-    <Navbar className="mb-4 bg-transparent" bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand className="me-5">
-          <Link to="/">
-            <img
-              src="https://minhaj06.github.io/AlifaOnline-OkkhoTech/images/logo.svg"
-              alt="Logo"
-            />
-          </Link>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto gap-4">
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/" aria-current="page">
-                Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/shop">
-                Shop
-              </NavLink>
-            </li>
-
-            <li className="nav-item ms-0 megaMenuLink">
-              <NavLink className="nav-link" to="category/women">
-                Women
-                <FiChevronDown size={20} />
-              </NavLink>
-              {/* mega menu */}
-              <MegaMenuWomen />
-            </li>
-
-            <li className="nav-item">
-              <NavLink className="nav-link" to="category/men">
-                Men
-              </NavLink>
-            </li>
-
-            <li className="nav-item">
-              <NavLink className="nav-link" to="category/sports">
-                Sports
-              </NavLink>
-            </li>
-          </Nav>
-
-          <div className="menuIcons d-flex align-items-center">
-            <div className="topbar-icon-group me-20">
-              <NavLink className="text-color-dark" to="/wishlist">
-                <div className="floating-text-icon d-inline-block position-relative">
-                  <AiOutlineHeart size={22} />
-                  <span className="floating-num">0</span>
-                </div>
-              </NavLink>
-            </div>
-            <div className="topbar-icon-group me-20">
-              <NavLink className="text-color-dark" to="/cart">
-                <div className="floating-text-icon d-inline-block position-relative">
-                  <AiOutlineShoppingCart size={22} />
-                  <span className="floating-num">{cart.length}</span>
-                </div>
-              </NavLink>
-            </div>
-            <div className="totalAmount">
-              <small className="fs-12 lightColor">Total</small>
-              <h5 className="fs-14">$0.00</h5>
-            </div>
+    <>
+      <Offcanvas show={show} onHide={handleClose} responsive="lg">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Responsive offcanvas</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <p className="mb-0">
+            This is content within an <code>.offcanvas-lg</code>.
+          </p>
+          <div>
+            <h1 className="p-5 bg-success">Hello</h1>
           </div>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        </Offcanvas.Body>
+      </Offcanvas>
+
+      <Navbar className="mb-4 bg-transparent" bg="light" expand="lg">
+        <Button variant="primary" className="d-lg-none" onClick={handleShow}>
+          Launch
+        </Button>
+        <Container>
+          <Navbar.Brand className="me-5">
+            <Link to="/">
+              <img
+                src="https://minhaj06.github.io/AlifaOnline-OkkhoTech/images/logo.svg"
+                alt="Logo"
+              />
+            </Link>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto gap-4">
+              {mainMenuItems.map((item, index) => (
+                <li className="nav-item" key={index}>
+                  <NavLink className="nav-link" to={item.to} aria-current="page">
+                    {item.label}
+                    {item.megaMenu && <FiChevronDown size={20} />}
+                  </NavLink>
+                  {item.megaMenu && <MegaMenu />}
+                </li>
+              ))}
+            </Nav>
+
+            <div className="menuIcons d-flex align-items-center">
+              <div className="topbar-icon-group me-20">
+                <NavLink className="text-color-dark" to="/wishlist">
+                  <div className="floating-text-icon d-inline-block position-relative">
+                    <AiOutlineHeart size={22} />
+                    <span className="floating-num">0</span>
+                  </div>
+                </NavLink>
+              </div>
+              <div className="topbar-icon-group me-20">
+                <NavLink className="text-color-dark" to="/cart">
+                  <div className="floating-text-icon d-inline-block position-relative">
+                    <AiOutlineShoppingCart size={22} />
+                    <span className="floating-num">{cart.length}</span>
+                  </div>
+                </NavLink>
+              </div>
+              <div className="totalAmount">
+                <small className="fs-12 lightColor">Total</small>
+                <h5 className="fs-14">$0.00</h5>
+              </div>
+            </div>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </>
   );
 };
 

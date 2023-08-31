@@ -1,10 +1,10 @@
 import React from "react";
 import "./megaMenu.css";
-import megaMenuWomen from "../../assets/images/megaMenuWomen.jpg";
+import megaMenuWomenImg from "../../assets/images/megaMenuWomen.jpg";
 import { BsArrowRightShort } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 
-const MegaMuenuWomen = () => {
+const MegaMenu = () => {
   return (
     <div className="megaMenu">
       <div className="container">
@@ -151,7 +151,7 @@ const MegaMuenuWomen = () => {
           <div className="col-lg-3">
             <div className="overflow-hidden">
               <NavLink to="/" className="d-block">
-                <img className="w-100 megaMenuImg mb-4" src={megaMenuWomen} alt="" />
+                <img className="w-100 megaMenuImg mb-4" src={megaMenuWomenImg} alt="" />
               </NavLink>
             </div>
           </div>
@@ -161,4 +161,4 @@ const MegaMuenuWomen = () => {
   );
 };
 
-export default MegaMuenuWomen;
+export default MegaMenu;

@@ -22,8 +22,8 @@
 }
 
 .homeCarousel {
-  width: calc(100% - 32.5rem);
-  margin-left: 32.5rem;
+  /* width: calc(100% - 32.5rem);
+  margin-left: 32.5rem; */
   margin-top: 2.5rem;
 }
 .homeCarousel img {
@@ -39,4 +39,12 @@
 }
 .swiper-pagination-bullet-active {
   background: var(--themeColorSecondaryDark);
+}
+
+@media (min-width: 992px) {
+  .homeCarousel {
+    width: calc(100% - 32.5rem);
+    margin-left: 32.5rem;
+    margin-top: 2.5rem;
+  }
 }

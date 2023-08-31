@@ -27,9 +27,23 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
     return;
   };
 
+  {
+    /* 
+    background: var(--lightColor2);
+    border-radius: 1rem;
+    border: 1px solid var(--bs-gray-300);
+    box-shadow: 0rem 0rem 2rem var(--bs-gray-500);
+
+
+*/
+  }
   return (
     <div
-      className={`${isTrending && "trendingProductCard"} 
+      style={{
+        border: "1px solid var(--bs-gray-300)",
+        // boxShadow: "0 0 2rem var(--bs-gray-500)",
+      }}
+      className={`bgLight2 shadow rounded-4 ${isTrending && "trendingProductCard"} 
       ${fullWidth && "fullWidthWrapper"} productCard h-100`}
     >
       <div className={`${isTrending ? "row h-100" : ""}`}>
@@ -82,7 +96,7 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
           </div>
         </div>
         <div
-          className={`${isTrending ? "col-8" : ""} ${
+          className={`p-4 ${isTrending ? "col-8" : "pt-0"} ${
             fullWidth && "fullWidthDesc flex-grow-1"
           } ${listView ? "ps-sm-5" : ""} productDetails`}
         >

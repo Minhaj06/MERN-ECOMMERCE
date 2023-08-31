@@ -3,6 +3,7 @@ import TopNav from "../../components/nav/TopNav";
 import SearchNav from "../../components/nav/SearchNav";
 import { Outlet } from "react-router-dom";
 import MainMenu from "../../components/nav/MainMenu";
+import Footer from "../../components/footer/Footer";
 
 const PublicLayout = () => {
   return (
@@ -11,6 +12,7 @@ const PublicLayout = () => {
       <MainMenu />
       <SearchNav />
       <Outlet />
+      <Footer />
     </Fragment>
   );
 };

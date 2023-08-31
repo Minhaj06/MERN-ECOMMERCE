@@ -143,3 +143,9 @@ select {
 .dropdown-item:active {
   background-color: var(--themeColor);
 }
+
+@media (min-width: 992px) {
+  .offcanvas-lg .offcanvas-body {
+    display: none !important;
+  }
+}

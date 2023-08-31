@@ -11,8 +11,8 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import PageNotFound from "./pages/PageNotFound";
 import Secret from "./pages/Secret";
 import Search from "./pages/Search";
-import AdminLayout from "./layout/adminLayout/AdminLayout";
 import PublicLayout from "./layout/publicLayout/PublicLayout";
+import AdminLayout from "./layout/adminLayout/AdminLayout";
 import Category from "./pages/admin/Category";
 import ProductDetails from "./pages/productDetails/ProductDetails";
 
@@ -31,6 +31,8 @@ const AllRoutes = () => {
             <Route path="/shop" element={<Shop />} />
             <Route path="/search" element={<Search />} />
             <Route path="/product/:slug" element={<ProductDetails />} />
+
+            {/* Private Route */}
             <Route path="/dashboard" element={<PrivateRoute />}>
               <Route path="user" element={<UserDashboard />} />
               <Route path="secret" element={<Secret />} />
