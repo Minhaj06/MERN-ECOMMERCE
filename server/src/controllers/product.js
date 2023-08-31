@@ -15,7 +15,7 @@ const sgMail = require("@sendgrid/mail");
 //   privateKey: process.env.BRAINTREE_PRIVATE_KEY,
 // });
 
-// Single Image
+// Create Product With Single Image
 // exports.create = async (req, res) => {
 //   try {
 //     // console.log(req.fields);
@@ -66,7 +66,7 @@ const sgMail = require("@sendgrid/mail");
 //   }
 // };
 
-// Multiple Image
+// Create Product With Multiple Image
 exports.create = async (req, res) => {
   try {
     const { name, description, price, category, subcategory, quantity, isFeatured, shipping } =
@@ -226,6 +226,59 @@ exports.remove = async (req, res) => {
   }
 };
 
+// exports.update = async (req, res) => {
+//   try {
+//     // console.log(req.fields);
+//     // console.log(req.files);
+
+//     const { name, description, price, category, subcategory, quantity, isFeatured, shipping } =
+//       req.fields;
+
+//     const { photos } = req.files;
+//     // console.log("PHOTO========>", photo);
+
+//     // Validation
+//     switch (true) {
+//       case !name?.trim():
+//         return res.json({ error: "Name is required" });
+//       case !description?.trim():
+//         return res.json({ error: "Description is required" });
+//       case !price?.trim():
+//         return res.json({ error: "Price is required" });
+//       case !category?.trim():
+//         return res.json({ error: "Category is required" });
+//       case !quantity?.trim():
+//         return res.json({ error: "Quantity is required" });
+//       case !shipping?.trim():
+//         return res.json({ error: "Shipping is required" });
+//       case photo && photo.size > 1000000:
+//         return res.json({ error: "Image should be less than 1mb in size" });
+//     }
+
+//     // Update Product
+//     const product = await Product.findByIdAndUpdate(
+//       req.params.productId,
+//       {
+//         ...req.fields,
+//         slug: slugify(name),
+//       },
+//       { new: true }
+//     );
+
+//     if (photo) {
+//       product.photos.data = fs.readFileSync(photo.path);
+//       product.photos.contentType = photo.type;
+//     }
+
+//     await product.save();
+//     res.json(product);
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(400).json(err.message);
+//   }
+// };
+
+// Update Product With Multiple Image
 exports.update = async (req, res) => {
   try {
     // console.log(req.fields);
@@ -234,8 +287,13 @@ exports.update = async (req, res) => {
     const { name, description, price, category, subcategory, quantity, isFeatured, shipping } =
       req.fields;
 
-    const { photo } = req.files;
-    // console.log("PHOTO========>", photo);
+    const { photos } = req.files;
+
+    // Handle multiple files
+    const receivedPhotos = Array.isArray(photos) ? photos : [photos];
+    if (receivedPhotos.length > 6) {
+      return res.json({ error: "Exceeded the maximum number of images allowed (6)." });
+    }
 
     // Validation
     switch (true) {
@@ -251,8 +309,14 @@ exports.update = async (req, res) => {
         return res.json({ error: "Quantity is required" });
       case !shipping?.trim():
         return res.json({ error: "Shipping is required" });
-      case photo && photo.size > 1000000:
-        return res.json({ error: "Image should be less than 1mb in size" });
+    }
+
+    // Find the existing product by name
+    const existingProduct = await Product.findOne({ name });
+
+    // Check if the existing product is different from the one being updated
+    if (existingProduct && existingProduct._id.toString() !== req.params.productId) {
+      return res.json({ error: "Product with this name already exists" });
     }
 
     // Update Product
@@ -265,9 +329,19 @@ exports.update = async (req, res) => {
       { new: true }
     );
 
-    if (photo) {
-      product.photo.data = fs.readFileSync(photo.path);
-      product.photo.contentType = photo.type;
+    if (receivedPhotos) {
+      product.photos = []; // Clear existing photos
+      for (let i = 0; i < receivedPhotos.length; i++) {
+        const photo = receivedPhotos[i];
+        if (photo.size > 1000000) {
+          return res.json({ error: "Each image should be less than 1mb in size" });
+        }
+        const photoData = {
+          data: fs.readFileSync(photo.path),
+          contentType: photo.type,
+        };
+        product.photos.push(photoData);
+      }
     }
 
     await product.save();
@@ -369,6 +443,7 @@ exports.trendingProducts = async (req, res) => {
   try {
     const trendingProducts = await Product.find({})
       .populate("category")
+      .populate("subcategory")
       .select("-photo")
       .limit(8)
       .sort({ sold: -1 });
@@ -384,6 +459,7 @@ exports.featuredProducts = async (req, res) => {
   try {
     const featuredProducts = await Product.find({ isFeatured: true })
       .populate("category")
+      .populate("subcategory")
       .select("-photo")
       .limit(8)
       .sort({ createdAt: -1 });

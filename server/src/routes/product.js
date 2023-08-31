@@ -26,10 +26,10 @@ const {
   orderStatus,
 } = require("../controllers/product.js");
 
-// Single Image
+// Create Product With Single Image
 // router.post("/product", requireSignin, isAdmin, formidable(), create);
 
-// Multiple Images
+// Create Product With Multiple Images
 router.post(
   "/product",
   requireSignin,
@@ -39,12 +39,27 @@ router.post(
   }),
   create
 );
+
 router.get("/products", list);
 router.get("/product/:slug", read);
 router.get("/product/photo/:productId", photo);
 router.get("/product/photos/:productId", photos);
 router.delete("/product/:productId", requireSignin, isAdmin, remove);
-router.put("/product/:productId", requireSignin, isAdmin, formidable(), update);
+
+// Update Product With Single Image
+// router.put("/product/:productId", requireSignin, isAdmin, formidable(), update);
+
+// Update Product With Multiple Images
+router.put(
+  "/product/:productId",
+  requireSignin,
+  isAdmin,
+  formidable({
+    multiples: true,
+  }),
+  update
+);
+
 router.post("/filtered-products", filteredProducts);
 router.get("/products-count", productCount);
 router.get("/list-products/:page/:perPage", listProducts);
