@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import "./searchNav.css";
 import { BsSearch } from "react-icons/bs";
 import axios from "axios";
-import { useSearch } from "../../context/search";
+import { useSearch } from "../../../context/search";
 import { useNavigate } from "react-router-dom";
-import CategoryMenu from "../categoryMenu/CategoryMenu";
+import CategoryMenu from "../../categoryMenu/CategoryMenu";
 
 const SearchNav = () => {
   // hooks
@@ -73,9 +74,9 @@ const SearchNav = () => {
                       ))}
                     </select>
                     <input
-                      style={{ width: "30rem", maxWidth: "30rem" }}
+                      // style={{ width: "30rem", maxWidth: "30rem" }}
                       type="search"
-                      className="form-control border-0 border-start border-secondary shadow-none ps-4"
+                      className="searchInput form-control border-0 border-start border-secondary shadow-none ps-4"
                       placeholder="Search..."
                       onChange={(e) => setValues({ ...values, keyword: e.target.value })}
                       value={values.keyword || ""}

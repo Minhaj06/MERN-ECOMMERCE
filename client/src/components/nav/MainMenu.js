@@ -58,7 +58,7 @@ const MainMenu = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto gap-4">
               {mainMenuItems.map((item, index) => (
-                <li className="nav-item" key={index}>
+                <li className={`nav-item${item?.megaMenu ? " megaMenuLink" : ""}`} key={index}>
                   <NavLink className="nav-link" to={item.to} aria-current="page">
                     {item.label}
                     {item.megaMenu && <FiChevronDown size={20} />}

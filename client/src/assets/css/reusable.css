@@ -136,6 +136,10 @@
   color: var(--themeColorSecondaryDark) !important;
 }
 
+.textColor {
+  color: var(--textColor) !important;
+}
+
 .lightColor {
   color: var(--lightColor) !important;
 }
