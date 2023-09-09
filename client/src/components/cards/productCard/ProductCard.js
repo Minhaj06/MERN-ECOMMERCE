@@ -27,16 +27,6 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
     return;
   };
 
-  {
-    /* 
-    background: var(--lightColor2);
-    border-radius: 1rem;
-    border: 1px solid var(--bs-gray-300);
-    box-shadow: 0rem 0rem 2rem var(--bs-gray-500);
-
-
-*/
-  }
   return (
     <div
       style={{
@@ -115,7 +105,7 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
               ({String(product?.rating).padStart(2, "0")})
             </small>
           </div>
-          <h4 className="fs-18 fw-normal mb-2">
+          <h4 className="fs-18 fw-normal mt-4">
             <span className="themeColor me-3">
               {product?.price?.toLocaleString("en-US", {
                 style: "currency",

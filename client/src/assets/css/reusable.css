@@ -176,6 +176,9 @@
 .bgLight2 {
   background-color: var(--lightColor2) !important;
 }
+.bgLight3 {
+  background-color: var(--lightColor3) !important;
+}
 .bgDark {
   background-color: var(--darkColor) !important;
 }
@@ -257,17 +260,6 @@
 }
 .fw-semibold {
   font-weight: 600 !important;
-}
-
-/* Borders */
-.border-dark {
-  border: 1px solid var(--textColor);
-}
-.border-dark-top {
-  border-top: 1px solid var(--textColor);
-}
-.border-dark-bottom {
-  border-bottom: 1px solid var(--textColor);
 }
 
 .rounded-top-3 {

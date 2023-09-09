@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./trendingProducts.css";
 import axios from "axios";
 import ProductCard from "../cards/productCard/ProductCard";
+import OfferCard from "../cards/offerCard/OfferCard";
 
 const TrendingProducts = () => {
   const [trendingProducts, setTrendingProducts] = useState([]);
@@ -19,6 +20,31 @@ const TrendingProducts = () => {
     }
   };
 
+  const products = [
+    {
+      _id: "64f08b5ea48bf2e08587ebd1",
+      name: "Web template",
+      slug: "web-template",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+      price: 6100,
+      rating: 434,
+      photo:
+        "https://mern-ecom-server.vercel.app/api/v1/product/photo/64fc9ea63a045402c10358a9",
+      offerEndDate: "2023-09-14T16:45:13.578Z",
+    },
+    {
+      _id: "64fca5603a045402c1035c1f",
+      name: "Web Template 2",
+      slug: "web-template-2",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+      price: 6100,
+      rating: 263,
+      photo:
+        "https://mern-ecom-server.vercel.app/api/v1/product/photo/64fc9ea63a045402c10358a9",
+      offerEndDate: "2023-10-09T16:57:38.702Z",
+    },
+  ];
+
   return (
     <div className="my-50">
       <div className="container">
@@ -28,9 +54,11 @@ const TrendingProducts = () => {
           </div>
 
           <div className="col-12">
-            <div className="row">
+            <div className="row g-5">
               <div className="col-lg-4">
-                <h2 className="text-danger">Offer Slider</h2>
+                {products.slice(0, 1).map((product) => (
+                  <OfferCard product={product} key={product?._id} />
+                ))}
               </div>
               <div className="col-lg-8">
                 <div className="row g-5">
