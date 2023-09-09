@@ -130,7 +130,7 @@ exports.list = async (req, res) => {
   try {
     const products = await Product.find({})
       .populate("category")
-      .select("-photo")
+      .select("-photos")
       .limit(12)
       .sort({ createdAt: -1 });
 
@@ -218,7 +218,7 @@ exports.photos = async (req, res) => {
 
 exports.remove = async (req, res) => {
   try {
-    const product = await Product.findByIdAndDelete(req.params.productId).select("-photo");
+    const product = await Product.findByIdAndDelete(req.params.productId).select("-photos");
     res.json(product);
   } catch (err) {
     console.log(err);
@@ -362,7 +362,7 @@ exports.filteredProducts = async (req, res) => {
     if (priceRange.length) args.price = { $gte: priceRange[0], $lte: priceRange[1] };
     // console.log("args ==> ", args);
 
-    const products = await Product.find(args).select("-photo");
+    const products = await Product.find(args).select("-photos");
     // console.log("Filtered products query ==> ", products.length);
     res.json(products);
     return;
@@ -388,7 +388,7 @@ exports.listProducts = async (req, res) => {
     const page = req.params.page ? req.params.page : 1;
 
     const products = await Product.find({})
-      .select("-photo")
+      .select("-photos")
       .skip((page - 1) * perPage)
       .limit(perPage)
       .sort({ createdAt: -1 });
@@ -413,7 +413,7 @@ exports.productSearch = async (req, res) => {
     if (category !== undefined) {
       query.category = category;
     }
-    const results = await Product.find(query).select("-photo");
+    const results = await Product.find(query).select("-photos");
     res.json(results);
   } catch (err) {
     console.log(err);
@@ -428,7 +428,7 @@ exports.relatedProducts = async (req, res) => {
       category: categoryId,
       _id: { $ne: productId },
     })
-      .select("-photo")
+      .select("-photos")
       .populate("category")
       .limit(3);
 
@@ -444,7 +444,7 @@ exports.trendingProducts = async (req, res) => {
     const trendingProducts = await Product.find({})
       .populate("category")
       .populate("subcategory")
-      .select("-photo")
+      .select("-photos")
       .limit(8)
       .sort({ sold: -1 });
 
@@ -460,7 +460,7 @@ exports.featuredProducts = async (req, res) => {
     const featuredProducts = await Product.find({ isFeatured: true })
       .populate("category")
       .populate("subcategory")
-      .select("-photo")
+      .select("-photos")
       .limit(8)
       .sort({ createdAt: -1 });
 

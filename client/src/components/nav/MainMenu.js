@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { FiChevronDown } from "react-icons/fi";
@@ -19,6 +19,14 @@ const mainMenuItems = [
 const MainMenu = () => {
   // Context
   const [cart, setCart] = useCart();
+
+  // state
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const totalAmount = parseFloat(cart.reduce((total, product) => total + product?.price, 0));
+    setTotalPrice(totalAmount);
+  }, [cart]);
 
   const [show, setShow] = useState(false);
 
@@ -41,10 +49,17 @@ const MainMenu = () => {
         </Offcanvas.Body>
       </Offcanvas>
 
-      <Navbar className="mb-4 bg-transparent" bg="light" expand="lg">
-        <Button variant="primary" className="d-none d-lg-none" onClick={handleShow}>
+      {/* <div className="container">
+        <Button variant="danger" className="d-lg-none" onClick={handleShow}>
           Launch
         </Button>
+
+        <div>
+          <pre>{JSON.stringify(cart, null, 4)}</pre>
+        </div>
+      </div> */}
+
+      <Navbar className="mb-4 bg-transparent" bg="light" expand="lg">
         <Container>
           <Navbar.Brand className="me-5">
             <Link to="/">
@@ -60,10 +75,10 @@ const MainMenu = () => {
               {mainMenuItems.map((item, index) => (
                 <li className={`nav-item${item?.megaMenu ? " megaMenuLink" : ""}`} key={index}>
                   <NavLink className="nav-link" to={item.to} aria-current="page">
-                    {item.label}
-                    {item.megaMenu && <FiChevronDown size={20} />}
+                    {item?.label}
+                    {item?.megaMenu && <FiChevronDown size={20} />}
                   </NavLink>
-                  {item.megaMenu && <MegaMenu />}
+                  {item?.megaMenu && <MegaMenu />}
                 </li>
               ))}
             </Nav>
@@ -86,8 +101,8 @@ const MainMenu = () => {
                 </NavLink>
               </div>
               <div className="totalAmount">
-                <small className="fs-12 lightColor">Total</small>
-                <h5 className="fs-14">$0.00</h5>
+                <small className="fs-14 lightColor">Total</small>
+                <h5 className="fs-14">${totalPrice.toFixed(2)}</h5>
               </div>
             </div>
           </Navbar.Collapse>
