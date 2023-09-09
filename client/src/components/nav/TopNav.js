@@ -14,7 +14,7 @@ import { FiLogIn, FiLogOut } from "react-icons/fi";
 
 const TopNav = () => {
   // hooks
-  const [auth, setAuth] = useAuth();
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const logout = () => {
     setAuth({ ...auth, user: null, token: "" });

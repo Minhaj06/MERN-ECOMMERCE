@@ -42,7 +42,7 @@ const MainMenu = () => {
       </Offcanvas>
 
       <Navbar className="mb-4 bg-transparent" bg="light" expand="lg">
-        <Button variant="primary" className="d-lg-none" onClick={handleShow}>
+        <Button variant="primary" className="d-none d-lg-none" onClick={handleShow}>
           Launch
         </Button>
         <Container>

@@ -15,14 +15,6 @@ const AuthProvider = ({ children }) => {
   axios.defaults.baseURL = process.env.REACT_APP_API;
   axios.defaults.headers.common["Authorization"] = auth?.token;
 
-  // const showLoader = () => {
-  //   setIsLoading(true);
-  // };
-
-  // const hideLoader = () => {
-  //   setIsLoading(false);
-  // };
-
   useEffect(() => {
     const data = localStorage.getItem("auth");
 
@@ -34,13 +26,17 @@ const AuthProvider = ({ children }) => {
     setIsLoading(false);
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ auth, setAuth, isLoading, setIsLoading }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const showLoader = () => {
+    setIsLoading(true);
+  };
+  const hideLoader = () => {
+    setIsLoading(false);
+  };
+
+  return <AuthContext.Provider value={[auth, setAuth]}>{children}</AuthContext.Provider>;
 };
 
 const useAuth = () => useContext(AuthContext);
+const useLoader = () => useContext(AuthContext);
 
 export { useAuth, AuthProvider };

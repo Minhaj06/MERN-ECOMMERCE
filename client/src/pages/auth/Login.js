@@ -11,7 +11,7 @@ function Login() {
   const [password, setPassword] = useState("");
 
   // hook
-  const [auth, setAuth] = useAuth();
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 

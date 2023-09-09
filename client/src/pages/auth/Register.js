@@ -13,7 +13,7 @@ function Register() {
   const [password, setPassword] = useState("");
 
   // hooks
-  const [auth, setAuth] = useAuth();
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import LoadingGIF from "../../images/loading.gif";
+import LoadingGIF from "../../assets/images/loading.gif";
 
 import React from "react";
 

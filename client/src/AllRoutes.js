@@ -1,6 +1,6 @@
 import React, { Fragment, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import FullScreenLoader from "./components/FullScreenLoader";
+import LazyLoader from "./components/LazyLoader";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/auth/Login"));
@@ -23,7 +23,7 @@ const AllRoutes = () => {
   return (
     <Fragment>
       <BrowserRouter>
-        <Suspense fallback={<FullScreenLoader />}>
+        <Suspense fallback={<LazyLoader />}>
           <Routes>
             {/* Public Layout */}
             <Route element={<PublicLayout />}>

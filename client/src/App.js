@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AllRoutes from "./AllRoutes";
 import { Toaster } from "react-hot-toast";
 import { ConfigProvider } from "antd";
+import FullScreenLoader from "./components/FullScreenLoader";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         },
       }}
     >
+      <FullScreenLoader />
       <Toaster />
       <AllRoutes></AllRoutes>
     </ConfigProvider>

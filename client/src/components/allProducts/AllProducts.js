@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "../cards/productCard/ProductCard";
-import FullScreenLoader from "../FullScreenLoader";
+import { useAuth } from "../../context/auth";
 
 const AllProducts = () => {
+  const { isLoading, setIsLoading } = useAuth();
+
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState([]);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(8);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     loadProducts();
@@ -55,7 +56,6 @@ const AllProducts = () => {
 
   return (
     <>
-      {isLoading && <FullScreenLoader />}
       <div className="my-50">
         <div className="container">
           <div className="row g-4">

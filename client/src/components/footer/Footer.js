@@ -47,7 +47,7 @@ const paymentMethodImages = [
 
 const Footer = () => {
   return (
-    <footer className="footer bgLight2 mt-5 pt-4">
+    <footer className="footer bgLight2 mt-50 pt-4">
       <div className="container">
         <div className="row">
           <div className="col-lg-12 py-5 border-bottom border-secondary">
@@ -107,22 +107,31 @@ const Footer = () => {
 
                   <ul>
                     <li className="mb-4">
-                      <Link className="textColor text-decoration-underline fs-3" to="">
+                      <Link className="textColor text-decoration-underline fs-3" to="/login">
                         login
                       </Link>
                     </li>
                     <li className="mb-4">
-                      <Link className="textColor text-decoration-underline fs-3" to="">
+                      <Link
+                        className="textColor text-decoration-underline fs-3"
+                        to="/wish-list"
+                      >
                         wish list
                       </Link>
                     </li>
                     <li className="mb-4">
-                      <Link className="textColor text-decoration-underline fs-3" to="">
+                      <Link
+                        className="textColor text-decoration-underline fs-3"
+                        to="/order-history"
+                      >
                         Order History
                       </Link>
                     </li>
                     <li className="mb-4">
-                      <Link className="textColor text-decoration-underline fs-3" to="">
+                      <Link
+                        className="textColor text-decoration-underline fs-3"
+                        to="/order-tracking"
+                      >
                         Order Tracking
                       </Link>
                     </li>
@@ -136,27 +145,27 @@ const Footer = () => {
 
                   <ul>
                     <li className="mb-4">
-                      <Link className="textColor fs-3" to="">
+                      <Link className="textColor fs-3" to="/privacy-policy">
                         Privacy Policy
                       </Link>
                     </li>
                     <li className="mb-4">
-                      <Link className="textColor fs-3" to="">
+                      <Link className="textColor fs-3" to="/shipping-policy">
                         Shipping Policy
                       </Link>
                     </li>
                     <li className="mb-4">
-                      <Link className="textColor fs-3" to="">
+                      <Link className="textColor fs-3" to="/payment-policy">
                         Payment Policy
                       </Link>
                     </li>
                     <li className="mb-4">
-                      <Link className="textColor fs-3" to="">
+                      <Link className="textColor fs-3" to="/return-policy">
                         Returns & Refunds
                       </Link>
                     </li>
                     <li className="mb-4">
-                      <Link className="textColor fs-3" to="">
+                      <Link className="textColor fs-3" to="/terms-conditions">
                         Terms & Conditions
                       </Link>
                     </li>
@@ -207,7 +216,13 @@ const Footer = () => {
             <div className="row">
               <div className="col-8 text-lg-end">
                 <p className="text-capitalize textColor">
-                  © all rights reserved terms conditions- privacy policy
+                  © all rights reserved terms conditions-{" "}
+                  <Link
+                    className="fw-medium themeColorSecondaryDark hoverable"
+                    to="privacy-policy"
+                  >
+                    privacy policy
+                  </Link>
                 </p>
               </div>
               <div className="col-4 text-end">

@@ -2,7 +2,7 @@ import { useAuth } from "../../context/auth";
 
 const UserDashboard = () => {
   // context
-  const [auth, setAuth] = useAuth();
+  const { auth, setAuth } = useAuth();
 
   return (
     <>

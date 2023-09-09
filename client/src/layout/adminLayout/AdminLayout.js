@@ -24,7 +24,7 @@ const AdminLayout = () => {
   const admin = "/dashboard/admin";
 
   // context
-  const [auth, setAuth] = useAuth();
+  const { auth, setAuth } = useAuth();
 
   // state
   const [ok, setOk] = useState(false);
