@@ -22,13 +22,17 @@
 }
 
 .homeCarousel {
-  /* width: calc(100% - 32.5rem);
-  margin-left: 32.5rem; */
   margin-top: 2.5rem;
 }
-.homeCarousel img {
+/* .homeCarousel img {
   height: 50rem;
   max-height: 50rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  object-fit: fill;
+} */
+.homeCarousel img {
+  height: 25rem;
   overflow: hidden;
   border-radius: 0.5rem;
   object-fit: fill;
@@ -41,10 +45,24 @@
   background: var(--themeColorSecondaryDark);
 }
 
+@media (min-width: 576px) {
+  .homeCarousel img {
+    height: 30rem;
+  }
+}
+@media (min-width: 768px) {
+  .homeCarousel img {
+    height: 40rem;
+  }
+}
+
 @media (min-width: 992px) {
   .homeCarousel {
     width: calc(100% - 32.5rem);
     margin-left: 32.5rem;
     margin-top: 2.5rem;
+  }
+  .homeCarousel img {
+    height: 51rem;
   }
 }

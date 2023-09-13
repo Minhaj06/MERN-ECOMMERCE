@@ -43,6 +43,10 @@
   width: 2.4rem;
 }
 
+:where(.css-dev-only-do-not-override-14l2z2n).ant-rate .ant-rate-star-first, :where(.css-dev-only-do-not-override-14l2z2n).ant-rate .ant-rate-star-second {
+  color: var(--lightColor);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .image-gallery-icon:hover {
     color: var(--themeColor);

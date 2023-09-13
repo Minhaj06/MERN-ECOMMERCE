@@ -291,6 +291,11 @@
   border-bottom-right-radius: 1rem !important;
 }
 
+/* Border */
+.borderTheme {
+  border-color: var(--themeColor) !important;
+}
+
 /* Padding */
 .p-12 {
   padding: 1.2rem !important;

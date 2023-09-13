@@ -8,7 +8,21 @@
 
 .btnPrimary:hover {
   color: var(--whiteColor) !important;
-  background-color: var(--themeColorSecondary) !important;
+  opacity: 0.85;
+  /* background-color: var(--themeColorSecondary) !important; */
+}
+
+.btnPrimaryOutline {
+  color: var(--themeColor) !important;
+  border: 1px solid var(--themeColor);
+  font-size: 1.6rem;
+  border-radius: 0.4rem;
+  transition: all 0.3s ease 0s;
+}
+.btnPrimaryOutline:hover {
+  background-color: var(--themeColor);
+  color: var(--whiteColor) !important;
+  opacity: 0.85;
 }
 
 .btnSecondary {
@@ -21,7 +35,8 @@
 
 .btnSecondary:hover {
   color: var(--whiteColor) !important;
-  background-color: var(--themeColorSecondaryDark) !important;
+  opacity: 0.85;
+  /* background-color: var(--themeColorSecondaryDark) !important; */
 }
 
 .btnDark {
@@ -34,5 +49,6 @@
 
 .btnDark:hover {
   color: var(--whiteColor) !important;
-  background-color: var(--themeColorSecondary) !important;
+  opacity: 0.85;
+  /* background-color: var(--themeColorSecondary) !important; */
 }

@@ -141,10 +141,7 @@ const OfferCard = ({ product }) => {
             <small>Stock: 250</small>
             <small>Sold: 1000</small>
           </div>
-          <div
-            className="progress mt-2"
-            style={{ height: "4px", backgroundColor: "##d2d7df" }}
-          >
+          <div className="progress mt-2" style={{ height: "4px", backgroundColor: "#d2d7df" }}>
             <div
               className="progress-bar bgThemeSecondary"
               role="progressbar"

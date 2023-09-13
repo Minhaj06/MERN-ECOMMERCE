@@ -40,9 +40,8 @@ const CategoryMenu = () => {
     }
   };
 
-  const loadSubcategories = async (categoryId) => {
+  const loadSubcategories = async () => {
     try {
-      // const { data } = await axios.get(`/subcategories-by-categoryId/${categoryId}`);
       const { data } = await axios.get(`/subcategories`);
 
       setSubcategories(data);
