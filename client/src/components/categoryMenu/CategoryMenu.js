@@ -3,21 +3,22 @@ import { HiOutlineBars3BottomRight } from "react-icons/hi2";
 import { BiChevronRight, BiChevronDown } from "react-icons/bi";
 import { NavLink, useLocation } from "react-router-dom";
 import Collapse from "react-bootstrap/Collapse";
+import { ReactComponent as CategoryIcon } from "../../assets/icons/categoryIcon.svg";
+import { useAuth } from "../../context/auth";
 import axios from "axios";
 
-import { ReactComponent as CategoryIcon } from "../../assets/icons/categoryIcon.svg";
-
-const CategoryMenu = () => {
-  const [categories, setCategories] = useState([]);
-  const [subcategories, setSubcategories] = useState([]);
+const CategoryMenu = ({ categories, subcategories }) => {
+  const { setIsLoading } = useAuth();
 
   const [activeCollapse, setActiveCollapse] = useState(null);
   const handleCollapse = (categoryId) => {
     setActiveCollapse(activeCollapse === categoryId ? null : categoryId);
   };
 
+  const [productsCount, setProductsCount] = useState(false);
   const [openCatMenu, setOpenCatMenu] = useState(false);
   const location = useLocation();
+
   useEffect(() => {
     if (location.pathname === "/") {
       setOpenCatMenu(true);
@@ -26,32 +27,22 @@ const CategoryMenu = () => {
     }
   }, [location.pathname]);
 
-  useEffect(() => {
-    loadCategories();
-    loadSubcategories();
-  }, []);
-
-  const loadCategories = async () => {
-    try {
-      const { data } = await axios.get(`/categories`);
-      setCategories(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const loadSubcategories = async () => {
-    try {
-      const { data } = await axios.get(`/subcategories`);
-
-      setSubcategories(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const filteredSubcategories = (categoryId) =>
     subcategories.filter((subcategory) => subcategory?.category?._id === categoryId);
+
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await axios.get(`/products-count`);
+        setProductsCount(data);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+        setIsLoading(false);
+      }
+    })();
+  }, []);
 
   return (
     <div
@@ -64,7 +55,9 @@ const CategoryMenu = () => {
       >
         <div>
           <h4 className="fs-16 fw-medium">All Departments</h4>
-          <p className="fs-13 mb-0">Total 1022 Products</p>
+          <p className="fs-13 mb-0">{`Total ${
+            productsCount.toString().padStart(2, "0") || "00"
+          } Products`}</p>
         </div>
         <div>
           <HiOutlineBars3BottomRight

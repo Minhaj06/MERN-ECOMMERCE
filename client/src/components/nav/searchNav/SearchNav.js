@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
 import "./searchNav.css";
 import { BsSearch } from "react-icons/bs";
-import axios from "axios";
 import { useSearch } from "../../../context/search";
 import { useNavigate } from "react-router-dom";
 import CategoryMenu from "../../categoryMenu/CategoryMenu";
 
-const SearchNav = () => {
+const SearchNav = ({ categories, subcategories }) => {
   // hooks
   const [values, setValues] = useSearch();
   const navigate = useNavigate();
@@ -30,28 +28,13 @@ const SearchNav = () => {
     }
   };
 
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    loadCategories();
-  }, []);
-
-  const loadCategories = async () => {
-    try {
-      const { data } = await axios.get(`/categories`);
-      setCategories(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <div className="bgThemeSecondaryDark pt-20 text-white">
       <div className="container">
         <div className="row">
           <div className="col-12">
             <div className="d-flex justify-content-end align-items-end position-relative">
-              <CategoryMenu />
+              <CategoryMenu categories={categories} subcategories={subcategories} />
 
               <div className="searchBox mb-20">
                 <form onSubmit={handleSearch}>

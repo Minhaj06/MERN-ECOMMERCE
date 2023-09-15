@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { HiOutlineBars3BottomRight } from "react-icons/hi2";
 import { BiChevronRight, BiChevronDown } from "react-icons/bi";
 import { FaSitemap } from "react-icons/fa";
 import { BiCategory } from "react-icons/bi";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import MegaMenu from "../megaMenu/MegaMunu";
 import { useCart } from "../../context/cart";
 import { Collapse, Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
-import axios from "axios";
 import { ReactComponent as CategoryIcon } from "../../assets/icons/categoryIcon.svg";
 import { BsChevronRight } from "react-icons/bs";
 
@@ -21,21 +19,15 @@ const mainMenuItems = [
   { _id: 6, label: "Sports", to: "/category/sports" },
 ];
 
-const MainMenu = () => {
+const MainMenu = ({ categories, subcategories }) => {
   // Context
   const [cart, setCart] = useCart();
-
-  // hook
-  const location = useLocation();
 
   // state
   const [show, setShow] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [activeSubcategoryCollapse, setActiveSubcategoryCollapse] = useState(null);
-
-  const [categories, setCategories] = useState([]);
-  const [subcategories, setSubcategories] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const handleMenuClose = () => setShow(false);
@@ -51,25 +43,6 @@ const MainMenu = () => {
   const handleSubcategoryCollapse = (categoryId) => {
     setActiveSubcategoryCollapse(activeSubcategoryCollapse === categoryId ? null : categoryId);
   };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get(`/categories`);
-        setCategories(data);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-    (async () => {
-      try {
-        const { data } = await axios.get(`/subcategories`);
-        setSubcategories(data);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
 
   const filteredSubcategories = (categoryId) =>
     subcategories.filter((subcategory) => subcategory?.category?._id === categoryId);
