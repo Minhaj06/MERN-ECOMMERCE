@@ -430,7 +430,7 @@ exports.relatedProducts = async (req, res) => {
     })
       .select("-photos")
       .populate("category")
-      .limit(3);
+      .limit(8);
 
     res.json(related);
   } catch (err) {

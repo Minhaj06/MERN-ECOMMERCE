@@ -5,7 +5,7 @@ import { HiOutlineBars3BottomRight } from "react-icons/hi2";
 import { BiChevronRight, BiChevronDown } from "react-icons/bi";
 import { FaSitemap } from "react-icons/fa";
 import { BiCategory } from "react-icons/bi";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import MegaMenu from "../megaMenu/MegaMunu";
 import { useCart } from "../../context/cart";
 import { Collapse, Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
@@ -25,8 +25,11 @@ const MainMenu = () => {
   // Context
   const [cart, setCart] = useCart();
 
+  // hook
+  const location = useLocation();
+
   // state
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [activeSubcategoryCollapse, setActiveSubcategoryCollapse] = useState(null);
@@ -186,23 +189,37 @@ const MainMenu = () => {
               <ul className="fs-3">
                 {mainMenuItems.map((item) => (
                   <li className="py-3" key={item?._id}>
-                    <NavLink
-                      onClick={() => handleSubmenuActive(item?._id)}
-                      className="nav-link d-flex justify-content-between align-items-center"
-                      to={item.to}
-                      aria-current="page"
-                    >
-                      {item?.label}
-                      {item?.megaMenu && <BsChevronRight size={18} />}
-                    </NavLink>
+                    {item?.megaMenu ? (
+                      <>
+                        <Link
+                          onClick={() => handleSubmenuActive(item?._id)}
+                          className="nav-link d-flex justify-content-between align-items-center"
+                          to="#"
+                          aria-current="page"
+                        >
+                          {item?.label}
+                          {item?.megaMenu && <BsChevronRight size={18} />}
+                        </Link>
 
-                    <Collapse in={activeSubmenu === item?._id}>
-                      <div className="p-3">
-                        <h4>Subcategory</h4>
-                        <h4>Subcategory</h4>
-                        <h4>Subcategory</h4>
-                      </div>
-                    </Collapse>
+                        <Collapse in={activeSubmenu === item?._id}>
+                          <div className="p-3">
+                            <h4>Subcategory</h4>
+                            <h4>Subcategory</h4>
+                            <h4>Subcategory</h4>
+                          </div>
+                        </Collapse>
+                      </>
+                    ) : (
+                      <NavLink
+                        onClick={() => handleSubmenuActive(item?._id)}
+                        className="nav-link d-flex justify-content-between align-items-center"
+                        to={item.to}
+                        aria-current="page"
+                      >
+                        {item?.label}
+                        {item?.megaMenu && <BsChevronRight size={18} />}
+                      </NavLink>
+                    )}
                   </li>
                 ))}
                 <>
@@ -239,16 +256,6 @@ const MainMenu = () => {
           </div>
         </Offcanvas.Body>
       </Offcanvas>
-
-      {/* <div className="container">
-        <Button variant="danger" className="d-lg-none" onClick={handleMenuShow}>
-          Launch
-        </Button>
-
-        <div>
-          <pre>{JSON.stringify(cart, null, 4)}</pre>
-        </div>
-      </div> */}
 
       <Navbar className="mb-4 bg-transparent" bg="light" expand="lg">
         <Container>

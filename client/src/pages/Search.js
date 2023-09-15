@@ -4,18 +4,19 @@ import axios from "axios";
 import ProductCard from "../components/cards/productCard/ProductCard";
 import NoProductImg from "../assets/images/noData.png";
 import Form from "react-bootstrap/Form";
-import FullScreenLoader from "../components/FullScreenLoader";
 import { RiLayoutGridFill } from "react-icons/ri";
 import { FaBars } from "react-icons/fa";
+import { useAuth } from "../context/auth";
 
 const Search = () => {
+  const { setIsLoading } = useAuth();
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const keyword = searchParams.get("keyword");
   const category = searchParams.get("category");
 
   const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); // Loading
   const [isGridView, setIsGridView] = useState(true); // List/Grid View
 
   const toggleView = () => {
@@ -29,6 +30,7 @@ const Search = () => {
   }, [keyword, category]);
 
   const loadSearchedProducts = async () => {
+    setIsLoading(true);
     try {
       const { data } = await axios.get("/products/search", {
         params: {
@@ -38,8 +40,10 @@ const Search = () => {
       });
 
       setProducts(data);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -79,8 +83,7 @@ const Search = () => {
 
   return (
     <>
-      {isLoading && <FullScreenLoader />}
-      <section className="my-50">
+      <section>
         <div className="container position-relative">
           <div className="row g-5">
             <div className="col-lg-12">

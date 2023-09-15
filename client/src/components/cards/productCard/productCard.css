@@ -44,6 +44,10 @@
   transition: 0.3s;
 }
 
+.productCard .productIcon:last-child {
+  transition: 0.5s;
+}
+
 .productCard:hover .productIcon {
   background-color: var(--themeColorSecondaryDark);
 }
@@ -52,13 +56,13 @@
   background-color: var(--themeColor);
 }
 
-.productCard .productIcon:last-child {
+.productCard .productIcon:not(:first-child) {
   position: absolute;
   right: -5rem;
 }
 
-.productCard:hover .productIcon:last-child {
-  right: 0;
+.productCard:hover .productIcon:not(:first-child) {
+  right: 0 !important;
 }
 
 .fullWidthImg {

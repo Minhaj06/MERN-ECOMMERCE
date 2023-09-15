@@ -4,7 +4,6 @@ import axios from "axios";
 import ReactImageGallery from "react-image-gallery";
 import Collapse from "react-bootstrap/esm/Collapse";
 import Stars from "../../components/stars/Stars";
-import FullScreenLoader from "../../components/FullScreenLoader";
 import { useCart } from "../../context/cart";
 import { toast } from "react-hot-toast";
 import { FaPlus, FaMinus } from "react-icons/fa";
@@ -15,9 +14,11 @@ import loadPhotos from "../../utils/loadPhotos";
 import arrayBufferToBase64 from "../../utils/arrayBufferToBase64";
 import productPlaceholderImg from "../../assets/images/productPlaceholder.png";
 import "./productDetails.css";
-import {Rate} from "antd"
+import { Rate } from "antd";
+import { useAuth } from "../../context/auth";
+import ProductCard from "../../components/cards/productCard/ProductCard";
 
-const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+const desc = ["terrible", "bad", "normal", "good", "wonderful"];
 
 const dummySliderImages = [
   {
@@ -47,13 +48,15 @@ const dummySliderImages = [
 ];
 
 const ProductDetails = () => {
+  const { setIsLoading } = useAuth();
+
   // state
-  const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState();
   const [photos, setPhotos] = useState([]);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [cartQuantity, setCartQuantity] = useState(1);
   const [activeCollapse, setActiveCollapse] = useState(3);
-  const [rating, setRating] = useState(0)
+  const [rating, setRating] = useState(0);
 
   // Context
   const [cart, setCart] = useCart();
@@ -66,6 +69,13 @@ const ProductDetails = () => {
   const { slug } = useParams();
 
   useEffect(() => {
+    const foundItem = cart.find((item) => item._id === product?._id);
+    if (foundItem) {
+      setCartQuantity(foundItem.cartQuantity);
+    }
+  }, [product?._id]);
+
+  useEffect(() => {
     if (slug) loadProduct();
   }, [slug]);
 
@@ -73,11 +83,12 @@ const ProductDetails = () => {
     if (product?._id) fetchPhotos();
   }, [product?._id]);
 
-  const loadProduct = async (req, res) => {
+  const loadProduct = async () => {
     setIsLoading(true);
     try {
       const { data } = await axios.get(`/product/${slug}`);
       setProduct(data);
+      loadRelatedProducts(data._id, data.category._id);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -85,12 +96,25 @@ const ProductDetails = () => {
     }
   };
 
+  const loadRelatedProducts = async (productId, categoryId) => {
+    try {
+      const { data } = await axios.get(`/related-products/${productId}/${categoryId}`);
+      console.log(data);
+      setRelatedProducts(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const fetchPhotos = async () => {
+    setIsLoading(true);
     try {
       const data = await loadPhotos(product?._id);
       setPhotos(data);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   };
 
@@ -110,27 +134,14 @@ const ProductDetails = () => {
 
   return (
     <>
-      {isLoading && <FullScreenLoader />}
-      <section className="my-50">
+      <section className="mt-50">
         <div className="container">
           <div className="row g-5 position-relative mb-4">
             <div className="col-12 col-lg-6 sticky-lg-top" style={{ height: "fit-content" }}>
-              {/* <div
-                className="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
-                style={{ zIndex: 1021 }}
-              >
-                <div
-                  class="spinner-border text-light"
-                  role="status"
-                  style={{ width: "3.5rem", height: "3.5rem" }}
-                >
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-              </div> */}
               <div className="me-xl-3 me-xxl-4">
                 <ReactImageGallery
                   items={sliderImages.length > 0 ? sliderImages : dummySliderImages}
-                  showIndex={true}
+                  // showIndex={true}s
                   slideOnThumbnailOver={true}
                   autoPlay={true}
                 />
@@ -257,21 +268,13 @@ const ProductDetails = () => {
                   >
                     {activeCollapse === 2 ? <FaMinus size={12} /> : <FaPlus size={12} />}
 
-                    <span>Details</span>
+                    <span>Description</span>
                   </h3>
 
                   <Collapse in={activeCollapse === 2}>
                     <div className="">
                       <div className="ps-4 ms-3 pt-4 pb-2 fs-14">
-                        <p className="lh-base">
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-                          repudiandae libero ipsa, dignissimos exercitationem animi enim, velit
-                          fugiat culpa aperiam vitae veritatis incidunt molestiae neque.
-                          <br />
-                          <br />
-                          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est quaerat
-                          sunt incidunt, quibusdam praesentium nostrum.
-                        </p>
+                        <p className="lh-base">{product?.description}</p>
                       </div>
                     </div>
                   </Collapse>
@@ -353,13 +356,63 @@ const ProductDetails = () => {
                         <div className="border-top py-12 mt-2">
                           <h4 className="lightColor fs-22 mb-4">Write a review</h4>
 
-                          <div className="d-flex align-items-center gap-4">
+                          <div className="d-flex flex-wrap align-items-center gap-4">
                             <p className="fs-3 mb-0 mt-2">Are you satisfied enough?</p>
                             <div>
-                              <Rate style={{color: "#f59c3a"}} tooltips={desc} onChange={setRating} value={rating} />
-                              {rating ? <span className="ant-rate-text text-capitalize fs-4 fw-medium">{desc[rating - 1]}</span> : ''}
+                              <Rate
+                                style={{ color: "#f59c3a" }}
+                                tooltips={desc}
+                                onChange={setRating}
+                                value={rating}
+                              />
+                              {rating ? (
+                                <span className="ant-rate-text text-capitalize fs-4 fw-medium">
+                                  {desc[rating - 1]}
+                                </span>
+                              ) : (
+                                ""
+                              )}
                             </div>
                           </div>
+                          <form className="mt-5">
+                            <div className="mb-25">
+                              <label className="form-label text-uppercase fs-4 mb-3">
+                                Name
+                              </label>
+                              <input
+                                style={{ padding: "0.8rem 1.2rem" }}
+                                type="text"
+                                className="form-control fs-4"
+                              />
+                            </div>
+                            <div className="mb-25">
+                              <label className="form-label text-uppercase fs-4 mb-3">
+                                Summary
+                              </label>
+                              <input
+                                style={{ padding: "0.8rem 1.2rem" }}
+                                type="text"
+                                className="form-control fs-4"
+                              />
+                            </div>
+                            <div className="mb-25">
+                              <label className="form-label text-uppercase fs-4 mb-3">
+                                Review
+                              </label>
+                              <textarea
+                                style={{ padding: "0.8rem 1.2rem" }}
+                                type="text"
+                                className="form-control fs-4"
+                                rows={5}
+                              ></textarea>
+                            </div>
+                            <button
+                              className="btn btnPrimary rounded-pill px-20 py-10 fs-4"
+                              type="submit"
+                            >
+                              Submit Review
+                            </button>
+                          </form>
                         </div>
                       </div>
                     </div>
@@ -371,7 +424,26 @@ const ProductDetails = () => {
         </div>
       </section>
 
-      <div className="bg-info" style={{ height: "500px" }}></div>
+      {/* <div className="bg-info" style={{ height: "500px" }}></div> */}
+      <section>
+        <div className="container">
+          <div className="row g-4">
+            <div className="col-12">
+              <h1 className="text-capitalize pb-3 border-bottom mb-5">Related Products</h1>
+            </div>
+
+            <div className="col-12">
+              <div className="row g-4 g-xl-5">
+                {relatedProducts?.map((product) => (
+                  <div className="col-sm-6 col-md-4 col-lg-3" key={product?._id}>
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };

@@ -11,7 +11,7 @@ const Home = () => {
   const { auth, setAuth } = useAuth();
 
   return (
-    <div>
+    <>
       <HomeCarousel />
       <TrendingProducts />
       <FeaturedProducts />
@@ -21,7 +21,7 @@ const Home = () => {
       <div className="container-fluid">
         <pre className="mt-4">{JSON.stringify(auth, null, 4)}</pre>
       </div> */}
-    </div>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
-.image-gallery-thumbnail .image-gallery-thumbnail-image {
+/* .image-gallery-thumbnail .image-gallery-thumbnail-image {
   height: 6.5rem;
-}
+} */
 
 .image-gallery-content.fullscreen {
   position: fixed;
@@ -43,7 +43,8 @@
   width: 2.4rem;
 }
 
-:where(.css-dev-only-do-not-override-14l2z2n).ant-rate .ant-rate-star-first, :where(.css-dev-only-do-not-override-14l2z2n).ant-rate .ant-rate-star-second {
+:where(.css-dev-only-do-not-override-14l2z2n).ant-rate .ant-rate-star-first,
+:where(.css-dev-only-do-not-override-14l2z2n).ant-rate .ant-rate-star-second {
   color: var(--lightColor);
 }
 

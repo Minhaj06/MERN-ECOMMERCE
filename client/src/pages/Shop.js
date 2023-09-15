@@ -12,10 +12,10 @@ import { ReactComponent as CategoryIcon } from "../assets/icons/categoryIcon.svg
 import { Collapse } from "react-bootstrap";
 
 import { Slider } from "antd";
-import FullScreenLoader from "../components/FullScreenLoader";
+import { useAuth } from "../context/auth";
 
 const Shop = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, setIsLoading } = useAuth();
 
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
@@ -52,11 +52,14 @@ const Shop = () => {
   }, [priceRange]);
 
   const getTotal = async () => {
+    setIsLoading(true);
     try {
       const { data } = await axios.get("/products-count");
       setTotal(data);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -68,6 +71,7 @@ const Shop = () => {
       setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -100,6 +104,7 @@ const Shop = () => {
       setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -127,22 +132,26 @@ const Shop = () => {
   }, []);
 
   const loadCategories = async () => {
+    setIsLoading(true);
     try {
       const { data } = await axios.get(`/categories`);
       setCategories(data);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
-  const loadSubcategories = async (categoryId) => {
+  const loadSubcategories = async () => {
+    setIsLoading(true);
     try {
-      // const { data } = await axios.get(`/subcategories-by-categoryId/${categoryId}`);
       const { data } = await axios.get(`/subcategories`);
-
       setSubcategories(data);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -210,8 +219,7 @@ const Shop = () => {
 
   return (
     <>
-      {isLoading && <FullScreenLoader />}
-      <section className="my-50">
+      <section>
         <div className="container position-relative">
           {/* <pre>
             {JSON.stringify({ categoryChecked, subcategoryChecked, priceRange }, null, 4)}

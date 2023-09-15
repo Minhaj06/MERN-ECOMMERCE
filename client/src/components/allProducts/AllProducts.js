@@ -22,11 +22,14 @@ const AllProducts = () => {
   }, [page]);
 
   const getTotal = async () => {
+    setIsLoading(true);
     try {
       const { data } = await axios.get("/products-count");
       setTotal(data);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -56,11 +59,10 @@ const AllProducts = () => {
 
   return (
     <>
-      <div className="my-50">
+      <section>
         <div className="container">
           <div className="row g-4">
             <div className="col-12">
-              {/* <h1 className="text-capitalize pb-3 border-bottom mb-5">Shop our collection</h1> */}
               <h1 className="text-capitalize pb-3 border-bottom mb-5">
                 Explore Our Range{" "}
                 <sub className="fs-14 fw-normal themeColorSecondaryDark">{`(${products.length} out of ${total})`}</sub>
@@ -95,7 +97,7 @@ const AllProducts = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import Countdown, { zeroPad } from "react-countdown";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineShoppingCart, AiOutlineShareAlt } from "react-icons/ai";
 import { IoBagCheckOutline } from "react-icons/io5";
 import "./offerCard.css";
 import productPlaceholderImg from "../../../assets/images/productPlaceholder.png";
@@ -83,6 +83,7 @@ const OfferCard = ({ product }) => {
             <AiOutlineHeart size={20} />
           </span>
           <span
+            style={{ top: "4rem" }}
             className={`productIcon disabled ${
               cart.filter((item) => item._id === product?._id).length > 0 && "bgTheme end-0"
             }`}
@@ -107,10 +108,13 @@ const OfferCard = ({ product }) => {
           >
             <AiOutlineShoppingCart size={20} />
           </span>
+          <span style={{ top: "8rem" }} className="productIcon" title="Share">
+            <AiOutlineShareAlt size={17} />
+          </span>
         </div>
 
-        <div className="position-absolute" style={{ bottom: "5rem", right: "5rem" }}>
-          <span className="productIcon start-0" title="Add to wishlist">
+        <div className="position-absolute" style={{ bottom: "1.5rem", right: "1.5rem" }}>
+          <span className="productIcon start-0" title="Shop with 30% discount">
             33%
           </span>
         </div>
@@ -139,14 +143,14 @@ const OfferCard = ({ product }) => {
         <div>
           <div className="d-flex justify-content-between items-center lightColor">
             <small>Stock: 250</small>
-            <small>Sold: 1000</small>
+            <small>Sold: 750</small>
           </div>
           <div className="progress mt-2" style={{ height: "4px", backgroundColor: "#d2d7df" }}>
             <div
               className="progress-bar bgThemeSecondary"
               role="progressbar"
               style={{ width: "25%" }}
-              aria-valuenow={24}
+              aria-valuenow={25}
               aria-valuemin={0}
               aria-valuemax={100}
             ></div>

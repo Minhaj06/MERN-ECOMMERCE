@@ -3,8 +3,11 @@ import "./trendingProducts.css";
 import axios from "axios";
 import ProductCard from "../cards/productCard/ProductCard";
 import OfferCard from "../cards/offerCard/OfferCard";
+import { useAuth } from "../../context/auth";
 
 const TrendingProducts = () => {
+  const { setIsLoading } = useAuth();
+
   const [trendingProducts, setTrendingProducts] = useState([]);
 
   useEffect(() => {
@@ -12,11 +15,14 @@ const TrendingProducts = () => {
   }, []);
 
   const loadTrendingProducts = async () => {
+    setIsLoading(true);
     try {
       const { data } = await axios.get(`trending-products`);
       setTrendingProducts(data);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -30,7 +36,7 @@ const TrendingProducts = () => {
       rating: 434,
       photo:
         "https://mern-ecom-server.vercel.app/api/v1/product/photo/64fc9ea63a045402c10358a9",
-      offerEndDate: "2023-09-14T16:45:13.578Z",
+      offerEndDate: "2023-09-16T16:45:13.578Z",
     },
     {
       _id: "64fca5603a045402c1035c1f",
@@ -46,7 +52,7 @@ const TrendingProducts = () => {
   ];
 
   return (
-    <div className="my-50">
+    <section>
       <div className="container">
         <div className="row g-4">
           <div className="col-12">
@@ -73,7 +79,7 @@ const TrendingProducts = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

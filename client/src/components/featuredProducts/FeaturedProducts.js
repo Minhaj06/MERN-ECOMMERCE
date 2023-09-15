@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "../cards/productCard/ProductCard";
+import { useAuth } from "../../context/auth";
 
 const FeaturedProducts = () => {
+  const { setIsLoading } = useAuth();
+
   const [featuredProducts, setFeaturedProducts] = useState([]);
 
   useEffect(() => {
@@ -10,16 +13,19 @@ const FeaturedProducts = () => {
   }, []);
 
   const loadFeaturedProducts = async () => {
+    setIsLoading(true);
     try {
       const { data } = await axios.get(`featured-products`);
       setFeaturedProducts(data);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="my-50">
+    <section>
       <div className="container">
         <div className="row g-4">
           <div className="col-12">
@@ -37,7 +43,7 @@ const FeaturedProducts = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
