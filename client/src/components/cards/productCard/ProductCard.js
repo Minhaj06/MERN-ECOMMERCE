@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineHeart, AiOutlineShoppingCart, AiOutlineShareAlt } from "react-icons/ai";
 import { IoBagCheckOutline } from "react-icons/io5";
 import "./productCard.css";
-
 import productPlaceholderImg from "../../../assets/images/productPlaceholder.png";
-
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useCart } from "../../../context/cart";
@@ -38,7 +36,6 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
       <div
         style={{
           border: "1px solid var(--bs-gray-300)",
-          // boxShadow: "0 0 2rem var(--bs-gray-500)",
         }}
         className={`bgLight2 shadow rounded-4 ${isTrending && "trendingProductCard"} 
       ${fullWidth && "fullWidthWrapper"} productCard h-100`}

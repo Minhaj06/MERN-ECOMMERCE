@@ -25,7 +25,7 @@ const FeaturedProducts = () => {
   };
 
   return (
-    <section>
+    <section style={{ margin: "7rem 0" }}>
       <div className="container">
         <div className="row g-4">
           <div className="col-12">

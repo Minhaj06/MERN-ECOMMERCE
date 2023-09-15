@@ -1,22 +1,3 @@
-/* .custom-slider .ant-slider {
-  height: 40px;
-}
-
-.custom-slider .ant-slider-rail {
-  height: 8px;
-}
-
-.custom-slider .ant-slider-track {
-  height: 8px;
-  background-color: var(--themeColor) !important;
-}
-
-.custom-slider .ant-slider-handle {
-  height: 24px;
-  width: 8px;
-  margin-top: 2px !important;
-} */
-
 .custom-slider .ant-slider-track {
   background-color: var(--themeColor) !important;
 }
@@ -25,4 +6,12 @@
 }
 .custom-slider .ant-slider-handle:hover::after {
   box-shadow: 0 0 0 4px var(--themeColor) !important;
+}
+
+:where(.css-dev-only-do-not-override-14l2z2n).ant-modal-root .ant-modal-mask {
+  z-index: 1060;
+}
+
+:where(.css-dev-only-do-not-override-14l2z2n).ant-modal-root .ant-modal-wrap {
+  z-index: 1070;
 }

@@ -15,7 +15,7 @@ const CategoryMenu = ({ categories, subcategories }) => {
     setActiveCollapse(activeCollapse === categoryId ? null : categoryId);
   };
 
-  const [productsCount, setProductsCount] = useState(false);
+  const [productsCount, setProductsCount] = useState(0);
   const [openCatMenu, setOpenCatMenu] = useState(false);
   const location = useLocation();
 
@@ -47,7 +47,7 @@ const CategoryMenu = ({ categories, subcategories }) => {
   return (
     <div
       className="categoryMenu allDepartments position-absolute top-0 start-0 d-none d-lg-block"
-      style={{ width: "30rem", zIndex: 1000 }}
+      style={{ width: "30rem", zIndex: 1030 }}
     >
       <div
         className="catMenuHeader bgTheme px-4 py-3 rounded-top-3 d-flex justify-content-between align-items-center"
@@ -55,9 +55,10 @@ const CategoryMenu = ({ categories, subcategories }) => {
       >
         <div>
           <h4 className="fs-16 fw-medium">All Departments</h4>
-          <p className="fs-13 mb-0">{`Total ${
-            productsCount.toString().padStart(2, "0") || "00"
-          } Products`}</p>
+          <p className="fs-13 mb-0">{`Total ${String(productsCount).padStart(
+            2,
+            "0"
+          )} Products`}</p>
         </div>
         <div>
           <HiOutlineBars3BottomRight

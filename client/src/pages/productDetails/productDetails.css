@@ -1,6 +1,6 @@
-/* .image-gallery-thumbnail .image-gallery-thumbnail-image {
-  height: 6.5rem;
-} */
+.image-gallery-thumbnail .image-gallery-thumbnail-image {
+  height: 7rem;
+}
 
 .image-gallery-content.fullscreen {
   position: fixed;

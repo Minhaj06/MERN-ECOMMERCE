@@ -24,14 +24,13 @@ const MainMenu = ({ categories, subcategories }) => {
   const [cart, setCart] = useCart();
 
   // state
-  const [show, setShow] = useState(false);
+  const [showMenuOffcanvas, setShowMenuOffcanvas] = useState(false);
+  const [showCartOffcanvas, setShowCartOffcanvas] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [activeSubcategoryCollapse, setActiveSubcategoryCollapse] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const handleMenuClose = () => setShow(false);
-  const handleMenuShow = () => setShow(true);
   const handleSubmenuActive = (id) => {
     if (activeSubmenu === id) {
       setActiveSubmenu(null);
@@ -48,13 +47,20 @@ const MainMenu = ({ categories, subcategories }) => {
     subcategories.filter((subcategory) => subcategory?.category?._id === categoryId);
 
   useEffect(() => {
-    const totalAmount = parseFloat(cart.reduce((total, product) => total + product?.price, 0));
+    const totalAmount = parseFloat(
+      cart.reduce((total, product) => total + product?.price * product?.cartQuantity, 0)
+    );
     setTotalPrice(totalAmount);
   }, [cart]);
 
   return (
     <>
-      <Offcanvas show={show} onHide={handleMenuClose} responsive="lg">
+      {/* Menu & Category Offcanvas */}
+      <Offcanvas
+        show={showMenuOffcanvas}
+        onHide={() => setShowMenuOffcanvas(false)}
+        responsive="lg"
+      >
         <Offcanvas.Header
           className="px-4 pt-4 justify-content-end"
           closeButton
@@ -230,6 +236,21 @@ const MainMenu = ({ categories, subcategories }) => {
         </Offcanvas.Body>
       </Offcanvas>
 
+      {/* Cart Offcanvas */}
+      <Offcanvas
+        show={showCartOffcanvas}
+        onHide={() => setShowCartOffcanvas(false)}
+        // placement="end"
+      >
+        <Offcanvas.Header
+          className="px-4 pt-4 justify-content-end"
+          closeButton
+        ></Offcanvas.Header>
+        <Offcanvas.Body className="px-0">
+          <h1>Cart Offcanvas</h1>
+        </Offcanvas.Body>
+      </Offcanvas>
+
       <Navbar className="mb-4 bg-transparent" bg="light" expand="lg">
         <Container>
           <Navbar.Brand className="me-5">
@@ -240,7 +261,11 @@ const MainMenu = ({ categories, subcategories }) => {
               />
             </Link>
           </Navbar.Brand>
-          <span onClick={handleMenuShow} className="hoverableOp d-lg-none" role="button">
+          <span
+            onClick={() => setShowMenuOffcanvas(true)}
+            className="hoverableOp d-lg-none"
+            role="button"
+          >
             <HiOutlineBars3BottomRight size={32} className="themeColorSecondaryDark" />
           </span>
           {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
@@ -262,20 +287,23 @@ const MainMenu = ({ categories, subcategories }) => {
 
             <div className="menuIcons d-flex justify-content-center align-items-center mt-2 mt-lg-0">
               <div className="topbar-icon-group me-20">
-                <NavLink className="text-color-dark" to="/wishlist">
-                  <div className="floating-text-icon d-inline-block position-relative">
-                    <AiOutlineHeart size={22} />
-                    <span className="floating-num">0</span>
-                  </div>
-                </NavLink>
+                <span
+                  role="button"
+                  className="floating-text-icon d-inline-block position-relative hoverable"
+                >
+                  <AiOutlineHeart size={22} />
+                  <span className="floating-num">0</span>
+                </span>
               </div>
               <div className="topbar-icon-group me-20">
-                <NavLink className="text-color-dark" to="/cart">
-                  <div className="floating-text-icon d-inline-block position-relative">
-                    <AiOutlineShoppingCart size={22} />
-                    <span className="floating-num">{cart.length}</span>
-                  </div>
-                </NavLink>
+                <span
+                  onClick={() => setShowCartOffcanvas(true)}
+                  role="button"
+                  className="floating-text-icon d-inline-block position-relative hoverable"
+                >
+                  <AiOutlineShoppingCart size={22} />
+                  <span className="floating-num">{cart.length}</span>
+                </span>
               </div>
               <div className="totalAmount">
                 <small className="fs-14 lightColor">Total</small>

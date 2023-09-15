@@ -17,6 +17,7 @@ import "./productDetails.css";
 import { Rate } from "antd";
 import { useAuth } from "../../context/auth";
 import ProductCard from "../../components/cards/productCard/ProductCard";
+import { addToCart } from "../../utils/cart";
 
 const desc = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -99,7 +100,6 @@ const ProductDetails = () => {
   const loadRelatedProducts = async (productId, categoryId) => {
     try {
       const { data } = await axios.get(`/related-products/${productId}/${categoryId}`);
-      console.log(data);
       setRelatedProducts(data);
     } catch (err) {
       console.log(err);
@@ -134,7 +134,7 @@ const ProductDetails = () => {
 
   return (
     <>
-      <section className="mt-50">
+      <section style={{ marginTop: "5rem", marginBottom: "7rem" }}>
         <div className="container">
           <div className="row g-5 position-relative mb-4">
             <div className="col-12 col-lg-6 sticky-lg-top" style={{ height: "fit-content" }}>
@@ -197,11 +197,7 @@ const ProductDetails = () => {
                   <div className="col-7">
                     <button
                       className="btn btnPrimary py-12 rounded-pill w-100"
-                      onClick={() => {
-                        setCart([...cart, product]);
-                        localStorage.setItem("cart", JSON.stringify([...cart, product]));
-                        toast.success("Added to cart");
-                      }}
+                      onClick={() => addToCart(product, cartQuantity, cart, setCart)}
                     >
                       Add To Cart
                     </button>
@@ -425,7 +421,7 @@ const ProductDetails = () => {
       </section>
 
       {/* <div className="bg-info" style={{ height: "500px" }}></div> */}
-      <section>
+      <section style={{ margin: "7rem 0" }}>
         <div className="container">
           <div className="row g-4">
             <div className="col-12">

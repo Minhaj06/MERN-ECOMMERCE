@@ -19,7 +19,7 @@ const SubscribeSection = () => {
   };
 
   return (
-    <section className="">
+    <section style={{ margin: "7rem 0" }}>
       <div className="container" style={subscribeContainerStyle}>
         <div className="d-flex justify-content-center align-items-center p-4">
           <div className="text-capitalize">

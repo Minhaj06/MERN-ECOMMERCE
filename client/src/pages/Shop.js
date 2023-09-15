@@ -219,7 +219,7 @@ const Shop = () => {
 
   return (
     <>
-      <section>
+      <section style={{ margin: "7rem 0" }}>
         <div className="container position-relative">
           {/* <pre>
             {JSON.stringify({ categoryChecked, subcategoryChecked, priceRange }, null, 4)}
