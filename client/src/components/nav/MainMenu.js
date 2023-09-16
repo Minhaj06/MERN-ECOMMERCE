@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { HiOutlineBars3BottomRight } from "react-icons/hi2";
 import { BiChevronRight, BiChevronDown } from "react-icons/bi";
 import { FaSitemap } from "react-icons/fa";
@@ -10,6 +10,9 @@ import { useCart } from "../../context/cart";
 import { Collapse, Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { ReactComponent as CategoryIcon } from "../../assets/icons/categoryIcon.svg";
 import { BsChevronRight } from "react-icons/bs";
+import ImageLazyLoad from "../../utils/ImageLazyLoad";
+import { IoClose } from "react-icons/io5";
+import { removeFromCart } from "../../utils/cart";
 
 const mainMenuItems = [
   { _id: 1, label: "Home", to: "/" },
@@ -240,14 +243,90 @@ const MainMenu = ({ categories, subcategories }) => {
       <Offcanvas
         show={showCartOffcanvas}
         onHide={() => setShowCartOffcanvas(false)}
-        // placement="end"
+        placement="end"
       >
-        <Offcanvas.Header
-          className="px-4 pt-4 justify-content-end"
-          closeButton
-        ></Offcanvas.Header>
-        <Offcanvas.Body className="px-0">
-          <h1>Cart Offcanvas</h1>
+        <Offcanvas.Header className="p-20 border-bottom" closeButton>
+          <Offcanvas.Title className="fs-2 fw-medium lightColor">{`${String(
+            cart.length
+          ).padStart(2, "0")} items in cart`}</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body className="p-20">
+          <div>
+            {cart.length > 0 ? (
+              cart.map((product) => (
+                <div
+                  className="d-flex flex-wrap justify-content-between gap-4 mb-20"
+                  key={product?._id}
+                >
+                  <div>
+                    <Link to={`/product/${product?.slug}`}>
+                      <ImageLazyLoad
+                        style={{ width: "8rem", height: "8rem", borderRadius: "3px" }}
+                        src={`${process.env.REACT_APP_API}/product/photo/${product?._id}`}
+                        alt={product?.name}
+                      />
+                    </Link>
+                  </div>
+                  <div className="flex-grow-1">
+                    <h4 className="fw-medium mb-20">
+                      <Link
+                        className="hoverLine hoverSecondary"
+                        to={`/product/${product?.slug}`}
+                      >
+                        {product?.name}
+                      </Link>
+                    </h4>
+
+                    <div>
+                      <span className="fw-normal position-relative fs-3">
+                        ${product?.price}
+                        <span
+                          style={{
+                            top: "-1.2rem",
+                            right: "-3rem",
+                            width: "2.8rem",
+                            lineHeight: 1,
+                            padding: "2px",
+                          }}
+                          className="bgTheme position-absolute fs-12 lightColor2 text-center rounded-1"
+                        >
+                          {product?.cartQuantity}x
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="">
+                    <span
+                      onClick={() => removeFromCart(product._id, cart, setCart)}
+                      className="p-2 hoverableOp"
+                      role="button"
+                    >
+                      <IoClose size={20} />
+                    </span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <h2 className="text-center fs-1">No product in cart. 😔</h2>
+            )}
+          </div>
+
+          <div className="border-top pt-4 mt-5">
+            <h4 className="fw-normal themeColorSecondaryDark">Subtotal</h4>
+            <h1 className="fw-bold">
+              {totalPrice.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </h1>
+
+            <Link to="/checkout" className="btn btnPrimary w-100 py-10 rounded-pill mt-5">
+              Checkout
+            </Link>
+            <Link to="/cart" className="btn btnDark w-100 py-10 rounded-pill mt-3">
+              View cart
+            </Link>
+          </div>
         </Offcanvas.Body>
       </Offcanvas>
 

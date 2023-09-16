@@ -111,7 +111,7 @@ const ProductCard = ({ product, isTrending, listView, fullWidth }) => {
               <span className="themeColor me-3">
                 {product?.price?.toLocaleString("en-US", {
                   style: "currency",
-                  currency: "BDT",
+                  currency: "USD",
                 })}
               </span>
               <span className="lightColor fs-13 text-decoration-line-through d-none">
