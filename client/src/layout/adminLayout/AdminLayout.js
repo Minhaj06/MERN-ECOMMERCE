@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
   LaptopOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Button, Layout, Menu, theme } from "antd";
+import { Button, Layout, theme } from "antd";
 
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 import Loading from "../../components/routes/Loading";
@@ -153,7 +151,14 @@ const AdminLayout = () => {
           style={{
             padding: 0,
             background: colorBgContainer,
+            position: "fixed",
+            top: 0,
+            left: collapsed ? 0 : siderWidth,
+            width: collapsed ? "100%" : `calc(100% - ${siderWidth})`,
+            transition: "0.3s",
+            zIndex: 1020,
           }}
+          className="shadow"
         >
           <Button
             type="text"
@@ -169,7 +174,7 @@ const AdminLayout = () => {
 
         <Content
           style={{
-            margin: "0 16px",
+            margin: "64px 16px 0 16px",
             overflow: "initial",
           }}
         >
