@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../../context/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function Login() {
+const Login = () => {
   // state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -73,6 +73,6 @@ function Login() {
       </div>
     </div>
   );
-}
+};
 
 export default Login;

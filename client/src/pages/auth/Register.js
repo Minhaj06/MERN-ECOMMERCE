@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 
-function Register() {
+const Register = () => {
   // state
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -91,6 +91,6 @@ function Register() {
       </div>
     </div>
   );
-}
+};
 
 export default Register;

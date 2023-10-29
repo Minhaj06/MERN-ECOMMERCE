@@ -375,30 +375,21 @@ const ProductDetails = () => {
                               <label className="form-label text-uppercase fs-4 mb-3">
                                 Name
                               </label>
-                              <input
-                                style={{ padding: "0.8rem 1.2rem" }}
-                                type="text"
-                                className="form-control fs-4"
-                              />
+                              <input type="text" className="form-control customInput fs-4" />
                             </div>
                             <div className="mb-25">
                               <label className="form-label text-uppercase fs-4 mb-3">
                                 Summary
                               </label>
-                              <input
-                                style={{ padding: "0.8rem 1.2rem" }}
-                                type="text"
-                                className="form-control fs-4"
-                              />
+                              <input type="text" className="form-control customInput fs-4" />
                             </div>
                             <div className="mb-25">
                               <label className="form-label text-uppercase fs-4 mb-3">
                                 Review
                               </label>
                               <textarea
-                                style={{ padding: "0.8rem 1.2rem" }}
                                 type="text"
-                                className="form-control fs-4"
+                                className="form-control customInput fs-4"
                                 rows={5}
                               ></textarea>
                             </div>

@@ -1,96 +1,117 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Menu } from "antd";
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { BiCategory, BiAddToQueue } from "react-icons/bi";
+import { MdManageSearch } from "react-icons/md";
+import { SiBrandfolder } from "react-icons/si";
+import { FaBoxOpen } from "react-icons/fa";
 
 const AdminMenu = () => {
-  const menuItems = [
-    {
-      key: "1",
-      icon: <UserOutlined />,
-      label: "Dashboard",
-      link: "/dashboard",
-    },
-    {
-      key: "2",
-      icon: <LaptopOutlined />,
-      label: "Category",
-      items: [
-        {
-          key: "2-1",
-          label: "Create Category",
-          link: "/category/create",
-        },
-        {
-          key: "2-2",
-          label: "Manage Category",
-          link: "/category/manage",
-        },
-        {
-          key: "2-3",
-          label: "Subcategory",
-          items: [
-            {
-              key: "2-3-1",
-              label: "Create Subcategory",
-              link: "/category/subcategory/create",
-            },
-            {
-              key: "2-3-2",
-              label: "Manage Subcategory",
-              link: "/category/subcategory/manage",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      key: "3",
-      icon: <NotificationOutlined />,
-      label: "Product",
-      items: [
-        {
-          key: "3-1",
-          label: "Create Product",
-          link: "/product/create",
-        },
-        {
-          key: "3-2",
-          label: "Manage Product",
-          link: "/product/manage",
-        },
-      ],
-    },
-  ];
+  const admin = "/dashboard/admin";
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [selectedKeys, setSelectedKeys] = useState([]);
+  const [openKeys, setOpenKeys] = useState([]);
 
-  const renderMenuItems = (items) => {
-    return items.map((item) => {
-      if (item.items) {
-        return (
-          <Menu.SubMenu key={item.key} icon={item.icon} title={item.label}>
-            {renderMenuItems(item.items)}
-          </Menu.SubMenu>
-        );
+  useEffect(() => {
+    const pathToKeyMapping = {
+      [admin]: "1",
+      [admin + "/category"]: "2",
+      [admin + "/categories"]: "3",
+      [admin + "/subcategory"]: "4",
+      [admin + "/subcategories"]: "5",
+      [admin + "/brand"]: "6",
+      [admin + "/brand"]: "7",
+      [admin + "/product"]: "8",
+      [admin + "/products"]: "9",
+    };
+    const currentPathKey = pathToKeyMapping[location.pathname];
+
+    if (currentPathKey) {
+      setSelectedKeys([currentPathKey]);
+
+      const parentKey = getParentKey(currentPathKey);
+      if (parentKey) {
+        setOpenKeys([parentKey]);
       }
+    }
+  }, [location.pathname]);
 
-      return (
-        <Menu.Item key={item.key} icon={item.icon}>
-          <NavLink to={item.link}>{item.label}</NavLink>
-        </Menu.Item>
-      );
-    });
+  const getParentKey = (key) => {
+    // Define a mapping of submenu keys to their parent keys
+    const submenuParentMapping = {
+      2: "sub1",
+      3: "sub1",
+      4: "sub2",
+      5: "sub2",
+      6: "sub3",
+      7: "sub3",
+      8: "sub4",
+      9: "sub4",
+    };
+    return submenuParentMapping[key];
   };
+
+  const getItem = (label, key, icon, children, onClick) => {
+    return {
+      key,
+      icon,
+      children,
+      label,
+      onClick,
+    };
+  };
+
+  const items = [
+    getItem("Dashboard", "1", <UserOutlined />, null, () => {
+      navigate(admin);
+    }),
+    getItem("Category", "sub1", <BiCategory size={18} />, [
+      getItem("Create Category", "2", <BiAddToQueue size={18} />, null, () => {
+        navigate(admin + "/category");
+      }),
+      getItem("All Categories", "3", <MdManageSearch size={18} />, null, () => {
+        navigate(admin + "/categories");
+      }),
+
+      getItem("Subcategory", "sub2", <BiCategory size={18} />, [
+        getItem("Create Subcategory", "4", <BiAddToQueue size={18} />, null, () => {
+          navigate(admin + "/subcategory");
+        }),
+        getItem("All Subcategories", "5", <MdManageSearch size={18} />, null, () => {
+          navigate(admin + "/subcategories");
+        }),
+      ]),
+    ]),
+    getItem("Brand", "sub3", <SiBrandfolder size={18} />, [
+      getItem("Create Brand", "6", <BiAddToQueue size={18} />, null, () => {
+        navigate(admin + "/brand");
+      }),
+      getItem("All Brands", "7", <MdManageSearch size={18} />, null, () => {
+        navigate(admin + "/brands");
+      }),
+    ]),
+    getItem("Product", "sub4", <FaBoxOpen size={18} />, [
+      getItem("Create Product", "8", <BiAddToQueue size={18} />, null, () => {
+        navigate(admin + "/product");
+      }),
+      getItem("All Products", "9", <MdManageSearch size={18} />, null, () => {
+        navigate(admin + "/products");
+      }),
+    ]),
+  ];
 
   return (
     <Menu
       className="flex-grow-1"
       theme="dark"
       mode="inline"
-      defaultSelectedKeys={["1"]}
-      defaultOpenKeys={["2-3"]} // Open the "Subcategory" submenu by default
-    >
-      {renderMenuItems(menuItems)}
-    </Menu>
+      selectedKeys={selectedKeys}
+      openKeys={openKeys}
+      onOpenChange={setOpenKeys}
+      items={items}
+    />
   );
 };
 

@@ -130,6 +130,7 @@ exports.list = async (req, res) => {
   try {
     const products = await Product.find({})
       .populate("category")
+      .populate("subcategory")
       .select("-photos")
       .limit(12)
       .sort({ createdAt: -1 });
@@ -388,6 +389,8 @@ exports.listProducts = async (req, res) => {
     const page = req.params.page ? req.params.page : 1;
 
     const products = await Product.find({})
+      .populate("category")
+      .populate("subcategory")
       .select("-photos")
       .skip((page - 1) * perPage)
       .limit(perPage)

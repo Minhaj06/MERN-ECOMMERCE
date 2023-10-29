@@ -1,7 +1,5 @@
-/* Floation Icon Text */
-.search-box input {
-  border: 1px solid var(--stroke-color);
-  background-color: var(--light-color);
+.customInput {
+  padding: 0.8rem 1.2rem;
 }
 
 .topbar-icon-group a {

@@ -8,10 +8,10 @@
   box-shadow: 0 0 0 4px var(--themeColor) !important;
 }
 
-:where(.css-dev-only-do-not-override-14l2z2n).ant-modal-root .ant-modal-mask {
-  z-index: 1060;
+.ant-modal-root .ant-modal-mask {
+  z-index: 1060 !important;
 }
 
-:where(.css-dev-only-do-not-override-14l2z2n).ant-modal-root .ant-modal-wrap {
-  z-index: 1070;
+.ant-modal-root .ant-modal-wrap {
+  z-index: 1070 !important;
 }

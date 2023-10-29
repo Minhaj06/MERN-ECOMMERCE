@@ -38,24 +38,27 @@ const SearchNav = ({ categories, subcategories }) => {
 
               <div className="searchBox mb-20">
                 <form onSubmit={handleSearch}>
-                  <div className="input-group">
-                    <select
-                      className="form-select ps-3 fw-medium border-0 shadow-none border-end border-secondary"
-                      onChange={(e) =>
-                        setValues({
-                          ...values,
-                          category: e.target.value === "null" ? "" : e.target.value,
-                        })
-                      }
-                      value={values.category || ""}
-                    >
-                      <option value="">Select Category</option>
-                      {categories.map((category) => (
-                        <option value={category?._id} key={category?._id}>
-                          {category?.name}
-                        </option>
-                      ))}
-                    </select>
+                  <div className="input-group flex-nowrap">
+                    <div>
+                      <select
+                        style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0 }}
+                        className="form-select ps-3 fw-medium border-0 shadow-none border-end border-secondary h-100"
+                        onChange={(e) =>
+                          setValues({
+                            ...values,
+                            category: e.target.value === "null" ? "" : e.target.value,
+                          })
+                        }
+                        value={values.category || ""}
+                      >
+                        <option value="">Select Category</option>
+                        {categories.map((category) => (
+                          <option value={category?._id} key={category?._id}>
+                            {category?.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                     <input
                       // style={{ width: "30rem", maxWidth: "30rem" }}
                       type="search"

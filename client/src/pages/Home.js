@@ -17,10 +17,6 @@ const Home = () => {
       <FeaturedProducts />
       <AllProducts />
       <SubscribeSection />
-      {/* <Jumbotron title="Home" subtitle="Welcome to my first react ecommerce" />
-      <div className="container-fluid">
-        <pre className="mt-4">{JSON.stringify(auth, null, 4)}</pre>
-      </div> */}
     </>
   );
 };

@@ -100,10 +100,18 @@ const AdminLayout = () => {
           setCollapsed(broken);
         }}
         onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
+          // console.log(collapsed, type);
         }}
         width={siderWidth}
-        style={{ maxWidth: "100%" }}
+        style={{
+          maxWidth: "100%",
+          overflow: "auto",
+          height: "100vh",
+          position: "fixed",
+          left: 0,
+          top: 0,
+          bottom: 0,
+        }}
       >
         <div className="d-flex flex-column">
           <div
@@ -131,49 +139,16 @@ const AdminLayout = () => {
             />
           </div>
 
-          {/*  */}
-          {/*  */}
-          {/*  */}
-
-          {/* <Menu
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          defaultOpenKeys={["sub1"]}
-          style={{
-            height: "100%",
-          }}
-          items={items2}
-        /> */}
-
           <AdminMenu />
-
-          {/* <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <UserOutlined />,
-              label: "Nav 1",
-              link: "/nav1",
-            },
-            {
-              key: "2",
-              icon: <VideoCameraOutlined />,
-              label: <NavLink to={`${admin}/category`}>Category</NavLink>,
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "Nav 3",
-              link: "/nav3",
-            },
-          ]}
-        /> */}
         </div>
       </Sider>
-      <Layout>
+      <Layout
+        style={{
+          marginLeft: collapsed ? 0 : siderWidth,
+          transition: "0.3s",
+          // marginLeft: siderWidth,
+        }}
+      >
         <Header
           style={{
             padding: 0,
@@ -195,6 +170,7 @@ const AdminLayout = () => {
         <Content
           style={{
             margin: "0 16px",
+            overflow: "initial",
           }}
         >
           <BreadcrumbComponent />
