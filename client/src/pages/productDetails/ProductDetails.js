@@ -147,7 +147,7 @@ const ProductDetails = () => {
                 />
               </div>
             </div>
-            <div className="col-12 col-lg-6" style={{ minHeight: "1000px" }}>
+            <div className="col-12 col-lg-6">
               <div className="h-100 ms-xl-3 ms-xxl-4">
                 <h1 className="fontPoppins fs-40 fw-bold mb-3">{product?.name}</h1>
                 <p>
@@ -420,9 +420,9 @@ const ProductDetails = () => {
             </div>
 
             <div className="col-12">
-              <div className="row g-4 g-xl-5">
+              <div className="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-3 g-sm-4 g-xxl-5">
                 {relatedProducts?.map((product) => (
-                  <div className="col-sm-6 col-md-4 col-lg-3" key={product?._id}>
+                  <div className="col" key={product?._id}>
                     <ProductCard product={product} />
                   </div>
                 ))}

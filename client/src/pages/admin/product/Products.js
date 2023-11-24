@@ -7,21 +7,23 @@ import { BiSearch } from "react-icons/bi";
 import { AiFillEdit, AiOutlineEdit, AiOutlineEye } from "react-icons/ai";
 import { BsFillEyeFill, BsFillTrashFill, BsTrash } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import adminBaseURL from "../../../utils/adminBaseURL";
 
 const Products = () => {
-  const { auth, setAuth } = useAuth();
+  const { auth, setAuth, setIsLoading } = useAuth();
 
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       try {
         const { data } = await axios.get("/products");
         setProducts(data);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
+        setIsLoading(false);
       }
     })();
   }, []);

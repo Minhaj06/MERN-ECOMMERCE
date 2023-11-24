@@ -4,9 +4,9 @@ import { useAuth } from "../../context/auth";
 import axios from "axios";
 import Loading from "./Loading";
 
-function PrivateRoute() {
+const PrivateRoute = () => {
   // context
-  const [auth, setAuth] = useAuth();
+  const { auth, setAuth } = useAuth();
 
   // state
   const [ok, setOk] = useState(false);
@@ -39,6 +39,6 @@ function PrivateRoute() {
   // }, [auth?.token]);
 
   return ok ? <Outlet /> : <Loading />;
-}
+};
 
 export default PrivateRoute;

@@ -642,3 +642,10 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+/* Position */
+@media (min-width: 992px) {
+  .static-lg {
+    position: static !important;
+  }
+}

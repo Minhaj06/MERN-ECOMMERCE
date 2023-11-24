@@ -70,7 +70,7 @@ const Footer = () => {
                     </div>
                     <div className="text">
                       <p className="text-capitalize lh-base">
-                        satkhra sadar, satkhira, Bangladesh.
+                        Chapainawabganj, Rajshahi, Bangladesh.
                       </p>
                     </div>
                   </div>
@@ -82,7 +82,9 @@ const Footer = () => {
                       </span>
                     </div>
                     <div className="text">
-                      <p className="text-lowercase lh-base">example@gmail.com</p>
+                      <p className="text-lowercase lh-base" style={{ wordBreak: "break-all" }}>
+                        milonmdminhajkobir@gmail.com
+                      </p>
                     </div>
                   </div>
 
@@ -93,7 +95,7 @@ const Footer = () => {
                       </span>
                     </div>
                     <div className="text">
-                      <p className="text-lowercase lh-base">+8801759-000000</p>
+                      <p className="text-lowercase lh-base">+8801303-148457</p>
                     </div>
                   </div>
                 </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { Breadcrumb } from "antd";
 import { useLocation } from "react-router-dom";
 
-const BreadcrumbComponent = () => {
+const AdminBreadcrumb = () => {
   const location = useLocation();
 
   // Extract the pathname from the location object
@@ -29,4 +29,4 @@ const BreadcrumbComponent = () => {
   );
 };
 
-export default BreadcrumbComponent;
+export default AdminBreadcrumb;

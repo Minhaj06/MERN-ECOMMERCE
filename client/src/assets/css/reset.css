@@ -12,7 +12,7 @@
 
 html {
   font-size: 62.5%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 body {
@@ -138,5 +138,26 @@ select {
 @media (min-width: 992px) {
   .offcanvas-lg .offcanvas-body {
     display: none !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  html {
+    font-size: 58%;
+  }
+}
+@media (max-width: 450px) {
+  html {
+    font-size: 54%;
+  }
+}
+@media (max-width: 380px) {
+  html {
+    font-size: 52%;
+  }
+}
+@media (max-width: 350px) {
+  html {
+    font-size: 50%;
   }
 }

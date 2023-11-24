@@ -1,0 +1,347 @@
+import React, { useState } from "react";
+import { ShoppingCartOutlined, CloseOutlined } from "@ant-design/icons";
+import UserBreadcrumb from "../components/breadcrumb/UserBreadcrumb";
+import { useCart } from "../context/cart";
+import ImageLazyLoad from "../utils/ImageLazyLoad";
+import { addToCart, removeFromCart } from "../utils/cart";
+import { FaMinus, FaPlus } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+
+const QtyUpdate = ({ product }) => {
+  const [cart, setCart] = useCart();
+
+  // state
+  const [cartQuantity, setCartQuantity] = useState(product?.cartQuantity || 1);
+
+  const handleDecrease = () => {
+    const newQuantity = cartQuantity - 1;
+    setCartQuantity(newQuantity);
+    addToCart(product, newQuantity, cart, setCart);
+  };
+
+  const handleIncrease = () => {
+    const newQuantity = cartQuantity + 1;
+    setCartQuantity(newQuantity);
+    addToCart(product, newQuantity, cart, setCart);
+  };
+
+  return (
+    <div
+      style={{ maxWidth: "15rem" }}
+      className="d-flex align-items-center text-nowrap border px-3 py-2 rounded-pill my-5"
+    >
+      <button
+        onClick={handleDecrease}
+        disabled={cartQuantity < 2}
+        style={{ width: "3rem", height: "3rem" }}
+        className="btn bgLight2 rounded-circle flex-shrink-0 d-flex justify-content-center align-items-center hoverable"
+      >
+        <FaMinus size={13} />
+      </button>
+      <input
+        type="number"
+        min={0}
+        max={100}
+        className="form-control text-center border-0 px-3 py-2-none fs-3 p-0"
+        value={cartQuantity}
+        onChange={(e) => setCartQuantity(parseInt(e.target.value))}
+        readOnly
+      />
+      <button
+        onClick={handleIncrease}
+        disabled={cartQuantity > 99}
+        style={{ width: "3rem", height: "3rem" }}
+        className="btn bgLight2 rounded-circle flex-shrink-0 d-flex justify-content-center align-items-center hoverable"
+      >
+        <FaPlus size={13} />
+      </button>
+    </div>
+  );
+};
+
+const CouponBilling = () => {
+  const [selectedDivision, setSelectedDivision] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+
+  const districtsByDivision = {
+    Dhaka: [
+      "Dhaka",
+      "Gazipur",
+      "Tangail",
+      "Madaripur",
+      "Munshiganj",
+      "Rajbari",
+      "Shariatpur",
+      "Narayanganj",
+      "Narsingdi",
+      "Manikganj",
+      "Faridpur",
+      "Gopalganj",
+      "Kishoreganj",
+    ],
+    Chittagong: [
+      "Chittagong",
+      "Cox's Bazar",
+      "Comilla",
+      "Feni",
+      "Brahmanbaria",
+      "Chandpur",
+      "Lakshmipur",
+      "Noakhali",
+      "Rangamati",
+      "Khagrachari",
+      "Bandarban",
+    ],
+    Khulna: [
+      "Khulna",
+      "Jessore",
+      "Satkhira",
+      "Bagerhat",
+      "Chuadanga",
+      "Jhenaidah",
+      "Kushtia",
+      "Magura",
+      "Meherpur",
+      "Narail",
+    ],
+    Rajshahi: [
+      "Rajshahi",
+      "Bogra",
+      "Pabna",
+      "Jaipurhat",
+      "Naogaon",
+      "Natore",
+      "Chapainawabganj",
+    ],
+    Barishal: ["Barishal", "Bhola", "Jhalokathi", "Patuakhali", "Pirojpur"],
+    Sylhet: ["Sylhet", "Habiganj", "Moulvibazar", "Sunamganj"],
+    Rangpur: [
+      "Rangpur",
+      "Lalmonirhat",
+      "Kurigram",
+      "Nilphamari",
+      "Gaibandha",
+      "Dinajpur",
+      "Thakurgaon",
+      "Panchagarh",
+    ],
+    Mymensingh: ["Mymensingh", "Jamalpur", "Netrokona", "Sherpur"],
+  };
+
+  const handleDivisionChange = (event) => {
+    const selectedDivisionValue = event.target.value;
+    setSelectedDivision(selectedDivisionValue);
+
+    // Reset selected district when division changes
+    setSelectedDistrict("");
+  };
+
+  const handleDistrictChange = (event) => {
+    setSelectedDistrict(event.target.value);
+  };
+
+  return (
+    <div>
+      <div className="bgLight2 pb-50">
+        {/* Coupon Input */}
+        <div className="input-group mb-50">
+          <input
+            type="text"
+            className="form-control border border-dark border-2 rounded-0 px-20"
+            placeholder="Enter coupon"
+          />
+          <button className="btn btn-dark text-white input-group-text rounded-0 px-25 py-4">
+            Apply
+          </button>
+        </div>
+
+        <div className="px-4 px-xl-5">
+          {/* Select Division */}
+          <div className="mb-5">
+            <label className="form-label fontPoppins fw-medium">DIVISION</label>
+            <select
+              className="form-select shadow px-3 py-2"
+              aria-label="Select Division"
+              value={selectedDivision}
+              onChange={handleDivisionChange}
+            >
+              <option value="" disabled>
+                Select Division
+              </option>
+
+              {Object.keys(districtsByDivision).map((division) => (
+                <option key={division} value={division}>
+                  {division}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Select District */}
+          <div className="mb-5">
+            <label className="form-label fontPoppins fw-medium ">DISTRICT</label>
+            <select
+              className="form-select shadow px-3 py-2"
+              aria-label="Select District"
+              value={selectedDistrict}
+              onChange={handleDistrictChange}
+              disabled={!selectedDivision}
+            >
+              <option value="" disabled>
+                Select District
+              </option>
+              {selectedDivision &&
+                districtsByDivision[selectedDivision].map((district, index) => (
+                  <option key={index} value={district}>
+                    {district}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          {/* Postal Code Input */}
+          <div>
+            <label className="form-label fontPoppins fw-medium">ZIP/POSTAL CODE</label>
+            <input type="text" className="form-control shadow px-3 py-2" />
+          </div>
+        </div>
+      </div>
+      <div className="bgLight3 pt-50 pb-5 px-20">
+        <div className="d-flex justify-content-between align-items-center text-nowrap mb-3">
+          <span className="fs-3 fw-medium">Subtotal</span>
+          <span className="fs-3">$2,000</span>
+        </div>
+        <div className="d-flex justify-content-between align-items-center text-nowrap mb-3">
+          <span className="fs-3 fw-medium">Discount</span>
+          <span className="fs-3">-$100</span>
+        </div>
+        <div className="d-flex justify-content-between align-items-center text-nowrap mb-5">
+          <span className="fs-3 fw-medium">Shipping</span>
+          <span className="fs-3">$10</span>
+        </div>
+        <div className="d-flex justify-content-between align-items-baseline text-nowrap">
+          <span className="fs-3 fw-medium">TOTAL</span>
+          <span className="fs-1 fw-bold">$1910</span>
+        </div>
+
+        {/* Checkout Button */}
+        <button className="btn btnDark w-100 py-12 rounded-pill mt-50">Checkout</button>
+      </div>
+    </div>
+  );
+};
+
+const Cart = () => {
+  const [cart, setCart] = useCart();
+
+  return (
+    <section style={{ marginTop: "5rem", marginBottom: "7rem" }}>
+      <div className="container">
+        <div className="mb-5">
+          <UserBreadcrumb
+            items={[
+              {
+                title: (
+                  <>
+                    <ShoppingCartOutlined />
+                    <span>Cart</span>
+                  </>
+                ),
+              },
+            ]}
+          />
+          <h1 className="display-4 fontPoppins fw-bold mt-2">Shopping Cart</h1>
+        </div>
+
+        <div className="row g-5">
+          <div className="col-lg-8 sticky-lg-top" style={{ height: "fit-content" }}>
+            <div className="table-responsive">
+              <table className="table align-middle fs-14" style={{ minWidth: "70rem" }}>
+                <thead className="bgLight2">
+                  <tr>
+                    <th className="py-20 ps-20">Item</th>
+                    <th className="py-20">Price</th>
+                    <th className="py-20">Quantity</th>
+                    <th className="py-20">Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cart.length > 0 ? (
+                    cart.map((product) => (
+                      <tr key={product?._id}>
+                        <td className="py-4">
+                          <div className="d-flex align-items-center gap-4">
+                            <div>
+                              <ImageLazyLoad
+                                style={{ width: "8rem", height: "8rem" }}
+                                className="img-thumbnail"
+                                src={`${process.env.REACT_APP_API}/product/photo/${product?._id}`}
+                                alt={product?.name}
+                              />
+                            </div>
+
+                            <div>
+                              <a className="d-block mb-3" href="#">
+                                <h4 className="fs-14">THE TERRY SHORTS (UNISEX)</h4>
+                              </a>
+
+                              <div>
+                                <span className="fs-13 fst-italic">Navy / XS</span>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-4">
+                          <span className="fw-semibold">
+                            {product?.price.toLocaleString("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            })}
+                          </span>
+                        </td>
+                        <td className="py-4">
+                          <QtyUpdate product={product} />
+                        </td>
+                        <td className="py-4">
+                          <div className="d-flex justify-content-between align-items-center">
+                            <span className="fw-semibold pe-4">
+                              {(product?.price * product?.cartQuantity).toLocaleString(
+                                "en-US",
+                                {
+                                  style: "currency",
+                                  currency: "USD",
+                                }
+                              )}
+                            </span>
+                            <IoClose
+                              onClick={() => removeFromCart(product._id, cart, setCart)}
+                              role="button"
+                              className="hoverableOp"
+                              size={24}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr className="text-center fs-1">
+                      <td className="fs-1 py-5" colSpan={4}>
+                        No product in cart. 😔
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="col-lg-4 sticky-lg-top" style={{ height: "fit-content" }}>
+            <CouponBilling />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Cart;

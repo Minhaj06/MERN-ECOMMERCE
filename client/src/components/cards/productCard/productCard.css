@@ -68,3 +68,22 @@
 .fullWidthImg {
   max-width: 33rem !important;
 }
+
+@media (max-width: 991px) {
+  .productCard:not(.trendingProductCard) img {
+    height: 20rem;
+    max-height: 20rem;
+  }
+}
+@media (max-width: 450px) {
+  .productCard:not(.trendingProductCard) img {
+    height: 18rem;
+    max-height: 18rem;
+  }
+}
+@media (max-width: 380px) {
+  .productCard:not(.trendingProductCard) img {
+    height: 14rem;
+    max-height: 14rem;
+  }
+}

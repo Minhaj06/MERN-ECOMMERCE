@@ -205,35 +205,63 @@ const MainMenu = ({ categories, subcategories }) => {
                     )}
                   </li>
                 ))}
-                <>
-                  <li className="py-3">
-                    <NavLink
-                      className="nav-link d-flex justify-content-between align-items-center"
-                      to="/blog"
-                      aria-current="page"
-                    >
-                      Blog
-                    </NavLink>
-                  </li>
-                  <li className="py-3">
-                    <NavLink
-                      className="nav-link d-flex justify-content-between align-items-center"
-                      to="/featured-products"
-                      aria-current="page"
-                    >
-                      Featured Products
-                    </NavLink>
-                  </li>
-                  <li className="py-3">
-                    <NavLink
-                      className="nav-link d-flex justify-content-between align-items-center"
-                      to="/wishlist"
-                      aria-current="page"
-                    >
-                      Wishlist
-                    </NavLink>
-                  </li>
-                </>
+                <li className="py-3">
+                  <NavLink
+                    className="nav-link d-flex justify-content-between align-items-center"
+                    to="/blog"
+                    aria-current="page"
+                  >
+                    Blog
+                  </NavLink>
+                </li>
+                <li className="py-3">
+                  <NavLink
+                    className="nav-link d-flex justify-content-between align-items-center"
+                    to="/featured-products"
+                    aria-current="page"
+                  >
+                    Featured Products
+                  </NavLink>
+                </li>
+                <li className="py-3">
+                  <NavLink
+                    className="nav-link d-flex justify-content-between align-items-center"
+                    to="/wishlist"
+                    aria-current="page"
+                  >
+                    Wishlist
+                  </NavLink>
+                </li>
+                <li className="py-3">
+                  <div className="menuIcons d-flex align-items-center mt-2 mt-lg-0">
+                    <div className="topbar-icon-group me-20">
+                      <span
+                        role="button"
+                        className="floating-text-icon d-inline-block position-relative hoverable"
+                      >
+                        <AiOutlineHeart size={22} />
+                        <span className="floating-num">0</span>
+                      </span>
+                    </div>
+                    <div className="topbar-icon-group me-20">
+                      <span
+                        onClick={() => {
+                          setShowMenuOffcanvas(false);
+                          setShowCartOffcanvas(true);
+                        }}
+                        role="button"
+                        className="floating-text-icon d-inline-block position-relative hoverable"
+                      >
+                        <AiOutlineShoppingCart size={22} />
+                        <span className="floating-num">{cart.length}</span>
+                      </span>
+                    </div>
+                    <div className="totalAmount">
+                      <small className="fs-14 lightColor">Total</small>
+                      <h5 className="fs-14">${totalPrice.toFixed(2)}</h5>
+                    </div>
+                  </div>
+                </li>
               </ul>
             )}
           </div>
@@ -296,13 +324,19 @@ const MainMenu = ({ categories, subcategories }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="">
+                  <div className="d-flex align-items-center gap-3">
+                    <span className="fs-3 fontPoppins fw-semibold">
+                      {(product?.price * product?.cartQuantity).toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      })}
+                    </span>
                     <span
                       onClick={() => removeFromCart(product._id, cart, setCart)}
                       className="p-2 hoverableOp"
                       role="button"
                     >
-                      <IoClose size={20} />
+                      <IoClose size={22} />
                     </span>
                   </div>
                 </div>
@@ -321,17 +355,30 @@ const MainMenu = ({ categories, subcategories }) => {
               })}
             </h1>
 
-            <Link to="/checkout" className="btn btnPrimary w-100 py-10 rounded-pill mt-5">
+            <Link
+              onClick={() => setShowCartOffcanvas(!showCartOffcanvas)}
+              to="/checkout"
+              className="btn btnPrimary w-100 py-10 rounded-pill mt-5"
+            >
               Checkout
             </Link>
-            <Link to="/cart" className="btn btnDark w-100 py-10 rounded-pill mt-3">
+            <Link
+              onClick={() => setShowCartOffcanvas(!showCartOffcanvas)}
+              to="/cart"
+              className="btn btnDark w-100 py-10 rounded-pill mt-3"
+            >
               View cart
             </Link>
           </div>
         </Offcanvas.Body>
       </Offcanvas>
 
-      <Navbar className="mb-4 bg-transparent" bg="light" expand="lg">
+      <Navbar
+        className="mb-3 mb-sm-4 position-sticky top-0 start-0 static-lg"
+        bg="white"
+        expand="lg"
+        style={{ zIndex: 1020 }}
+      >
         <Container>
           <Navbar.Brand className="me-5">
             <Link to="/">

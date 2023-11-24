@@ -13,7 +13,7 @@ import { useAuth } from "../../context/auth";
 import axios from "axios";
 import Loading from "../../components/routes/Loading";
 import { Footer } from "antd/es/layout/layout";
-import BreadcrumbComponent from "../../components/breadcrumb/BreadcrumbComponent";
+import AdminBreadcrumb from "../../components/breadcrumb/AdminBreadcrumb";
 import AdminMenu from "../../components/nav/AdminMenu";
 
 const { Header, Sider, Content } = Layout;
@@ -178,7 +178,7 @@ const AdminLayout = () => {
             overflow: "initial",
           }}
         >
-          <BreadcrumbComponent />
+          <AdminBreadcrumb />
           <div
             style={{
               padding: 24,
