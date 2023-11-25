@@ -4,16 +4,16 @@ import { Outlet } from "react-router-dom";
 
 const UserDashboardLayout = () => {
   return (
-    <section style={{ margin: "7rem 0" }}>
+    <section className="themeColorSecondaryDark" style={{ margin: "7rem 0" }}>
       <div className="container">
         <div className="row g-5">
-          <div className="col-lg-3">
-            <div>
+          <div className="col-lg-3 sticky-lg-top" style={{ height: "fit-content" }}>
+            <div className="h-100">
               <UserMenu />
             </div>
           </div>
-          <div className="col-lg-9">
-            <div>
+          <div className="col-lg-9 sticky-lg-top" style={{ height: "fit-content" }}>
+            <div className="h-100 px-4">
               <Outlet />
             </div>
           </div>

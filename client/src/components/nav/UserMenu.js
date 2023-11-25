@@ -21,7 +21,7 @@ const UserMenu = () => {
   ];
 
   return (
-    <aside className="themeColorSecondaryDark">
+    <aside>
       <div className="userMenuTop d-flex gap-4">
         <div>
           <img
