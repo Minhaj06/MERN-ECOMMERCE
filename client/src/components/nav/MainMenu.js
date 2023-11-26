@@ -283,10 +283,7 @@ const MainMenu = ({ categories, subcategories }) => {
           <div>
             {cart.length > 0 ? (
               cart.map((product) => (
-                <div
-                  className="d-flex flex-wrap justify-content-between gap-4 mb-20"
-                  key={product?._id}
-                >
+                <div className="d-flex justify-content-between gap-4 mb-20" key={product?._id}>
                   <div>
                     <Link to={`/product/${product?.slug}`}>
                       <ImageLazyLoad

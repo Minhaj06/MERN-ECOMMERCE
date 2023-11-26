@@ -64,6 +64,9 @@ const QtyUpdate = ({ product }) => {
 const CouponBilling = () => {
   const { auth } = useAuth();
 
+  // Context
+  const [cart, setCart] = useCart();
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -73,6 +76,14 @@ const CouponBilling = () => {
   const [division, setDivision] = useState("");
   const [district, setDistrict] = useState("");
   const [postalCode, setPostalCode] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const totalAmount = parseFloat(
+      cart.reduce((total, product) => total + product?.price * product?.cartQuantity, 0)
+    );
+    setTotalPrice(totalAmount);
+  }, [cart]);
 
   useEffect(() => {
     if (billingAddress) {
@@ -233,7 +244,12 @@ const CouponBilling = () => {
       <div className="bgLight3 pt-50 pb-5 px-20">
         <div className="d-flex justify-content-between align-items-center text-nowrap mb-3">
           <span className="fs-3 fw-medium">Subtotal</span>
-          <span className="fs-3">$2,000</span>
+          <span className="fs-3">
+            {totalPrice.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </span>
         </div>
         <div className="d-flex justify-content-between align-items-center text-nowrap mb-3">
           <span className="fs-3 fw-medium">Discount</span>
@@ -309,7 +325,7 @@ const Cart = () => {
                     <th className="py-20 ps-20">Item</th>
                     <th className="py-20">Price</th>
                     <th className="py-20">Quantity</th>
-                    <th className="py-20">Subtotal</th>
+                    <th className="py-20">Total</th>
                   </tr>
                 </thead>
                 <tbody>
