@@ -12,11 +12,13 @@ const UserBreadcrumb = ({ items }) => (
     </Breadcrumb.Item>
     {items.map((item, index) =>
       item?.link ? (
-        <Breadcrumb.Item key={index}>
+        <Breadcrumb.Item key={index} onClick={item?.onClick}>
           <Link to={item.link}>{item?.title}</Link>
         </Breadcrumb.Item>
       ) : (
-        <Breadcrumb.Item key={index}>{item?.title}</Breadcrumb.Item>
+        <Breadcrumb.Item key={index} onClick={() => item?.onClick}>
+          {item?.title}
+        </Breadcrumb.Item>
       )
     )}
   </Breadcrumb>

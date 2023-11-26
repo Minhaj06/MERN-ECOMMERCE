@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ShoppingCartOutlined, CloseOutlined } from "@ant-design/icons";
 import UserBreadcrumb from "../components/breadcrumb/UserBreadcrumb";
 import { useCart } from "../context/cart";
@@ -6,6 +6,8 @@ import ImageLazyLoad from "../utils/ImageLazyLoad";
 import { addToCart, removeFromCart } from "../utils/cart";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { useAuth } from "../context/auth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const QtyUpdate = ({ product }) => {
   const [cart, setCart] = useCart();
@@ -60,8 +62,25 @@ const QtyUpdate = ({ product }) => {
 };
 
 const CouponBilling = () => {
-  const [selectedDivision, setSelectedDivision] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const { auth } = useAuth();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const billingAddress = location.state?.billingAddress;
+
+  // state
+  const [division, setDivision] = useState("");
+  const [district, setDistrict] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+
+  useEffect(() => {
+    if (billingAddress) {
+      setDivision(billingAddress?.division);
+      setDistrict(billingAddress?.district);
+      setPostalCode(billingAddress?.postalCode);
+    }
+  }, [location, billingAddress]);
 
   const districtsByDivision = {
     Dhaka: [
@@ -129,15 +148,15 @@ const CouponBilling = () => {
   };
 
   const handleDivisionChange = (event) => {
-    const selectedDivisionValue = event.target.value;
-    setSelectedDivision(selectedDivisionValue);
+    const divisionValue = event.target.value;
+    setDivision(divisionValue);
 
-    // Reset selected district when division changes
-    setSelectedDistrict("");
+    // Reset  district when division changes
+    setDistrict("");
   };
 
   const handleDistrictChange = (event) => {
-    setSelectedDistrict(event.target.value);
+    setDistrict(event.target.value);
   };
 
   return (
@@ -162,7 +181,7 @@ const CouponBilling = () => {
             <select
               className="form-select shadow px-3 py-2"
               aria-label="Select Division"
-              value={selectedDivision}
+              value={division}
               onChange={handleDivisionChange}
             >
               <option value="" disabled>
@@ -183,15 +202,15 @@ const CouponBilling = () => {
             <select
               className="form-select shadow px-3 py-2"
               aria-label="Select District"
-              value={selectedDistrict}
+              value={district}
               onChange={handleDistrictChange}
-              disabled={!selectedDivision}
+              disabled={!division}
             >
               <option value="" disabled>
                 Select District
               </option>
-              {selectedDivision &&
-                districtsByDivision[selectedDivision].map((district, index) => (
+              {division &&
+                districtsByDivision[division].map((district, index) => (
                   <option key={index} value={district}>
                     {district}
                   </option>
@@ -202,7 +221,12 @@ const CouponBilling = () => {
           {/* Postal Code Input */}
           <div>
             <label className="form-label fontPoppins fw-medium">ZIP/POSTAL CODE</label>
-            <input type="text" className="form-control shadow px-3 py-2" />
+            <input
+              onBlur={(e) => setPostalCode(e.target.value)}
+              type="text"
+              className="form-control shadow px-3 py-2"
+              defaultValue={postalCode}
+            />
           </div>
         </div>
       </div>
@@ -225,7 +249,30 @@ const CouponBilling = () => {
         </div>
 
         {/* Checkout Button */}
-        <button className="btn btnDark w-100 py-12 rounded-pill mt-50">Checkout</button>
+        {auth?.user ? (
+          <button
+            onClick={() =>
+              navigate("/checkout", {
+                state: { billingAddress: { division, district, postalCode } },
+              })
+            }
+            className="btn btnDark w-100 py-12 rounded-pill mt-50"
+            disabled={!division || !district || !postalCode ? true : false}
+          >
+            Checkout
+          </button>
+        ) : (
+          <button
+            onClick={() =>
+              navigate("/login", {
+                state: "/cart",
+              })
+            }
+            className="btn btnDark w-100 py-12 rounded-pill mt-50"
+          >
+            Login to Checkout
+          </button>
+        )}
       </div>
     </div>
   );

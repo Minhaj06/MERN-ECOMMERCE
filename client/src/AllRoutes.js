@@ -8,6 +8,7 @@ const Login = lazy(() => import("./pages/auth/Login"));
 const Register = lazy(() => import("./pages/auth/Register"));
 const Shop = lazy(() => import("./pages/Shop"));
 const Cart = lazy(() => import("./pages/Cart"));
+const Checkout = lazy(() => import("./pages/Checkout"));
 const Calculate = lazy(() => import("./pages/Calculate"));
 const Profile = lazy(() => import("./pages/user/Profile"));
 const Orders = lazy(() => import("./pages/user/Orders"));
@@ -47,6 +48,9 @@ const AllRoutes = () => {
               <Route path="/register" element={<Register />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/cart" element={<Cart />} />
+              <Route element={<PrivateRoute />}>
+                <Route path="/checkout" element={<Checkout />} />
+              </Route>
               <Route path="/calculate" element={<Calculate />} />
               <Route path="/search" element={<Search />} />
               <Route path="/product/:slug" element={<ProductDetails />} />
