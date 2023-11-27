@@ -5,8 +5,9 @@ const router = express.Router();
 const { requireSignin, isAdmin } = require("../middlewares/auth.js");
 
 // Controllers
-const { create } = require("../controllers/coupon.js");
+const { create, read } = require("../controllers/coupon.js");
 
 router.post("/coupon", requireSignin, isAdmin, create);
+router.get("/coupons/:code", read);
 
 module.exports = router;

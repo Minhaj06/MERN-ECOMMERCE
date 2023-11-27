@@ -8,6 +8,8 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { useAuth } from "../context/auth";
 import { useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const QtyUpdate = ({ product }) => {
   const [cart, setCart] = useCart();
@@ -62,7 +64,7 @@ const QtyUpdate = ({ product }) => {
 };
 
 const CouponBilling = () => {
-  const { auth } = useAuth();
+  const { auth, setIsLoading } = useAuth();
 
   // Context
   const [cart, setCart] = useCart();
@@ -76,6 +78,8 @@ const CouponBilling = () => {
   const [division, setDivision] = useState("");
   const [district, setDistrict] = useState("");
   const [postalCode, setPostalCode] = useState("");
+  const [couponDiscountPercentage, setCouponDiscountPercentage] = useState(0);
+  const [shippingCharge, setShippingCharge] = useState(10);
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
@@ -92,6 +96,14 @@ const CouponBilling = () => {
       setPostalCode(billingAddress?.postalCode);
     }
   }, [location, billingAddress]);
+
+  useEffect(() => {
+    if (division.toLowerCase() !== "dhaka") {
+      setShippingCharge(15);
+    } else {
+      setShippingCharge(10);
+    }
+  }, [division]);
 
   const districtsByDivision = {
     Dhaka: [
@@ -170,20 +182,46 @@ const CouponBilling = () => {
     setDistrict(event.target.value);
   };
 
+  const handleCouponSubmit = async (e) => {
+    e.preventDefault();
+
+    const couponCode = e.target.couponInput.value;
+    if (!couponCode) {
+      toast.error("Coupon cannot be empty");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { data } = await axios.get(`/coupons/${couponCode}`);
+      setCouponDiscountPercentage(data.discountPercentage);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div>
       <div className="bgLight2 pb-50">
         {/* Coupon Input */}
-        <div className="input-group mb-50">
-          <input
-            type="text"
-            className="form-control border border-dark border-2 rounded-0 px-20"
-            placeholder="Enter coupon"
-          />
-          <button className="btn btn-dark text-white input-group-text rounded-0 px-25 py-4">
-            Apply
-          </button>
-        </div>
+        <form onSubmit={handleCouponSubmit}>
+          <div className="input-group mb-50">
+            <input
+              type="text"
+              name="couponInput"
+              className="form-control border border-dark border-2 rounded-0 px-20"
+              placeholder="Enter coupon"
+            />
+            <button
+              type="submit"
+              className="btn btn-dark text-white input-group-text rounded-0 px-25 py-4"
+            >
+              Apply
+            </button>
+          </div>
+        </form>
 
         <div className="px-4 px-xl-5">
           {/* Select Division */}
@@ -253,15 +291,29 @@ const CouponBilling = () => {
         </div>
         <div className="d-flex justify-content-between align-items-center text-nowrap mb-3">
           <span className="fs-3 fw-medium">Discount</span>
-          <span className="fs-3">-$100</span>
+          <span className="fs-3">
+            {((totalPrice / 100) * couponDiscountPercentage * -1).toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </span>
         </div>
         <div className="d-flex justify-content-between align-items-center text-nowrap mb-5">
           <span className="fs-3 fw-medium">Shipping</span>
-          <span className="fs-3">$10</span>
+          <span className="fs-3">${shippingCharge}</span>
         </div>
         <div className="d-flex justify-content-between align-items-baseline text-nowrap">
           <span className="fs-3 fw-medium">TOTAL</span>
-          <span className="fs-1 fw-bold">$1910</span>
+          <span className="fs-1 fw-bold">
+            {(
+              totalPrice +
+              shippingCharge -
+              (totalPrice / 100) * couponDiscountPercentage
+            ).toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </span>
         </div>
 
         {/* Checkout Button */}
