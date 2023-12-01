@@ -5,11 +5,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import toast from "react-hot-toast";
-import {
-  isValidPhoneNumber,
-  formatPhoneNumber,
-  formatAndValidatePhoneNumber,
-} from "../utils/validation";
 import { useCart } from "../context/cart";
 import ImageLazyLoad from "../utils/ImageLazyLoad";
 
@@ -22,6 +17,8 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   const billingAddress = location?.state?.billingAddress;
+  const discountPercentage = location?.state?.discountPercentage;
+  const shippingCharge = location?.state?.shippingCharge;
 
   // State
   const [shippingAddress, setShippingAddress] = useState({
@@ -31,18 +28,18 @@ const Checkout = () => {
     division: "",
     district: "",
     postalCode: "",
-    address: "",
+    streetAddress: "",
     phoneNumber: "443",
   });
 
   useEffect(() => {
     if (billingAddress) {
       setShippingAddress({
-        email: auth?.user?.email,
-        firstName: auth?.user?.firstName,
-        lastName: auth?.user?.lastName,
-        address: auth?.user?.address,
-        phoneNumber: auth?.user?.phoneNumber,
+        // email: auth?.user?.email,
+        // firstName: auth?.user?.firstName,
+        // lastName: auth?.user?.lastName,
+        // address: auth?.user?.address,
+        // phoneNumber: auth?.user?.phoneNumber,
         division: billingAddress?.division,
         district: billingAddress?.district,
         postalCode: billingAddress?.postalCode,
@@ -65,7 +62,7 @@ const Checkout = () => {
       disabled: true,
       type: "text",
     },
-    { label: "Street Address", name: "address" },
+    { label: "Street Address", name: "streetAddress" },
     { label: "Phone Number", name: "phoneNumber", type: "tel" },
   ];
 
@@ -96,7 +93,7 @@ const Checkout = () => {
       division,
       district,
       postalCode,
-      address,
+      streetAddress,
       phoneNumber,
     } = shippingAddress;
 
@@ -125,14 +122,22 @@ const Checkout = () => {
       toast.error("Postal Code cannot be empty!");
       return;
     }
-    if (!address) {
-      toast.error("Address cannot be empty!");
+    if (!streetAddress) {
+      toast.error("Street address cannot be empty!");
       return;
     }
     if (!phoneNumber) {
       toast.error("Phone Number cannot be empty!");
       return;
     }
+
+    navigate("/checkout/payment", {
+      state: {
+        shippingAddress: shippingAddress,
+        discountPercentage: discountPercentage,
+        shippingCharge: shippingCharge,
+      },
+    });
   };
 
   return (

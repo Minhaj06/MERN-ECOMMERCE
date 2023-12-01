@@ -225,7 +225,7 @@ const Shop = () => {
             {JSON.stringify({ categoryChecked, subcategoryChecked, priceRange }, null, 4)}
           </pre> */}
           <div className="row g-5">
-            <div className="col-lg-3">
+            <div className="col-lg-3 sticky-lg-top" style={{ height: "fit-content" }}>
               <div className="bgLight2 rounded py-4 border mb-5">
                 <h2 className="d-flex justify-content-between align-items-center px-4">
                   <span>Filter</span>

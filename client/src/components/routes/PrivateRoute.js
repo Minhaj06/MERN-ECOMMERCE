@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 import Loading from "./Loading";
@@ -11,32 +11,32 @@ const PrivateRoute = () => {
   // state
   const [ok, setOk] = useState(false);
 
+  // hooks
+  const navigate = useNavigate();
+  const location = useLocation();
+
   useEffect(() => {
     const authCheck = async () => {
       const { data } = await axios.get(`/auth-check`);
-      // const { data } = await axios.get(`/auth-check`, {
-      //   headers: {
-      //     authorization: auth?.token,
-      //   },
-      // });
 
       if (data.ok) {
         setOk(true);
       } else {
         setOk(false);
+        navigate("/login", {
+          state: location.pathname,
+        });
       }
     };
 
     if (auth?.token) authCheck();
+    else
+      setTimeout(() => {
+        navigate("/login", {
+          state: location.pathname,
+        });
+      }, 3000);
   }, [auth?.token]);
-
-  // useEffect(() => {
-  //   if (auth?.token) {
-  //     setOk(true);
-  //   } else {
-  //     setOk(false);
-  //   }
-  // }, [auth?.token]);
 
   return ok ? <Outlet /> : <Loading />;
 };

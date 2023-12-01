@@ -9,6 +9,7 @@ const Register = lazy(() => import("./pages/auth/Register"));
 const Shop = lazy(() => import("./pages/Shop"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Checkout = lazy(() => import("./pages/Checkout"));
+const Payment = lazy(() => import("./pages/Payment"));
 const Calculate = lazy(() => import("./pages/Calculate"));
 const Profile = lazy(() => import("./pages/user/Profile"));
 const Orders = lazy(() => import("./pages/user/Orders"));
@@ -17,6 +18,7 @@ const Wishlist = lazy(() => import("./pages/user/Wishlist"));
 const Invoices = lazy(() => import("./pages/user/Invoices"));
 
 const PrivateRoute = lazy(() => import("./components/routes/PrivateRoute"));
+const AdminRoute = lazy(() => import("./components/routes/AdminRoute"));
 const UserDashboard = lazy(() => import("./pages/user/UserDashboard"));
 const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 const Secret = lazy(() => import("./pages/Secret"));
@@ -34,8 +36,6 @@ const Product = lazy(() => import("./pages/admin/product/Product"));
 const Products = lazy(() => import("./pages/admin/product/Products"));
 
 const AllRoutes = () => {
-  const admin = "/dashboard/admin";
-
   return (
     <Fragment>
       <BrowserRouter>
@@ -50,6 +50,9 @@ const AllRoutes = () => {
               <Route path="/cart" element={<Cart />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/checkout" element={<Checkout />} />
+              </Route>
+              <Route element={<PrivateRoute />}>
+                <Route path="/checkout/payment" element={<Payment />} />
               </Route>
               <Route path="/calculate" element={<Calculate />} />
               <Route path="/search" element={<Search />} />
@@ -70,12 +73,14 @@ const AllRoutes = () => {
             </Route>
 
             {/* Admin Layout */}
-            <Route element={<AdminLayout />}>
-              <Route path={`${admin}`} element={<AdminDashboard />} />
-              <Route path={`${admin}/category`} element={<Category />} />
+            <Route path="/dashboard/admin" element={<AdminRoute />}>
+              <Route element={<AdminLayout />}>
+                <Route path="" element={<AdminDashboard />} />
+                <Route path="category" element={<Category />} />
 
-              <Route path={`${admin}/product`} element={<Product />} />
-              <Route path={`${admin}/products`} element={<Products />} />
+                <Route path="product" element={<Product />} />
+                <Route path="products" element={<Products />} />
+              </Route>
             </Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>

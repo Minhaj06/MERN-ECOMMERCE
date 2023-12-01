@@ -1,19 +1,19 @@
 const Product = require("../models/product.js");
+const User = require("../models/user.js");
 const Order = require("../models/order.js");
 const fs = require("fs");
 const slugify = require("slugify");
-const branitree = require("braintree");
+const braintree = require("braintree");
 require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_KEY);
 
-// sgMail.setApiKey(process.env.SENDGRID_KEY);
-
-// const gateway = new braintree.BraintreeGateway({
-//   environment: braintree.Environment.Sandbox,
-//   merchantId: process.env.BRAINTREE_MERCHANT_ID,
-//   publicKey: process.env.BRAINTREE_PUBLIC_KEY,
-//   privateKey: process.env.BRAINTREE_PRIVATE_KEY,
-// });
+const gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: process.env.BRAINTREE_MERCHANT_ID,
+  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+  privateKey: process.env.BRAINTREE_PRIVATE_KEY,
+});
 
 // Create Product With Single Image
 // exports.create = async (req, res) => {
@@ -505,18 +505,28 @@ exports.getToken = async (req, res) => {
 
 exports.processPayment = async (req, res) => {
   try {
-    // console.log(req.body);
+    const user = await User.findById(req.user._id);
+
+    const { shippingAddress, discountPercentage, shippingCharge } = req.body;
+
+    if (!shippingAddress && !user?.address) {
+      return res.send({ error: "User address or shipping address required" });
+    }
+
     const { nonce, cart } = req.body;
 
     let total = 0;
     cart.map((i) => {
       total += i.price;
     });
-    // console.log("total => ", total);
+
+    let discount = (total / 100) * discountPercentage;
+
+    let amount = total + shippingCharge - discount;
 
     let newTransaction = gateway.transaction.sale(
       {
-        amount: total,
+        amount: amount,
         paymentMethodNonce: nonce,
         options: {
           submitForSettlement: true,
@@ -525,12 +535,17 @@ exports.processPayment = async (req, res) => {
       function (error, result) {
         if (result) {
           // res.send(result);
-          // create order
-          const order = new Order({
+          const orderData = {
             products: cart,
+            discountPercentage: discountPercentage,
             payment: result,
             buyer: req.user._id,
-          }).save();
+          };
+
+          if (shippingAddress) orderData.shippingAddress = shippingAddress;
+
+          // create order
+          const order = new Order(orderData).save();
           // decrement quantity
           decrementQuantity(cart);
           // const bulkOps = cart.map((item) => {
@@ -562,7 +577,7 @@ const decrementQuantity = async (cart) => {
       return {
         updateOne: {
           filter: { _id: item._id },
-          update: { $inc: { quantity: -0, sold: +1 } },
+          update: { $inc: { quantity: -0, sold: +item?.cartQuantity } },
         },
       };
     });

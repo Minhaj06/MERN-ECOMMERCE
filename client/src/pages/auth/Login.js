@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Jumbotron from "../../components/cards/Jumbotron";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -6,18 +6,16 @@ import { useAuth } from "../../context/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Login = () => {
+  // context
+  const { auth, setAuth } = useAuth();
+
   // state
   const [email, setEmail] = useState("minhaj@gmail.com");
   const [password, setPassword] = useState("123456");
 
   // hook
-  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    console.log("Login", location);
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

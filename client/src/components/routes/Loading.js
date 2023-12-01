@@ -1,31 +1,29 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import LoadingGIF from "../../assets/images/loading.gif";
 
 import React from "react";
 
-function Loading({ path = "login" }) {
-  // state
-  const [count, setCount] = useState(3);
+const Loading = () => {
+  // // state
+  // const [count, setCount] = useState(3);
 
-  // hooks
-  const navigate = useNavigate();
-  const location = useLocation();
+  // // hooks
+  // const navigate = useNavigate();
+  // const location = useLocation();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCount((currentCount) => --currentCount);
-    }, 1000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCount((currentCount) => --currentCount);
+  //   }, 1000);
 
-    // Redirect once count is equal to 0
-    count === 0 &&
-      navigate(`/${path}`, {
-        state: location.pathname,
-      });
+  //   // Redirect once count is equal to 0
+  //   count === 0 &&
+  //     navigate(`/${path}`, {
+  //       state: location.pathname,
+  //     });
 
-    // cleanup
-    return () => clearInterval(interval);
-  }, [count]);
+  //   // cleanup
+  //   return () => clearInterval(interval);
+  // }, [count]);
 
   return (
     <div
@@ -35,6 +33,6 @@ function Loading({ path = "login" }) {
       <img src={LoadingGIF} alt="Loading" style={{ width: "400px" }} />
     </div>
   );
-}
+};
 
 export default Loading;

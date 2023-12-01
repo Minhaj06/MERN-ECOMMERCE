@@ -57,6 +57,21 @@ const MainMenu = ({ categories, subcategories }) => {
     setTotalPrice(totalAmount);
   }, [cart]);
 
+  // const mediaQueryThreshold = 768;
+  // const handleWindowResize = () => {
+  //   const windowWidth = window.innerWidth;
+
+  //   setShowMenuOffcanvas(windowWidth < mediaQueryThreshold);
+  // };
+
+  // useEffect(() => {
+  //   window.addEventListener("resize", handleWindowResize);
+
+  //   return () => {
+  //     window.removeEventListener("resize", handleWindowResize);
+  //   };
+  // }, []);
+
   return (
     <>
       {/* Menu & Category Offcanvas */}

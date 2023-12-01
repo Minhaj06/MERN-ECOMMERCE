@@ -19,28 +19,8 @@ import AdminMenu from "../../components/nav/AdminMenu";
 const { Header, Sider, Content } = Layout;
 
 const AdminLayout = () => {
-  const admin = "/dashboard/admin";
-
-  // context
-  const { auth, setAuth } = useAuth();
-
   // state
-  const [ok, setOk] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-
-  useEffect(() => {
-    const adminCheck = async () => {
-      const { data } = await axios.get(`/admin-check`);
-
-      if (data.ok) {
-        setOk(true);
-      } else {
-        setOk(false);
-      }
-    };
-
-    if (auth?.token) adminCheck();
-  }, [auth?.token]);
 
   const {
     token: { colorBgContainer, colorPrimary, colorSecondary, colorSecondaryDark },
@@ -86,7 +66,7 @@ const AdminLayout = () => {
     };
   });
 
-  return ok ? (
+  return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
         trigger={null}
@@ -116,7 +96,7 @@ const AdminLayout = () => {
             className="demo-logo-vertical d-flex justify-content-between align-items-center py-4 mb-3"
             style={{ marginInline: "4px" }}
           >
-            <Link className="d-block" to={"./"}>
+            <Link className="d-block" to="/">
               <img
                 className="w-100"
                 src="https://minhaj06.github.io/AlifaOnline-OkkhoTech/images/logo.svg"
@@ -197,8 +177,6 @@ const AdminLayout = () => {
         </Footer>
       </Layout>
     </Layout>
-  ) : (
-    <Loading path="login" />
   );
 };
 

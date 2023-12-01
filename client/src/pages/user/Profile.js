@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UpdateProfile = () => {
   const { auth, setAuth } = useAuth();
@@ -13,6 +14,10 @@ const UpdateProfile = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
+
+  // hooks
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (auth?.user) {
@@ -48,6 +53,9 @@ const UpdateProfile = () => {
 
         localStorage.setItem("auth", JSON.stringify(ls));
         toast.success("Profile Updated");
+        if (location.state) {
+          navigate(location.state);
+        }
       }
     } catch (err) {
       console.log(err);

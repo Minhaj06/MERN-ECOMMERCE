@@ -81,6 +81,7 @@ const CouponBilling = () => {
   const [couponDiscountPercentage, setCouponDiscountPercentage] = useState(0);
   const [shippingCharge, setShippingCharge] = useState(10);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [shippingAddressCheck, setShippingAddressCheck] = useState(false);
 
   useEffect(() => {
     const totalAmount = parseFloat(
@@ -97,13 +98,13 @@ const CouponBilling = () => {
     }
   }, [location, billingAddress]);
 
-  useEffect(() => {
-    if (division.toLowerCase() !== "dhaka") {
-      setShippingCharge(15);
-    } else {
-      setShippingCharge(10);
-    }
-  }, [division]);
+  // useEffect(() => {
+  //   if (division.toLowerCase() !== "dhaka") {
+  //     setShippingCharge(15);
+  //   } else {
+  //     setShippingCharge(10);
+  //   }
+  // }, [division]);
 
   const districtsByDivision = {
     Dhaka: [
@@ -318,17 +319,65 @@ const CouponBilling = () => {
 
         {/* Checkout Button */}
         {auth?.user ? (
-          <button
-            onClick={() =>
-              navigate("/checkout", {
-                state: { billingAddress: { division, district, postalCode } },
-              })
-            }
-            className="btn btnDark w-100 py-12 rounded-pill mt-50"
-            disabled={!division || !district || !postalCode ? true : false}
-          >
-            Checkout
-          </button>
+          <div className="mt-50">
+            <div className="form-check mb-4">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="shippingAddressCheck"
+                onChange={() => setShippingAddressCheck(!shippingAddressCheck)}
+              />
+              <label className="form-check-label" htmlFor="shippingAddressCheck">
+                Add Shipping Address
+              </label>
+            </div>
+            {shippingAddressCheck ? (
+              <button
+                onClick={() =>
+                  navigate("/checkout", {
+                    state: {
+                      billingAddress: { division, district, postalCode },
+                      discountPercentage: couponDiscountPercentage,
+                      shippingCharge: shippingCharge,
+                    },
+                  })
+                }
+                className="btn btnDark w-100 py-12 rounded-pill"
+                disabled={!division || !district || !postalCode || !cart.length ? true : false}
+              >
+                Checkout
+              </button>
+            ) : auth?.user?.address ? (
+              <button
+                onClick={() =>
+                  navigate("/checkout/payment", {
+                    state: {
+                      billingAddress: { division, district, postalCode },
+                      discountPercentage: couponDiscountPercentage,
+                      shippingCharge: shippingCharge,
+                    },
+                  })
+                }
+                className="btn btnDark w-100 py-12 rounded-pill"
+                disabled={!cart.length}
+              >
+                Checkout
+              </button>
+            ) : (
+              <button
+                onClick={() =>
+                  navigate("/dashboard/user/profile", {
+                    state: "/cart",
+                  })
+                }
+                className="btn btnDark w-100 py-12 rounded-pill"
+                disabled={!cart.length}
+              >
+                Update Address
+              </button>
+            )}
+          </div>
         ) : (
           <button
             onClick={() =>
